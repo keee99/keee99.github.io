@@ -1,10 +1,16 @@
 <script setup lang="ts">
+
+import { useCounterStore } from '@/stores/counter'
+
+// Store test
+const counterStore = useCounterStore()
+
 </script>
 
 <template>
   <main>
     <h1>Home Sweet Home.</h1>
-
+    <h2>{{ counterStore.count }}</h2>
     <div>
       <div><RouterLink to="/about">About Me</RouterLink></div>
       <div><RouterLink to="/projects">Projects</RouterLink></div>
