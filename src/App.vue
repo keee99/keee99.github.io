@@ -1,15 +1,17 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
+import CtdProject from "./threejs/CtdProject.vue";
 import Topbar from "./components/Topbar.vue";
 </script>
 
 <template>
-  <header>
+  <!-- <header>
     <Topbar />
-  </header>
+  </header> -->
   
   <body>
-    <RouterView />
+    <CtdProject />
+    <!-- <RouterView /> -->
   </body>
 </template>
 
