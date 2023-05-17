@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { RouterLink } from "vue-router";
 import Toolbar from 'primevue/toolbar';
 </script>
 
@@ -15,9 +14,8 @@ import Toolbar from 'primevue/toolbar';
 
       <template #end>
     
-        <div label="About Me" class="topbarLink"><RouterLink to="/about"></RouterLink></div>
-        <div class="topbarLink"><RouterLink to="/projects">Projects</RouterLink></div>
-        <div class="topbarLink"><RouterLink to="/designs">Designs</RouterLink></div>
+        <div class="topbarLink"><RouterLink to="/about">About</RouterLink></div>
+        <div class="topbarLink"><RouterLink to="/portfolio">Projects</RouterLink></div>
         <div class="topbarLink"><RouterLink to="/contact">Contact</RouterLink></div>
       </template>
     </Toolbar>
@@ -25,3 +23,15 @@ import Toolbar from 'primevue/toolbar';
     
   </main>
 </template>
+
+<style scoped>
+  .topbarTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-right: 2rem;
+  }
+  .topbarLink {
+    margin-right: 2rem;
+  }
+
+</style>

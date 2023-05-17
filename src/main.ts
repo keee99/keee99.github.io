@@ -11,8 +11,8 @@ import "./assets/main.css";
 import PrimeVue from 'primevue/config';
 // // Theme
 // import "primevue/resources/themes/lara-light-indigo/theme.css";     
-// // Core CSS
-// import "primevue/resources/primevue.min.css";
+// Core CSS
+import "primevue/resources/primevue.min.css";
 
 const app = createApp(App);
 
