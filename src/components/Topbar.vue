@@ -1,18 +1,27 @@
 <script setup lang="ts">
 import { RouterLink } from "vue-router";
+import Toolbar from 'primevue/toolbar';
 </script>
 
 <template>
   <main>
-    
-    <span>
-        <span class="topbarTitle"><RouterLink to="/">JJ</RouterLink></span>
+    <Toolbar>
+      <template #start>
+        <div class="topbarTitle"><RouterLink to="/">JJ</RouterLink></div>
+        <div label="Link" link />
         
-        <span class="topbarLink"><RouterLink to="/">Home</RouterLink></span>
-        <span class="topbarLink"><RouterLink to="/about">About Me</RouterLink></span>
-        <span class="topbarLink"><RouterLink to="/projects">Projects</RouterLink></span>
-        <span class="topbarLink"><RouterLink to="/designs">Designs</RouterLink></span>
-        <span class="topbarLink"><RouterLink to="/contact">Contact</RouterLink></span>
-    </span>
+
+      </template>
+
+      <template #end>
+    
+        <div label="About Me" class="topbarLink"><RouterLink to="/about"></RouterLink></div>
+        <div class="topbarLink"><RouterLink to="/projects">Projects</RouterLink></div>
+        <div class="topbarLink"><RouterLink to="/designs">Designs</RouterLink></div>
+        <div class="topbarLink"><RouterLink to="/contact">Contact</RouterLink></div>
+      </template>
+    </Toolbar>
+    
+    
   </main>
 </template>

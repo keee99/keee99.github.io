@@ -10,7 +10,6 @@ const counterStore = useCounterStore()
 <template>
   <main>
     <h1>About Me.</h1>
-    <h2>{{ counterStore.count }}</h2>
     <div>
         <RouterLink to="/">Back</RouterLink>
     </div>
