@@ -11,7 +11,11 @@ import Topbar from "./components/Topbar.vue";
   
   <body>
     <!-- <CtdProject /> -->
-    <router-view />
+    <router-view v-slot="{ Component }">
+      <transition>
+        <component :is="Component"></component>
+      </transition>
+    </router-view>
   </body>
 </template>
 

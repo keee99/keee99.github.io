@@ -61,6 +61,7 @@
   font-weight: normal;
 }
 
+/* TODO - styling: change body defaults */
 body {
   min-height: 100vh;
   color: var(--color-text);
