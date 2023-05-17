@@ -10,8 +10,8 @@ import Topbar from "./components/Topbar.vue";
   </header> -->
   
   <body>
-    <CtdProject />
-    <!-- <RouterView /> -->
+    <!-- <CtdProject /> -->
+    <router-view />
   </body>
 </template>
 

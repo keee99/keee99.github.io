@@ -28,12 +28,27 @@ const cam_pos_x_min = 10; // Added to cam pos x to adjust for wider aspect ratio
 const cam_pos_y = 1; // Height of camera above origin
 
 // Colour Control
+const bg_color = 0x000000;
+
 // const r_range = [255, 255];
 // const g_range = [255, 70];
 // const b_range = [255, 0];
+
 const r_range = [0, 255];
 const g_range = [0, 255];
 const b_range = [0, 255];
+
+// const bg_color = 0xF1FAEE;
+// --> RED (use 0.94 falloff)
+// const r_range = [231, 241];
+// const g_range = [150, 60];
+// const b_range = [170, 84];
+// FLAT 
+// const r_range = [221, 221];
+// const g_range = [70, 70];
+// const b_range = [104, 104];
+
+
 
 const get_r = (i: number) => (r_range[0] + (r_range[1] - r_range[0]) * i / n_circles)/255;
 const get_g = (i: number) => (g_range[0] + (g_range[1] - g_range[0]) * i / n_circles)/255;
@@ -131,6 +146,7 @@ onMounted(() => {
 
     // Renderer
     renderer = getNewRenderer(canvas);
+    renderer.setClearColor(bg_color);
     window.addEventListener('resize', resizeCallback)
     resizeCallback()
 
