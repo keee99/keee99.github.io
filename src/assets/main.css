@@ -5,16 +5,72 @@
 
 #app {
 
-  margin: 0 auto;
-  padding: 2rem;
-
-  font-weight: normal;
 }
 
 a {
   text-decoration: none;
   color: rgb(199, 73, 73);
 }
+
+
+
+.app-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  position:fixed; 
+  left:0;           /* top left corner should start at leftmost spot */
+  top:0;            /* top left corner should start at topmost spot */
+  width:100vw;      /* take up the full browser width */
+  z-index:200;  /* high z index so other content scrolls underneath */
+  height: 4rem;
+  padding: 0 1rem;
+  background-color: var(--color-topbar);;
+
+  border: 2px solid;
+  border-color: rgb(0, 85, 255);
+}
+
+
+.app-body {
+  
+  font-weight: normal;
+  border: 1rem;
+  padding: 2rem;
+  left:0;
+  top:4rem;
+  width:100vw; 
+
+  border: 2px solid;
+  border-color: rgb(255, 8, 8);
+}
+
+
+/* CSS Flex */
+.flex-div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.col-1 {
+  flex: 0 0 99%
+}
+
+.col-2 {
+  flex: 0 0 50%
+}
+
+.col-4 {
+  flex: 0 0 25%
+}
+
+.col-8 {
+  flex: 0 0 12%
+}
+
+
+
 
 
 /* TODO - styling: media styling */

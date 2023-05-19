@@ -10,7 +10,7 @@ import "./assets/main.css";
 // Config
 import PrimeVue from 'primevue/config';
 // // Theme
-// import "primevue/resources/themes/lara-light-indigo/theme.css";     
+import "primevue/resources/themes/lara-light-indigo/theme.css";     
 // Core CSS
 import "primevue/resources/primevue.min.css";
 

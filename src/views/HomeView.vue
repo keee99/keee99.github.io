@@ -9,6 +9,38 @@ const counterStore = useCounterStore()
 
 <template>
   <main>
-    <h1>Home Sweet Home.</h1>
+    <div class="flex-div">
+      <div class="col-2">
+
+        <div class="title-card">
+          <div class="title-header">
+            <h1>Jia Jun.</h1>
+          </div>
+          <div class="title-desc">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum quasi consequatur labore provident repellendus eius ipsum culpa odio, id voluptates vitae reprehenderit eum. Culpa velit quae, aliquam dignissimos exercitationem sunt!</p>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    
   </main>
 </template>
+
+<style>
+
+.title-card {
+  padding: 2rem;
+}
+
+.title-header {
+  font-size: 3rem;
+}
+
+.title-desc {
+  padding-right: 5%;
+  text-align: justify;
+}
+
+</style>
