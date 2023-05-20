@@ -11,9 +11,6 @@ const counterStore = useCounterStore()
   <main>
     <h1>About Me.</h1>
     <div>
-        <RouterLink to="/">Back</RouterLink>
-    </div>
-    <div>
       <div id="profilePictureDiv">
         <img src="../assets/images/profile.png" />
       </div>
