@@ -13,17 +13,17 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
     <div class="app-topbar">
         
         <div class="topbar-start">
-          <div class="topbar-title"><RouterLink to="/">JJ</RouterLink></div>
+          <RouterLink class="topbar-title" to="/">JJ</RouterLink>
           
-          <div v-for="item in navStartItems" class="topbar-link">
-            <RouterLink :to="{path: item}">{{ capitalize(item) }}</RouterLink>
-          </div>
+          <RouterLink class="topbar-link" v-for="item in navStartItems" :to="{path: item}">
+            {{ capitalize(item) }}
+          </RouterLink>
 
         </div>
         <div class="topbar-end">
-          <div v-for="item in navEndItems" class="topbar-link">
-            <RouterLink :to="{path: item}">{{ capitalize(item) }}</RouterLink>
-          </div>
+          <RouterLink class="topbar-link" v-for="item in navEndItems" :to="{path: item}">
+            {{ capitalize(item) }}
+          </RouterLink>
         </div>
         
     </div>
@@ -37,19 +37,28 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
     font-size: 1.5rem;
     font-weight: bold;
     margin: 0 2rem;
+    display: flex;
+    align-items: center;
   }
   .topbar-link {
-    padding: 2rem;
-    height: 100%;
+    padding: 0 1rem;
     display: flex;
     align-items: center;
   }
 
-  .topbar-start {
+  .topbar-end, .topbar-start {
     display: flex;
-    align-items: center;
-    height: 100%
+    align-items: stretch;
   }
+
+  /* On hover over a topbar-link, change color */
+  .topbar-link:hover {
+    background-color: #39487a;
+    color: #e4e4e4;
+    transition: 0.3s;
+    transition-timing-function: ease-in-out;
+  }
+
 
 
 

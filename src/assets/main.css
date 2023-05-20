@@ -17,7 +17,7 @@ a {
 .app-topbar {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch;
 
   position:fixed; 
   left:0;           /* top left corner should start at leftmost spot */
@@ -25,7 +25,7 @@ a {
   width:100vw;      /* take up the full browser width */
   z-index:200;  /* high z index so other content scrolls underneath */
   height: 4rem;
-  padding: 0 1rem;
+  padding: 0 10%;
   background-color: var(--color-topbar);;
 
   border: 2px solid;
@@ -37,7 +37,7 @@ a {
   
   font-weight: normal;
   border: 1rem;
-  padding: 2rem;
+  padding: 2rem 15%;
   left:0;
   top:4rem;
   width:100vw; 
