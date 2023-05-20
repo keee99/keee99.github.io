@@ -28,21 +28,21 @@ const cam_pos_x_min = 10; // Added to cam pos x to adjust for wider aspect ratio
 const cam_pos_y = 1; // Height of camera above origin
 
 // Colour Control
-const bg_color = 0x000000;
+// const bg_color = 0x000000;
 
 // const r_range = [255, 255];
 // const g_range = [255, 70];
 // const b_range = [255, 0];
 
-const r_range = [0, 255];
-const g_range = [0, 255];
-const b_range = [0, 255];
+// const r_range = [0, 255];
+// const g_range = [0, 255];
+// const b_range = [0, 255];
 
-// const bg_color = 0xF1FAEE;
+const bg_color = 0xF1FAEE;
 // --> RED (use 0.94 falloff)
-// const r_range = [231, 241];
-// const g_range = [150, 60];
-// const b_range = [170, 84];
+const r_range = [231, 241];
+const g_range = [150, 60];
+const b_range = [170, 84];
 // FLAT 
 // const r_range = [221, 221];
 // const g_range = [70, 70];
@@ -128,9 +128,9 @@ scene.add(camera);
 
 
 // DEBUG =================
-const gui = new dat.GUI();
-gui.add(parameters, 'rotation_rad').min(0).max(100*Math.PI).step(Math.PI/2);
-gui.add(parameters, 'playback');
+// const gui = new dat.GUI();
+// gui.add(parameters, 'rotation_rad').min(0).max(100*Math.PI).step(Math.PI/2);
+// gui.add(parameters, 'playback');
 
 
 

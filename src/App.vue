@@ -9,21 +9,32 @@ import Topbar from "./components/Topbar.vue";
     <Topbar />
   </header>
   
-  <body>
-    <!-- <CtdProject /> -->
+  <body> 
     <div class="app-body">
       <router-view v-slot="{ Component }">
         <transition>
           <component :is="Component"></component>
         </transition>
       </router-view>
+      <CtdProject class="bg"/>
     </div>
+    
 
   </body>
 </template>
 
-<!-- <style>
-</style> -->
+<style>
+  .bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+  }
+
+</style>
 
 
 
