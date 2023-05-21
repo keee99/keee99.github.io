@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from "vue-router";
 import CtdProject from "./threejs/CtdProject.vue";
+import BGScene from "./threejs/BGScene.vue";
 import Topbar from "./components/Topbar.vue";
 </script>
 
@@ -16,7 +17,7 @@ import Topbar from "./components/Topbar.vue";
           <component :is="Component"></component>
         </transition>
       </router-view>
-      <CtdProject class="bg"/>
+      <BGScene class="bg"/>
     </div>
     
 

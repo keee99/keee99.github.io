@@ -124,7 +124,6 @@ const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 10
 camera.position.x = cam_pos_x / (sizes.width / sizes.height) + cam_pos_x_min;
 camera.position.y = cam_pos_y;
 camera.lookAt(0,0,0);
-scene.add(camera);
 
 
 // DEBUG =================
