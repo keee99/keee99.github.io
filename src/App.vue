@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 
 import CtdProject from "./threejs/CtdProject.vue";
 import BGScene from "./threejs/BGScene.vue";
@@ -11,17 +11,6 @@ import AboutView from "./views/AboutView.vue";
 import ContactView from "./views/ContactView.vue";
 import PortfolioView from "./views/PortfolioView.vue";
 
-const windowWidth = ref(window.innerWidth);
-const windowHeight = ref(window.innerHeight);
-// setInterval(() => {
-//   console.log(windowWidth.value)
-// }, 1000);
-
-// window.addEventListener('resize', () => {
-//   windowWidth.value = window.innerWidth;
-//   windowHeight.value = window.innerHeight;
-// });
-
 </script>
 
 <template>
@@ -31,17 +20,22 @@ const windowHeight = ref(window.innerHeight);
   
   <body> 
     <div class="app-body">
-      <router-view v-slot="{ Component }">
+      <!-- <router-view v-slot="{ Component }">
         <transition>
           <component :is="Component"></component>
         </transition>
-      </router-view>
+      </router-view> -->
 
-      <div>
-
-      </div>
+      <div class="app-section"><HomeView /></div>
+      <div class="app-section"><AboutView /></div>
+      <div class="app-section"><PortfolioView /></div>
+      
       <!-- <BGScene class="bg"/> -->
     </div>
+
+    <footer>
+      <div class="app-section"><ContactView /></div>
+    </footer>
     
 
   </body>
@@ -58,15 +52,6 @@ const windowHeight = ref(window.innerHeight);
     background-color: #000;
   }
 
-  .bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    background-color: #000;
-  }
 
 </style>
 
