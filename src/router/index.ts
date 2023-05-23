@@ -30,6 +30,11 @@ const router = createRouter({
       component: ContactView,
     },
   ],
+  scrollBehavior(to, from, savedPosition) {
+    console.log(to, from)
+    // always scroll to top
+    return { top: 0 }
+  },
 });
 
 export default router;

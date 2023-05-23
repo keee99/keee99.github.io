@@ -20,3 +20,10 @@ export const useCounterStore = defineStore('counter', {
   },
 
 })
+
+
+
+// import { useCounterStore } from '@/stores/counter'
+// const counterStore = useCounterStore()
+
+// <button @click="counterStore.increment()">click me</button>

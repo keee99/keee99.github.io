@@ -1,8 +1,27 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from "vue-router";
+import { RouterView } from "vue-router";
+import { ref } from "vue";
+
 import CtdProject from "./threejs/CtdProject.vue";
 import BGScene from "./threejs/BGScene.vue";
 import Topbar from "./components/Topbar.vue";
+
+import HomeView from "./views/HomeView.vue";
+import AboutView from "./views/AboutView.vue";
+import ContactView from "./views/ContactView.vue";
+import PortfolioView from "./views/PortfolioView.vue";
+
+const windowWidth = ref(window.innerWidth);
+const windowHeight = ref(window.innerHeight);
+// setInterval(() => {
+//   console.log(windowWidth.value)
+// }, 1000);
+
+// window.addEventListener('resize', () => {
+//   windowWidth.value = window.innerWidth;
+//   windowHeight.value = window.innerHeight;
+// });
+
 </script>
 
 <template>
@@ -17,7 +36,11 @@ import Topbar from "./components/Topbar.vue";
           <component :is="Component"></component>
         </transition>
       </router-view>
-      <BGScene class="bg"/>
+
+      <div>
+
+      </div>
+      <!-- <BGScene class="bg"/> -->
     </div>
     
 
@@ -25,6 +48,16 @@ import Topbar from "./components/Topbar.vue";
 </template>
 
 <style>
+  .bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+  }
+
   .bg {
     position: fixed;
     top: 0;

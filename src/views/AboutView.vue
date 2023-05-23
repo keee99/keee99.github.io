@@ -1,23 +1,46 @@
 <script setup lang="ts">
 
-import { useCounterStore } from '@/stores/counter'
 
-// Store Test
-const counterStore = useCounterStore()
 
 </script>
 
 <template>
-  <main>
-    <h1>About Me.</h1>
-    <div>
-      <div id="profilePictureDiv">
-        <!-- <img src="../assets/images/profile.png" /> -->
-      </div>
-      <p>
-        ipsum dolor sit amet consectetur adipisicing elit. Vel quibusdam ut corrupti voluptatem saepe quam iusto unde laborum! Magnam inventore dolores voluptatem rem accusamus necessitatibus a natus quam sed deserunt?
-      </p>
-      <button @click="counterStore.increment()">click me</button>
-    </div>
-  </main>
+    <main>
+        <h1>About Me.</h1>
+        <div>
+
+            <img src="../assets/images/profile.png" style="width: 50vw"/>
+
+            <Accordion :activeIndex="0">
+                <AccordionTab header="Header I">
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
+                        laborum.
+                    </p>
+                </AccordionTab>
+                <AccordionTab header="Header II">
+                    <p>
+                        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
+                        enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
+                    </p>
+                </AccordionTab>
+                <AccordionTab header="Header III">
+                    <p>
+                        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in
+                        culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
+                    </p>
+                </AccordionTab>
+            </Accordion>
+            <p>
+                ipsum dolor sit amet consectetur adipisicing elit. Vel quibusdam ut corrupti voluptatem saepe quam iusto unde laborum! Magnam inventore dolores voluptatem rem accusamus necessitatibus a natus quam sed deserunt?
+            </p>
+
+        </div>
+    </main>
 </template>
+
+<style scoped>
+
+
+</style>
