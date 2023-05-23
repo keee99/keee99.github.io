@@ -14,21 +14,21 @@ const router = createRouter({
       name: "home",
       component: HomeView,
     },
-    {
-      path: "/about",
-      name: "about",
-      component: AboutView,
-    },
-    {
-      path: "/portfolio",
-      name: "porfolio",
-      component: PorfolioView,
-    },
-    {
-      path: "/contact",
-      name: "contact",
-      component: ContactView,
-    },
+    // {
+    //   path: "/about",
+    //   name: "about",
+    //   component: AboutView,
+    // },
+    // {
+    //   path: "/portfolio",
+    //   name: "porfolio",
+    //   component: PorfolioView,
+    // },
+    // {
+    //   path: "/contact",
+    //   name: "contact",
+    //   component: ContactView,
+    // },
   ],
   scrollBehavior(to, from, savedPosition) {
     console.log(to, from)

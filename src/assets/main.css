@@ -24,7 +24,7 @@ a {
   top:0;            /* top left corner should start at topmost spot */
   width:100vw;      /* take up the full browser width */
   z-index:200;  /* high z index so other content scrolls underneath */
-  height: 4rem;
+  height: 8vh;
   padding: 0 10%;
   background-color: var(--color-topbar);;
 
@@ -39,11 +39,16 @@ a {
   border: 1rem;
   padding: 2rem 15%;
   left:0;
-  top:4rem;
+  top: 8vh;
   width:100vw; 
 
   /* border: 2px solid;
   border-color: rgb(255, 8, 8); */
+}
+
+.app-section {
+  min-height: 100vh;
+  padding-top: 10vh;
 }
 
 

@@ -1,18 +1,23 @@
 <script setup lang="ts">
-import { RouterLink, useRoute } from 'vue-router';
-import { ref, watch } from "vue";
+import { RouterLink } from 'vue-router';
+import { ref, toRef } from "vue";
+
+const props = defineProps({
+  active: {
+    type: String,
+    required: true
+  }
+})
 
 const navStartItems = ref(["about", "portfolio"]);
 const navEndItems = ref(["contact"]);
 
-const route = useRoute();
-const activeItem = ref(route.fullPath);
+const activeItem = toRef(props, "active")
 
-watch(
-  () => route.fullPath,
-  async () => activeItem.value = route.fullPath
-);
-
+setInterval(() => {
+  // console.log(window.location.hash)
+  console.log(activeItem.value)
+}, 1000)
 
 
 const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
@@ -25,19 +30,21 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
         <div class="topbar-start">
           <RouterLink class="topbar-title" to="/">JJ</RouterLink>
           
-          <RouterLink class="topbar-link" 
-          :class="{ 'topbar-link-active': activeItem === '/' + item, 'topbar-link-inactive': activeItem !== '/' + item }"
-          v-for="item in navStartItems" :to="{path: item}">
+          <a class="topbar-link" 
+            :class="{ 'topbar-link-active': activeItem === item, 'topbar-link-inactive': activeItem !== item }"
+            v-for="item in navStartItems" :to="{path: item}"
+            :href="'#' + item">
             {{ capitalize(item) }}
-          </RouterLink>
+          </a>
 
         </div>
         <div class="topbar-end">
-          <RouterLink class="topbar-link" 
-          :class="{ 'topbar-link-active': activeItem === '/' + item, 'topbar-link-inactive': activeItem !== '/' + item }"
-          v-for="item in navEndItems" :to="{path: item}">
+          <a class="topbar-link" 
+            :class="{ 'topbar-link-active': activeItem === item, 'topbar-link-inactive': activeItem !== item }"
+            v-for="item in navEndItems" :to="{path: item}"
+            :href="'#' + item">
             {{ capitalize(item) }}
-          </RouterLink>
+          </a>
         </div>
         
     </div>

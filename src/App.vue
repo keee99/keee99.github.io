@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { RouterView } from "vue-router";
-import { computed, ref } from "vue";
+import { useRoute } from "vue-router";
+import { onMounted, computed, ref } from "vue";
 
 import CtdProject from "./threejs/CtdProject.vue";
 import BGScene from "./threejs/BGScene.vue";
@@ -11,11 +11,56 @@ import AboutView from "./views/AboutView.vue";
 import ContactView from "./views/ContactView.vue";
 import PortfolioView from "./views/PortfolioView.vue";
 
+let sectionObserver: IntersectionObserver;
+const route = useRoute();
+
+const activeSection = ref("")
+
+// https://stackoverflow.com/questions/61645225/vue-router-change-anchor-in-route-on-scroll
+function sectionObserverHandler (entries: IntersectionObserverEntry[]) {
+  for (const entry of entries) {
+    if (entry.isIntersecting) {
+      const sectionId = entry.target.id
+    }
+  }
+
+  for (const entry of entries) {
+    if (entry.isIntersecting) {
+        const sectionId = entry.target.id
+        if (route.name === null) return;
+        addHashToLocation(sectionId)
+        activeSection.value = sectionId;
+    }
+  }
+}
+
+function observeSections() {
+  if (sectionObserver) {
+    try { sectionObserver.disconnect()
+    } catch (error) {}
+  }
+  
+  const options = {
+    rootMargin: '0px 0px',
+    threshold: 0
+  }
+
+  sectionObserver = new IntersectionObserver(sectionObserverHandler, options)
+  const sections = document.querySelectorAll('.app-section')
+  sections.forEach(section => sectionObserver.observe(section))
+}
+
+const addHashToLocation =(sectionName: string) => history.pushState({}, "", route.path + '#' + sectionName)
+
+onMounted(() => {
+  observeSections();
+})
+
 </script>
 
 <template>
   <header>
-    <Topbar />
+    <Topbar :active="activeSection"/>
   </header>
   
   <body> 
@@ -26,15 +71,16 @@ import PortfolioView from "./views/PortfolioView.vue";
         </transition>
       </router-view> -->
 
-      <div class="app-section"><HomeView /></div>
-      <div class="app-section"><AboutView /></div>
-      <div class="app-section"><PortfolioView /></div>
+      <div class="app-section" id="home" ><HomeView/></div>
+      <div class="app-section" id="about"><AboutView/></div>
+      <div class="app-section" id="portfolio"><PortfolioView/></div>
+      <div class="app-section"  id="contact"><ContactView/></div>
       
       <!-- <BGScene class="bg"/> -->
     </div>
 
     <footer>
-      <div class="app-section"><ContactView /></div>
+      
     </footer>
     
 

@@ -9,7 +9,7 @@ const counterStore = useCounterStore()
 
 <template>
   <main>
-    <div class="flex-div">
+    <div class="flex-left">
       <div class="col-2">
 
         <div class="title-card">
