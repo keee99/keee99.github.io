@@ -3,6 +3,9 @@
 import * as THREE from 'three'
 import { ref, onMounted } from 'vue';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+
+import * as dat from 'lil-gui'
 
 const MAIN_OBJECT_PATH: string = "public/scene.gltf"
 
@@ -17,8 +20,8 @@ class BGSceneManager {
             cam_pos_y: 0,
             cam_pos_z: 1,
 
-            cam_pos_x_min: 0.5,
-            cam_pos_y_min: 0,
+            cam_pos_x_min: 1,
+            cam_pos_y_min: 1,
             cam_pos_z_min: 1,
 
             bg_color: 0xFFFFFF,
@@ -28,40 +31,88 @@ class BGSceneManager {
         this.scene = this.buildScene();
         this.camera = this.buildCamera();
         this.renderer = this.buildRenderer(canvas);
+        this.controls = this.buildOrbitControls(canvas); 
 
         this.onWindowResize();
         window.addEventListener('resize', this.onWindowResize);
-
+        
         // Build objects
         this.buildCentralObject();
+        this.buildSphere();
+
+        this.pointLight = this.buildLight();
+
+        this.clk = new THREE.Clock();
 
     }
 
     buildCentralObject() {
-        const loader = new GLTFLoader();
-        const scene = this.scene;
-        const camera = this.camera;
+        const geometry = new THREE.BoxGeometry(1.5, 2, 1)
+        const material = new THREE.MeshLambertMaterial({ color: 0xff1fff });
+        const mesh = new THREE.Mesh(geometry, material);
+        mesh.position.y = -1;
+        mesh.position.x = -1.4;
 
-        loader.load( 
-            "public/scene.gltf", 
-            function ( gltf ) {
-                scene.add( gltf.scene.children[0]);
-                camera.lookAt(gltf.scene.position)
-            }, 
-            undefined, 
-            function ( error ) {console.error( error )}
-        );
+        mesh.receiveShadow = true;
+        mesh.castShadow = true;
+
+        this.scene.add(mesh);
+
+
+        // const loader = new GLTFLoader();
+        // const scene = this.scene;
+        // const camera = this.camera;
+
+        // loader.load( 
+        //     "public/scene.gltf", 
+        //     function ( gltf ) {
+        //         scene.add( gltf.scene.children[0]);
+        //         camera.lookAt(gltf.scene.position)
+        //     }, 
+        //     undefined, 
+        //     function ( error ) {console.error( error )}
+        // );
     }
 
     buildLight() {
-        const light = new THREE.AmbientLight(0x00ff00, 1);
-        this.scene.add(light)
+        const light = new THREE.AmbientLight(0xffffff, 0.05);
+        this.scene.add(light);
+
+        // const directionalLight = new THREE.DirectionalLight(0xffffff, 0.2)
+        // directionalLight.position.set(1, 0.25, 0)
+        // directionalLight.castShadow = true
+        // this.scene.add(directionalLight)
+
+        const pointLight = new THREE.PointLight(0xff9000, 1)
+        pointLight.position.set(-1.86, 1, -1.65)
+        this.scene.add(pointLight)   
+        return pointLight;
     }
     
 
     buildScene() {
         const scene = new THREE.Scene();
         return scene;
+    }
+
+    buildSphere() {
+        const geometry = new THREE.SphereGeometry(1, 32, 32);
+        const material = new THREE.MeshLambertMaterial({ color: 0xffbaa3 });
+        const mesh = new THREE.Mesh(geometry, material);
+
+        mesh.receiveShadow = true;
+        mesh.castShadow = true;
+
+        this.scene.add(mesh);
+    }
+
+    buildOrbitControls(canvas: HTMLCanvasElement) {
+        const controls = new OrbitControls(this.camera, canvas)
+        controls.enableDamping = true;
+        controls.enableZoom = true;
+        controls.autoRotate = true;
+        controls.update();
+        return controls;
     }
 
     buildRenderer(canvas: HTMLCanvasElement) {
@@ -72,8 +123,10 @@ class BGSceneManager {
         renderer.setSize(sizes.width, sizes.height);
         renderer.setClearColor(this.defaults.bg_color);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        renderer.render(this.scene, this.camera);
 
+        renderer.shadowMap.enabled = true;
+
+        renderer.render(this.scene, this.camera);
         return renderer;
     }
 
@@ -115,7 +168,14 @@ class BGSceneManager {
     
 
     update() {
+        const elapsedTime = this.clk.getElapsedTime();
+        const deltaTime = this.clk.getDelta();
+
         // Update 
+        this.pointLight.position.y = 2*Math.cos(elapsedTime)
+        this.pointLight.position.x = 2*Math.sin(elapsedTime)
+
+        this.controls.update()
         this.renderer.render(this.scene, this.camera);
     }
 
@@ -123,6 +183,9 @@ class BGSceneManager {
     scene: THREE.Scene;
     renderer: THREE.WebGLRenderer;
     camera: THREE.PerspectiveCamera;
+    controls: OrbitControls;
+    clk: THREE.Clock;
+    pointLight: THREE.PointLight;
     defaults: {
         cam_pos_x: number;
         cam_pos_y: number;

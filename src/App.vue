@@ -71,12 +71,12 @@ onMounted(() => {
         </transition>
       </router-view> -->
 
-      <div class="app-section" id="home" ><HomeView/></div>
+      <!-- <div class="app-section" id="home" ><HomeView/></div>
       <div class="app-section" id="about"><AboutView/></div>
       <div class="app-section" id="portfolio"><PortfolioView/></div>
-      <div class="app-section"  id="contact"><ContactView/></div>
+      <div class="app-section"  id="contact"><ContactView/></div> -->
       
-      <!-- <BGScene class="bg"/> -->
+      <BGScene class="bg"/>
     </div>
 
     <footer>
@@ -92,7 +92,7 @@ onMounted(() => {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: -1;
+    /* z-index: -1; */
     width: 100%;
     height: 100%;
     background-color: #000;
