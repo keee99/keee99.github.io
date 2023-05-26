@@ -42,7 +42,8 @@ const onMinimize = () => maximized.value = false;
     @mouseover="onMouseEnter"
     @mouseleave="onMouseLeave"
     >
-        <h1>{{ props.title }}</h1>
+        <h1 class="hover-overlay-title">{{ props.title }}</h1>
+        <h1 class="hover-overlay-arrow">></h1>
     </div>
 
 
@@ -67,9 +68,8 @@ const onMinimize = () => maximized.value = false;
 
                 <div class="col-1 flex-center" v-if="props.imgs.length > 1">
                     <Galleria :value="props.imgs" var="img" :numVisible="5" 
-                    :showThumbnails="true" :showItemNavigators="true"
-
-                    >
+                        :showThumbnails="true" :showItemNavigators="true"
+                        >
                         <template #item="slotProps">
                             <div class="flex-div">
                                 <img :class="{'dialog-img-maximized': maximized, 'dialog-img': !maximized}" 
@@ -131,26 +131,48 @@ const onMinimize = () => maximized.value = false;
         background-color: aqua;
         height: 100%;
         width: 100%;
-        position:absolute;
+        position: absolute;
         z-index: 5;
         border-radius: 6px;
+        padding: 2rem;
 
         display: flex;
         align-items: center;
+
+        font-size:  small;
+        
+    }
+
+    .hover-overlay-title {
+        position: absolute;
+        z-index: 4;
+        left: 10%;
+        right: 40%; 
+
+        font-weight: 500;
+        
+    }
+
+    .hover-overlay-arrow {
+        position: absolute;
+        z-index: 4;
+        left: 80%;
+
+        font-weight: bolder;
     }
 
 
     .card-active {
-        background-color: #0000006b;
+        background-color: #00000090;
         color: #e4e4e4;
-        transition: 0.25s;
+        transition: 0.20s;
         transition-timing-function: ease-in-out;
     }
 
     .card-inactive {
         background-color: #e4e4e400;
         color: #39487a00;
-        transition: 0.25s;
+        transition: 0.20s;
         transition-timing-function: ease-in-out;
     }
 
@@ -160,7 +182,7 @@ const onMinimize = () => maximized.value = false;
     }
     
     .dialog-img {
-        height: 20vw;
+        height: 25vw;
     }
     
     .dialog-img-thumbnail {
