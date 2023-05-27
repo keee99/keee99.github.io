@@ -9,7 +9,7 @@
         <h1>About Me.</h1>
         <div>
 
-            <img src="../assets/images/profile.png" style="width: 50vw"/>
+            <!-- <img src="../assets/images/profile.png" style="width: 50vw"/> -->
 
             <Accordion :activeIndex="0">
                 <AccordionTab header="Background">

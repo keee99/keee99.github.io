@@ -16,6 +16,9 @@ const route = useRoute();
 
 const activeSection = ref("")
 
+
+// INTERSECTION OBSERVER ================================
+
 // https://stackoverflow.com/questions/61645225/vue-router-change-anchor-in-route-on-scroll
 function sectionObserverHandler (entries: IntersectionObserverEntry[]) {
   for (const entry of entries) {
@@ -50,9 +53,41 @@ function observeSections() {
   sections.forEach(section => sectionObserver.observe(section))
 }
 
-const addHashToLocation =(sectionName: string) => history.pushState({}, "", route.path + '#' + sectionName)
+const addHashToLocation = (sectionName: string) => history.pushState({}, "", route.path + '#' + sectionName)
+
+
+
+// SCROLL TRACKER ================================
+
+
+
+const scrollDistances = ref({
+  scrollDistanceHome: 0,
+  scrollDistanceAbout: 0,
+  scrollDistancePortfolio: 0,
+  scrollDistanceContact: 0
+})
+
+// Get the distance from the top of the page to each section
+const updateScrollDistances = () => {
+  const home = document.getElementById('home')?.offsetTop
+  const about = document.getElementById('about')?.offsetTop
+  const portfolio = document.getElementById('portfolio')?.offsetTop
+  const contact = document.getElementById('contact')?.offsetTop
+
+  scrollDistances.value = {
+    scrollDistanceHome: home ? home : 0,
+    scrollDistanceAbout: about ? about : 0,
+    scrollDistancePortfolio: portfolio ? portfolio : 0,
+    scrollDistanceContact: contact ? contact : 0
+  }
+}
+
+
 
 onMounted(() => {
+  updateScrollDistances();
+  console.log(scrollDistances.value)
   observeSections();
 })
 
@@ -76,7 +111,8 @@ onMounted(() => {
       <div class="app-section" id="portfolio"><PortfolioView/></div>
       <div class="app-section"  id="contact"><ContactView/></div>
       
-      <BGScene class="bg"/>
+      <BGScene class="bg" :scrollDistances="scrollDistances"/>
+
     </div>
 
     <footer>

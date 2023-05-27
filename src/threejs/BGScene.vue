@@ -2,6 +2,11 @@
 
 import * as THREE from 'three'
 import { ref, onMounted } from 'vue';
+// import type { PropType } from 'vue';
+
+import { bgSceneConfig } from './BGSceneConfig';
+import type { BGSceneConfigInterface } from './BGSceneConfig';
+
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
@@ -17,84 +22,17 @@ import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPa
 const DEFAULT_LAYER = 0;
 const BLOOM_LAYER = 1;
 
-const config : BGConfig = {
-    cam_pos_x: 0,
-    cam_pos_y: 0,
-    cam_pos_z: 1,
 
-    cam_pos_x_min: 0,
-    cam_pos_y_min: 0,
-    cam_pos_z_min: 3,
+const props = defineProps({
+    scrollDistanceHome: Number,
+    scrollDistanceAbout: Number,
+    scrollDistancePortfolio: Number,
+    scrollDistanceContact: Number,
 
-    enableOrbitControls: true,
+})
 
-    bg_color: 0x000000,
-    ambientColor: 0x111133,
-    ambientIntensity: 0.5,
 
-    modelPath: "public/scene.gltf",
 
-    text: "Jing Heng's",
-    subtext: "Nipple",
-    textFontPath: "public/fonts/beon_medium.typeface.json",
-    subtextFontPath: "public/fonts/bettina_signature_regular.typeface.json",
-    textColor: 0xff8866,
-    subtextColor: 0xff88aa,
-    borderColor: 0x00ff00,
-    textIntensity: 0.3,
-    subtextIntensity: 0.2,
-    textBorderIntensity: 0.15,
-    
-    borderPosOffset: 0.1,
-    thickness: 0.02,
-    flickerTolerance: 0.005,
-
-    bloomThreshold: 0.0,
-    bloomStrength: 2.0,
-    bloomRadius: 1.0,
-}
-
-// TODO: Change to camel case
-interface BGConfig {
-    cam_pos_x: number;
-    cam_pos_y: number;
-    cam_pos_z: number;
-
-    cam_pos_x_min: number;
-    cam_pos_y_min: number;
-    cam_pos_z_min: number;
-
-    enableOrbitControls: boolean;
-
-    bg_color: number;
-    ambientColor: number;
-    ambientIntensity: number;
-
-    modelPath: string;
-
-    /**
-     * Defaults for neon sign logo
-     */
-    text: string;
-    subtext: string;
-    textFontPath: string;
-    subtextFontPath: string;
-    textColor: number;
-    subtextColor: number;
-    borderColor: number;
-    textIntensity: number;
-    subtextIntensity: number;
-    textBorderIntensity: number;
-
-    borderPosOffset: number;
-    thickness: number;
-    flickerTolerance: number;
-
-    bloomThreshold: number;
-    bloomStrength: number;
-    bloomRadius: number;
-    
-}
 
 
 class BGSceneManager {
@@ -132,10 +70,10 @@ class BGSceneManager {
     finalComposer: EffectComposer;
     materials: Map<string, THREE.Material>;
 
-    config: BGConfig;
+    config: BGSceneConfigInterface;
     parameters: Map<string, any>;
 
-    constructor(canvas: HTMLCanvasElement, config: BGConfig) {
+    constructor(canvas: HTMLCanvasElement, config: BGSceneConfigInterface) {
 
         this.layers = this.initLayers();
         this.parameters = new Map();
@@ -497,6 +435,15 @@ class BGSceneManager {
         return camera;
     }
 
+    // On scroll to a certain distance, change the camera position
+    onScroll() {
+        const height = this.getSizes().height;
+        const scroll = window.scrollY;
+
+        console.log(scroll)
+       
+    }
+
 
     onWindowResize = () => {
         const sizes = this.getSizes()
@@ -695,7 +642,7 @@ onMounted(() => {
     let canvas: HTMLCanvasElement | null | undefined = bgscene.value;
     if (!canvas) throw new Error("No canvas found");
 
-    const sceneManager = new BGSceneManager(canvas, config);
+    const sceneManager = new BGSceneManager(canvas, bgSceneConfig);
 
     function animate() {
         sceneManager.update();
