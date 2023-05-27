@@ -24,7 +24,7 @@ const config : BGConfig = {
 
     cam_pos_x_min: 0,
     cam_pos_y_min: 0,
-    cam_pos_z_min: 2,
+    cam_pos_z_min: 3,
 
     enableOrbitControls: true,
 
@@ -34,12 +34,16 @@ const config : BGConfig = {
 
     modelPath: "public/scene.gltf",
 
-    text: "JIa Jun",
-    fontPath: "public/fonts/beon_medium.typeface.json",
+    text: "Jing Heng's",
+    subtext: "Nipple",
+    textFontPath: "public/fonts/beon_medium.typeface.json",
+    subtextFontPath: "public/fonts/bettina_signature_regular.typeface.json",
     textColor: 0xff8866,
+    subtextColor: 0xff88aa,
     borderColor: 0x00ff00,
-    textIntensity: 0.4,
-    textBorderIntensity: 0.2,
+    textIntensity: 0.3,
+    subtextIntensity: 0.2,
+    textBorderIntensity: 0.15,
     
     borderPosOffset: 0.1,
     thickness: 0.02,
@@ -72,10 +76,14 @@ interface BGConfig {
      * Defaults for neon sign logo
      */
     text: string;
-    fontPath: string;
+    subtext: string;
+    textFontPath: string;
+    subtextFontPath: string;
     textColor: number;
+    subtextColor: number;
     borderColor: number;
     textIntensity: number;
+    subtextIntensity: number;
     textBorderIntensity: number;
 
     borderPosOffset: number;
@@ -100,18 +108,22 @@ class BGSceneManager {
 
 
     text: THREE.Group;
+    subtext: THREE.Group;
     textBorder: THREE.Group;
 
 
     lights: {
         textLight: THREE.Group;
+        subtextLight: THREE.Group;
         textBorderLight: THREE.Group | null;
         ambientLight: THREE.AmbientLight;
     };
-    flickerControlObject: {
+    flickerControlObject: { // TODO: Refactor!
         text: boolean;
+        subtext: boolean;
         textBorder: boolean;
         textFlickerTime: number;
+        subtextFlickerTime: number;
         textBorderFlickerTime: number;
     };
 
@@ -141,23 +153,30 @@ class BGSceneManager {
         // this.buildCentralObject();
 
         // Build Neon Text Sign
-        this.text = new THREE.Group();
-        this.textBorder = new THREE.Group();
         this.flickerControlObject = {
             text: true,
+            subtext: true,
             textBorder: true,
             textFlickerTime: Number.MAX_SAFE_INTEGER,
+            subtextFlickerTime: Number.MAX_SAFE_INTEGER,
             textBorderFlickerTime: Number.MAX_SAFE_INTEGER,
         };
+
+        this.text = new THREE.Group();
+        this.subtext = new THREE.Group();
+        this.textBorder = new THREE.Group();
+
         this.buildTextObject();
-        
+        this.buildSubtextObject();
+
         this.buildSphere();
 
     
         // Build Lights
         this.lights = {
             textLight: this.buildTextLight(),
-            textBorderLight: null,
+            subtextLight: this.buildSubtextLight(),
+            textBorderLight: null, // Built in the callback of buildTextObject
             ambientLight: this.buildAmbientLight(),
         };
 
@@ -185,104 +204,131 @@ class BGSceneManager {
     }
 
 
+    buildSubtextObject() {
+        const fontLoader = new FontLoader();
+        const textMaterial = new THREE.MeshBasicMaterial({ color: this.config.subtextColor });
+        fontLoader.load(
+            this.config.subtextFontPath,
+            (font) => {
+                const textMesh = this.createTextMesh(font, textMaterial, this.config.subtext, 0.2);
+
+                textMesh.position.y = -0.8;
+                textMesh.layers.toggle(BLOOM_LAYER)
+                this.subtext.add(textMesh)
+                this.scene.add(this.subtext)
+        });
+
+    }
 
     buildTextObject() {
         /**
          * Fonts
          */
-        const fontLoader = new FontLoader()
-        const textMaterial = new THREE.MeshBasicMaterial({ color: 0xff8866 });
-        const borderMaterial = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+        const fontLoader = new FontLoader();
+        const textMaterial = new THREE.MeshBasicMaterial({ color: this.config.textColor });
+
+        fontLoader.load(
+            this.config.textFontPath,
+            (font) => {
+
+                /**
+                 * Text 3D
+                 */
+                const textMesh = this.createTextMesh(font, textMaterial, this.config.text, 0.5);
+                textMesh.layers.toggle(BLOOM_LAYER)
+                this.text.add(textMesh)
+                this.scene.add(this.text)
+
+
+                /**
+                 * Text border
+                 */
+                this.textBorder = this.createBorderMesh();
+                this.scene.add(this.textBorder)
+
+            }
+        )
+    }
+
+    createTextMesh(font: any, textMaterial: THREE.MeshBasicMaterial, text: string, size: number) {
+        const textGeometry = new TextGeometry(
+            text,
+            {
+                font: font,
+                size: size,
+                height: 0.05,
+                curveSegments: 5,
+                bevelEnabled: false,
+            }
+        )
+
+        textGeometry.center();
+        const textMesh = new THREE.Mesh(textGeometry, textMaterial)
+        return textMesh;
+    }
+
+    createBorderMesh() {
+        const boundingBox = new THREE.Box3().setFromObject(this.text)
+        const borderMaterial = new THREE.MeshBasicMaterial({ color: this.config.borderColor });
 
         // Border parameters
         const pos_offset = this.config.borderPosOffset;
         const thickness = this.config.thickness;
         const borderRad = pos_offset;
 
-        fontLoader.load(
-            this.config.fontPath,
-            (font) => {
+        
+        // Create 2D bounding Border
+        const width = boundingBox.max.x - boundingBox.min.x;
+        const height = boundingBox.max.y - boundingBox.min.y;
 
-                /**
-                 * Text 3D
-                 */
-                const textGeometry = new TextGeometry(
-                    this.config.text,
-                    {
-                        font: font,
-                        size: 0.5,
-                        height: 0.05,
-                        curveSegments: 5,
-                        bevelEnabled: false,
-                    }
-                )
+        const hori_pos = width/2 + pos_offset
+        const vert_pos = height/2 + pos_offset
+        const border_hori_offset = hori_pos - borderRad
+        const border_vert_offset = vert_pos - borderRad
+        
+        const borderConnectorTorus = new THREE.TorusGeometry(borderRad, thickness, 12, 12, Math.PI/2)
+        const vertBorder = new THREE.CylinderGeometry(thickness, thickness, height)
+        const horiBorder = new THREE.CylinderGeometry(thickness, thickness, width).rotateZ(Math.PI / 2)
+        
+        
+        const borderMeshes = {
+            t: new THREE.Mesh(horiBorder, borderMaterial),
+            b: new THREE.Mesh(horiBorder, borderMaterial),
+            l: new THREE.Mesh(vertBorder, borderMaterial),
+            r: new THREE.Mesh(vertBorder, borderMaterial),
+            tr: new THREE.Mesh(borderConnectorTorus, borderMaterial),
+            tl: new THREE.Mesh(borderConnectorTorus, borderMaterial),
+            br: new THREE.Mesh(borderConnectorTorus, borderMaterial),
+            bl: new THREE.Mesh(borderConnectorTorus, borderMaterial),
+        } 
 
-                textGeometry.center();
-                const textMesh = new THREE.Mesh(textGeometry, textMaterial)
-                textMesh.layers.toggle(BLOOM_LAYER)
-                this.text.add(textMesh)
-                this.scene.add(this.text)
+        borderMeshes.t.position.set(0, vert_pos, 0)
+        borderMeshes.b.position.set(0, -vert_pos, 0)
+        borderMeshes.l.position.set(hori_pos, 0, 0)
+        borderMeshes.r.position.set(-hori_pos, 0, 0)
 
+        borderMeshes.tr.position.set(border_hori_offset, border_vert_offset, 0)
+        borderMeshes.tl.position.set(-border_hori_offset , border_vert_offset, 0)
+        borderMeshes.br.position.set(border_hori_offset, -border_vert_offset, 0)
+        borderMeshes.bl.position.set(-border_hori_offset, -border_vert_offset, 0)
 
+        borderMeshes.tl.rotation.z = Math.PI / 2 
+        borderMeshes.bl.rotation.z = Math.PI
+        borderMeshes.br.rotation.z = 3 * Math.PI / 2 
+        
+        function keys<T extends object>(obj: T) {
+            return Object.keys(obj) as Array<keyof T>;
+        }
 
-                /**
-                 * Text border
-                 */
-                const boundingBox = new THREE.Box3().setFromObject(this.text)
-                
-                // Create 2D bounding Border
-                const width = boundingBox.max.x - boundingBox.min.x;
-                const height = boundingBox.max.y - boundingBox.min.y;
+        
+        const textBorder = new THREE.Group(); 
+        for (let key of keys(borderMeshes)) {
+            borderMeshes[key].layers.toggle(BLOOM_LAYER)
+            textBorder.add(borderMeshes[key])
+        }
 
-                const hori_pos = width/2 + pos_offset
-                const vert_pos = height/2 + pos_offset
-                const border_hori_offset = hori_pos - borderRad
-                const border_vert_offset = vert_pos - borderRad
-                
-                const borderConnectorTorus = new THREE.TorusGeometry(borderRad, thickness, 12, 12, Math.PI/2)
-                const vertBorder = new THREE.CylinderGeometry(thickness, thickness, height)
-                const horiBorder = new THREE.CylinderGeometry(thickness, thickness, width).rotateZ(Math.PI / 2)
-                
-                
-                const borderMeshes = {
-                    t: new THREE.Mesh(horiBorder, borderMaterial),
-                    b: new THREE.Mesh(horiBorder, borderMaterial),
-                    l: new THREE.Mesh(vertBorder, borderMaterial),
-                    r: new THREE.Mesh(vertBorder, borderMaterial),
-                    tr: new THREE.Mesh(borderConnectorTorus, borderMaterial),
-                    tl: new THREE.Mesh(borderConnectorTorus, borderMaterial),
-                    br: new THREE.Mesh(borderConnectorTorus, borderMaterial),
-                    bl: new THREE.Mesh(borderConnectorTorus, borderMaterial),
-                } 
-
-                borderMeshes.t.position.set(0, vert_pos, 0)
-                borderMeshes.b.position.set(0, -vert_pos, 0)
-                borderMeshes.l.position.set(hori_pos, 0, 0)
-                borderMeshes.r.position.set(-hori_pos, 0, 0)
-
-                borderMeshes.tr.position.set(border_hori_offset, border_vert_offset, 0)
-                borderMeshes.tl.position.set(-border_hori_offset , border_vert_offset, 0)
-                borderMeshes.br.position.set(border_hori_offset, -border_vert_offset, 0)
-                borderMeshes.bl.position.set(-border_hori_offset, -border_vert_offset, 0)
-
-                borderMeshes.tl.rotation.z = Math.PI / 2 
-                borderMeshes.bl.rotation.z = Math.PI
-                borderMeshes.br.rotation.z = 3 * Math.PI / 2 
-                
-                function keys<T extends object>(obj: T) {
-                    return Object.keys(obj) as Array<keyof T>;
-                }
-
-                
-                for (let key of keys(borderMeshes)) {
-                    borderMeshes[key].layers.toggle(BLOOM_LAYER)
-                    this.textBorder.add(borderMeshes[key])
-                }
-
-                this.scene.add(this.textBorder)
-                this.lights["textBorderLight"] = this.buildBorderLights(boundingBox)
-            }
-        )
+        this.lights["textBorderLight"] = this.buildBorderLights(boundingBox)
+        return textBorder;
     }
 
     buildCentralObject() {
@@ -315,10 +361,10 @@ class BGSceneManager {
 
     buildSphere() {
         const geometry = new THREE.SphereGeometry(0.5, 32, 32)
-        const material = new THREE.MeshLambertMaterial( { color: 'white' } );
+        const material = new THREE.MeshLambertMaterial( { color: 'white', wireframe: true } );
         const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.z = 0.24;
-        mesh.position.y = -1;
+        mesh.position.z = 0.5;
+        mesh.position.y = -1.4;
 
         mesh.receiveShadow = true;
         mesh.castShadow = true;
@@ -337,22 +383,18 @@ class BGSceneManager {
     }
 
     /**
-     * Create Point Light
+     * Create Text Light
      */
     buildTextLight() {
         const textLightGroup = new THREE.Group();
 
-        const textLight1 = new THREE.PointLight(this.config.textColor, this.config.textIntensity)
-        const textLight2 = new THREE.PointLight(this.config.textColor, this.config.textIntensity)
-        const textLight3 = new THREE.PointLight(this.config.textColor, this.config.textIntensity)
+        const textLight1 = new THREE.PointLight(this.config.textColor, this.config.subtextIntensity)
+        const textLight2 = new THREE.PointLight(this.config.textColor, this.config.subtextIntensity)
+        const textLight3 = new THREE.PointLight(this.config.textColor, this.config.subtextIntensity)
 
         textLight1.position.set(0,0,0)
         textLight2.position.set(-1,0,0)
         textLight3.position.set(1,0,0)
-        
-        textLight1.castShadow = true
-        textLight2.castShadow = true
-        textLight3.castShadow = true
 
         textLightGroup.add(textLight1)
         textLightGroup.add(textLight2)
@@ -360,6 +402,23 @@ class BGSceneManager {
         
         this.scene.add(textLightGroup);
         return textLightGroup;
+        
+    }
+
+    /**
+     * Create Subtext Light
+     */
+     buildSubtextLight() {
+        const subtextLightGroup = new THREE.Group();
+
+        const subtextLight = new THREE.PointLight(this.config.textColor, this.config.textIntensity)
+    
+        subtextLight.position.set(0,-0.8,0)
+        subtextLightGroup.add(subtextLight)
+
+        
+        this.scene.add(subtextLightGroup);
+        return subtextLightGroup;
         
     }
 
@@ -387,8 +446,8 @@ class BGSceneManager {
 
         borderLights.add(pointLight1)   
         borderLights.add(pointLight2)
-        borderLights.add(pointLight3)  
-        borderLights.add(pointLight4)
+        // borderLights.add(pointLight3)  
+        // borderLights.add(pointLight4)
 
         this.scene.add(borderLights)
         return borderLights;
@@ -476,6 +535,7 @@ class BGSceneManager {
         this.renderPostProcessing();
     }
 
+    // TODO: Refactor this!
     flicker(elapsedTime: number) {
         if (!this.text) return;
 
@@ -492,7 +552,7 @@ class BGSceneManager {
             }
         }
 
-        // Make the text flicker at a random time interval
+
         if (this.flickerControlObject.textBorder && Math.random() < this.config.flickerTolerance) {
             this.flickerControlObject.textBorder = false;
             this.flickerControlObject.textBorderFlickerTime = elapsedTime + maxOffTime * Math.random();
@@ -503,9 +563,22 @@ class BGSceneManager {
             }
         }
 
+        if (this.flickerControlObject.subtext && Math.random() < this.config.flickerTolerance) {
+            this.flickerControlObject.subtext = false;
+            this.flickerControlObject.subtextFlickerTime = elapsedTime + maxOffTime * Math.random();
+            
+        } else {
+            if (elapsedTime > this.flickerControlObject.subtextFlickerTime) {
+                this.flickerControlObject.subtext = true;
+            }
+        }
+
         // Set visibility
         this.text.visible = this.flickerControlObject.text;
         this.lights.textLight.visible = this.flickerControlObject.text;
+
+        this.subtext.visible = this.flickerControlObject.subtext;
+        this.lights.subtextLight.visible = this.flickerControlObject.subtext;
 
         this.textBorder.visible = this.flickerControlObject.textBorder;
         if (this.lights.textBorderLight) this.lights.textBorderLight.visible = this.flickerControlObject.textBorder;
