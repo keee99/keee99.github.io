@@ -22,14 +22,14 @@ a {
   position:fixed; 
   left:0;           /* top left corner should start at leftmost spot */
   top:0;            /* top left corner should start at topmost spot */
-  width:100vw;      /* take up the full browser width */
+  width:100%;      /* take up the full browser width */
   z-index:200;  /* high z index so other content scrolls underneath */
   height: 8vh;
-  padding: 0 10%;
+  padding: 0 20%;
   background-color: var(--color-topbar);;
 
-  border: 2px solid;
-  border-color: rgb(0, 85, 255);
+  /* border: 2px solid;
+  border-color: rgb(0, 85, 255); */
 }
 
 
@@ -40,7 +40,7 @@ a {
   padding: 2rem 15%;
   left:0;
   top: 8vh;
-  width:100vw; 
+
 
   /* border: 2px solid;
   border-color: rgb(255, 8, 8); */
