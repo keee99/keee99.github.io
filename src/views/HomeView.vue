@@ -10,7 +10,7 @@ const counterStore = useCounterStore()
 <template>
   <main>
     <div class="flex-left">
-      <div class="col-2">
+      <!-- <div class="col-2">
 
         <div class="title-card">
           <div class="title-header">
@@ -21,7 +21,7 @@ const counterStore = useCounterStore()
           </div>
         </div>
         
-      </div>
+      </div> -->
     </div>
     
     

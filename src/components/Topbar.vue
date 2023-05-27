@@ -55,7 +55,7 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
   .topbar-title {
     font-size: 1.5rem;
     font-weight: bold;
-    margin: 0 2rem;
+    margin: 0 5rem;
     display: flex;
     align-items: center;
   }
