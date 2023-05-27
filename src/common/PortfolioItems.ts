@@ -1,14 +1,14 @@
 
-import img_feeling_funky_back from  "../assets/images/portfolio/design/feeling_funky_back.png"
-import img_feeling_funky_front from  "../assets/images/portfolio/design/feeling_funky_front.png"
-import img_feeling_funky_back_tbn from  "../assets/images/portfolio/design/feeling_funky_back_tbn.png"
-import img_feeling_funky_front_tbn from  "../assets/images/portfolio/design/feeling_funky_front_tbn.png"
-import img_feeling_funky_draft from  "../assets/images/portfolio/design/feeling_funky_draft.png"
-import img_feeling_funky_draft_tbn from  "../assets/images/portfolio/design/feeling_funky_draft_tbn.png"
-import img_feeling_funky_final from  "../assets/images/portfolio/design/feeling_funky_final.png"
-import img_feeling_funky_final_tbn from  "../assets/images/portfolio/design/feeling_funky_final_tbn.png"
-import img_feeling_funky_front_draft from  "../assets/images/portfolio/design/feeling_funky_front_draft.png"
-import img_feeling_funky_front_draft_tbn from  "../assets/images/portfolio/design/feeling_funky_front_draft_tbn.png"
+import img_feeling_funky_back from  "../../public/images/portfolio/design/feeling_funky_back.png"
+import img_feeling_funky_front from  "../../public/images/portfolio/design/feeling_funky_front.png"
+import img_feeling_funky_back_tbn from  "../../public/images/portfolio/design/feeling_funky_back_tbn.png"
+import img_feeling_funky_front_tbn from  "../../public/images/portfolio/design/feeling_funky_front_tbn.png"
+import img_feeling_funky_draft from  "../../public/images/portfolio/design/feeling_funky_draft.png"
+import img_feeling_funky_draft_tbn from  "../../public/images/portfolio/design/feeling_funky_draft_tbn.png"
+import img_feeling_funky_final from  "../../public/images/portfolio/design/feeling_funky_final.png"
+import img_feeling_funky_final_tbn from  "../../public/images/portfolio/design/feeling_funky_final_tbn.png"
+import img_feeling_funky_front_draft from  "../../public/images/portfolio/design/feeling_funky_front_draft.png"
+import img_feeling_funky_front_draft_tbn from  "../../public/images/portfolio/design/feeling_funky_front_draft_tbn.png"
 
 export interface card {
     title: string, 

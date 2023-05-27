@@ -14,11 +14,6 @@ const navEndItems = ref(["contact"]);
 
 const activeItem = toRef(props, "active")
 
-setInterval(() => {
-  // console.log(window.location.hash)
-  console.log(activeItem.value)
-}, 1000)
-
 
 const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
 </script>
