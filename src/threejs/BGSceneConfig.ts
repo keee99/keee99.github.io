@@ -8,7 +8,7 @@ export const bgSceneConfig : BGSceneConfigInterface = {
     cam_pos_y_min: 0,
     cam_pos_z_min: 2,
 
-    enableOrbitControls: true,
+    enableOrbitControls: false,
 
     bg_color: 0x000000,
     ambientColor: 0x111133,

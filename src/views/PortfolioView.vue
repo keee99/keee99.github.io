@@ -42,7 +42,7 @@ onMounted(() => {
 
 <template>
   <main>
-    <h1>Portfolio.</h1>
+    <h1 class="section-title neon-text-primary">Portfolio.</h1>
     <TabMenu v-model:activeIndex="activeTab" :model="items" @tab-change="updateHeight"/>
     <div class="main-container">
       <div class="height-container"/>

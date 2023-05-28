@@ -149,7 +149,8 @@ const onMinimize = () => maximized.value = false;
         left: 10%;
         right: 40%; 
 
-        font-weight: 500;
+        font-weight: bold;
+        font-family: 'Beon', monospace;
         
     }
 

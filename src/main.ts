@@ -4,8 +4,6 @@ import App from "./App.vue";
 import router from "./router";
 import store from "./stores/store";
 
-import "./assets/main.css";
-
 // PrimeVue
 // Config
 import PrimeVue from 'primevue/config';
@@ -21,6 +19,7 @@ import Dialog from 'primevue/dialog';
 import Galleria from 'primevue/galleria';
 import TabMenu from 'primevue/tabmenu';
 
+import "./assets/main.css";
 
 const app = createApp(App);
 

@@ -10,7 +10,7 @@ const props = defineProps({
 })
 
 const navStartItems = ref(["about", "portfolio"]);
-const navEndItems = ref(["contact"]);
+const navEndItems = ref([]);
 
 const activeItem = toRef(props, "active")
 
@@ -23,22 +23,29 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
     <div class="app-topbar">
         
         <div class="topbar-start">
-          <RouterLink class="topbar-title" to="/">JJ</RouterLink>
+          <a class="topbar-title neon-text-primary" href="/#home">J  j</a>
           
           <a class="topbar-link" 
             :class="{ 'topbar-link-active': activeItem === item, 'topbar-link-inactive': activeItem !== item }"
             v-for="item in navStartItems" :to="{path: item}"
             :href="'#' + item">
-            {{ capitalize(item) }}
+            <div>
+              {{ capitalize(item) }}
+            </div>
           </a>
 
         </div>
         <div class="topbar-end">
           <a class="topbar-link" 
-            :class="{ 'topbar-link-active': activeItem === item, 'topbar-link-inactive': activeItem !== item }"
+            :class="{ 
+              'topbar-link-active': activeItem === item, 
+              'topbar-link-inactive': activeItem !== item 
+            }"
             v-for="item in navEndItems" :to="{path: item}"
             :href="'#' + item">
-            {{ capitalize(item) }}
+            <div>
+              {{ capitalize(item) }}
+            </div>
           </a>
         </div>
         
@@ -54,11 +61,15 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
 
   .topbar-title {
     font-size: 1.5rem;
-    font-weight: bold;
+    font-weight: bolder;
     margin: 0 5rem;
     display: flex;
     align-items: center;
-  }
+
+
+    font-family: 'Beon';
+}
+
 
   .topbar-end, .topbar-start {
     display: flex;
@@ -67,14 +78,33 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
 
   
   .topbar-link {
+    font-family: 'Beon', 'sans-serif';
     padding: 0 1rem;
     display: flex;
     align-items: center;
   }
 
   .topbar-link-active {
-    background-color: #39487a;
-    color: #e4e4e4;
+
+    transition: 0.25s;
+    transition-timing-function: ease-in-out;
+  }
+
+  .topbar-link-active div::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #d7ffd7;
+    box-shadow: 0 0 5px #00FF00,
+                0 0 10px #00FF00,
+                0 0 20px #00FF00,
+                0 0 40px #00FF00,
+                0 0 80px #00FF00,
+                0 0 90px #00FF00,
+                0 0 100px #00FF00;
     transition: 0.25s;
     transition-timing-function: ease-in-out;
   }
@@ -85,8 +115,8 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
   }
   
   .topbar-link-inactive:hover {
-    background-color: #68749941;
-    transition: 0.3s;
+    background-color: #959fbb69;
+    transition: 0.2s;
     transition-timing-function: ease-in-out;
   }
 

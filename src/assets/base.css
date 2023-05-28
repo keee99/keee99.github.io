@@ -37,6 +37,7 @@
   --color-background-mute: var(--vt-c-white-mute);
 
   --color-topbar: #000000;
+  --color-topbar-title: var(--vt-c-white);
 
   --color-border: var(--vt-c-divider-light-2);
   --color-border-hover: var(--vt-c-divider-light-1);
@@ -85,4 +86,18 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+  font-family: 'Bettina Signature';
+  src: url('../../public/fonts/bettina_signature_regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Beon';
+  src: url('../../public/fonts/beon_medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }

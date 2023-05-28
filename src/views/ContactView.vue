@@ -3,7 +3,7 @@
 
 <template>
   <main>
-    <h1>Contact Me.</h1>
+    <h1 class="section-title neon-text-primary">Contact Me.</h1>
     <div>
       Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quibusdam ut corrupti voluptatem saepe quam iusto unde laborum! Magnam inventore dolores voluptatem rem accusamus necessitatibus a natus quam sed deserunt?
     </div>

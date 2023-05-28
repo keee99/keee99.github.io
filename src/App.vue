@@ -61,34 +61,27 @@ const addHashToLocation = (sectionName: string) => history.pushState({}, "", rou
 
 
 
-const scrollDistances = ref({
-  scrollDistanceHome: 0,
-  scrollDistanceAbout: 0,
-  scrollDistancePortfolio: 0,
-  scrollDistanceContact: 0
-})
+const homeY = ref(0);
+const aboutY = ref(0);
+const portfolioY = ref(0);
 
 // Get the distance from the top of the page to each section
 const updateScrollDistances = () => {
   const home = document.getElementById('home')?.offsetTop
   const about = document.getElementById('about')?.offsetTop
   const portfolio = document.getElementById('portfolio')?.offsetTop
-  const contact = document.getElementById('contact')?.offsetTop
 
-  scrollDistances.value = {
-    scrollDistanceHome: home ? home : 0,
-    scrollDistanceAbout: about ? about : 0,
-    scrollDistancePortfolio: portfolio ? portfolio : 0,
-    scrollDistanceContact: contact ? contact : 0
-  }
+  homeY.value = home ? home : 0;
+  aboutY.value = about ? about : 0;
+  portfolioY.value = portfolio ? portfolio : 0;
 }
 
 
 
 onMounted(() => {
   updateScrollDistances();
-  console.log(scrollDistances.value)
   observeSections();
+  window.addEventListener('resize', updateScrollDistances)
 })
 
 </script>
@@ -107,11 +100,19 @@ onMounted(() => {
       </router-view> -->
 
       <div class="app-section" id="home" ><HomeView/></div>
+      <div class="app-section-break" />
       <div class="app-section" id="about"><AboutView/></div>
+      <div class="app-section-break" />
       <div class="app-section" id="portfolio"><PortfolioView/></div>
-      <div class="app-section"  id="contact"><ContactView/></div>
+      <div class="app-section-break" />
+      <!-- <div class="app-section"  id="contact"><ContactView/></div> -->
       
-      <BGScene class="bg" :scrollDistances="scrollDistances"/>
+      <BGScene 
+        class="bg" 
+        :homeY="homeY" 
+        :aboutY="aboutY"
+        :portfolioY="portfolioY"
+      />
 
     </div>
 
