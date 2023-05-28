@@ -2,10 +2,10 @@
 
 import * as THREE from 'three'
 import { ref, onMounted } from 'vue';
-// import type { PropType } from 'vue';
 
 import { bgSceneConfig } from './BGSceneConfig';
 import type { BGSceneConfigInterface } from './BGSceneConfig';
+import { BGSceneState, BGSceneHomeState, BGSceneAboutState, BGScenePortfolioState } from './BGSceneState';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -19,15 +19,21 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 
 
-const DEFAULT_LAYER = 0;
 const BLOOM_LAYER = 1;
 
-
 const props = defineProps({
-    scrollDistanceHome: Number,
-    scrollDistanceAbout: Number,
-    scrollDistancePortfolio: Number,
-    scrollDistanceContact: Number,
+    homeY: {
+        type: Number,
+        required: true
+    },
+    aboutY: {
+        type: Number,
+        required: true
+    },
+    portfolioY: {
+        type: Number,
+        required: true
+    }
 
 })
 
@@ -64,6 +70,11 @@ class BGSceneManager {
         subtextFlickerTime: number;
         textBorderFlickerTime: number;
     };
+    scrollStates: {
+        home: BGSceneState;
+        about: BGSceneState;
+        portfolio: BGSceneState;
+    }
 
     
     bloomComposer: EffectComposer;
@@ -75,7 +86,7 @@ class BGSceneManager {
 
     constructor(canvas: HTMLCanvasElement, config: BGSceneConfigInterface) {
 
-        this.layers = this.initLayers();
+        this.layers = this.initLayers(2);
         this.parameters = new Map();
         this.config = config;
         this.clk = new THREE.Clock();
@@ -124,13 +135,18 @@ class BGSceneManager {
         this.bloomComposer = composers.bloomComposer;
         this.finalComposer = composers.finalComposer;
 
-        // Resize Callback
+        // Resize and scroll Callback
+        this.scrollStates = this.initScrollData();
         this.onWindowResize();
         window.addEventListener('resize', this.onWindowResize);
+        window.addEventListener('scroll', this.onScroll);
     }
 
 
-    initLayers() {
+    /**
+     * Initializes a number of layers for the scene. Default number = 2
+     */
+    initLayers(num: number = 2) {
         const layers = [];
         for (let i = 0; i < 2; i++) {
             const layer = new THREE.Layers();
@@ -436,13 +452,71 @@ class BGSceneManager {
     }
 
     // On scroll to a certain distance, change the camera position
-    onScroll() {
-        const height = this.getSizes().height;
+    // Also need handle not only between sections, but AT sections, or before/after extreme sections
+    initScrollData () {
+        return {
+            home: BGSceneHomeState,
+            about: BGSceneAboutState,
+            portfolio: BGScenePortfolioState,
+        }
+    }
+    onScroll = () => {
+        const sizes = this.getSizes();
         const scroll = window.scrollY;
+        const aspect = (sizes.width / sizes.height);
 
-        console.log(scroll)
+        let page = "";
+
+        if (scroll <= props.homeY) {
+            // Home
+            
+        } else if (scroll <= props.aboutY) {
+            // Between Home and About
+            page = "home";
+        } else {
+            // About
+        }
+
+        // If page between home and about, change camera position based on progress between the 2 sections
+        const getNewPos = (
+                oldPos: number, 
+                newPos: number, 
+                upperSectionHeight: number, 
+                lowerSectionHeight: number,
+                scroll: number) => {
+
+            const heightDiff = lowerSectionHeight - upperSectionHeight;
+            const progress = this.getProgress((scroll - upperSectionHeight) / heightDiff);
+            return progress * (newPos - oldPos) + oldPos;
+        }
+        
+        // Refactor!!!!
+        // Make these reactive to aspect ratio/screen size. 
+        // May need to change the aspect ratio formulae for screensize change
+        const aboutX = 1;
+        const aboutY = 2;
+        const aboutZ = this.config.cam_pos_z / aspect + 5;
+        const minZ = this.config.cam_pos_z / aspect + this.config.cam_pos_z_min;
+        const aboutRotationY = 0.25 / aspect + -0.5;
+        if (page === "home") {
+            this.camera.position.z = getNewPos(minZ, aboutZ, props.homeY, props.aboutY, scroll)
+            this.camera.position.y = getNewPos(this.config.cam_pos_y_min, aboutY, props.homeY, props.aboutY, scroll);
+            this.camera.rotation.y = getNewPos(0, aboutRotationY, props.homeY, props.aboutY, scroll);
+            this.camera.position.x = getNewPos(this.config.cam_pos_x_min, aboutX, 0, props.aboutY, scroll);
+            
+        }
        
     }
+
+    setSceneState(state: BGSceneState) {
+
+    }
+
+    transitSceneState(topState: BGSceneState, bottomState: BGSceneState) {
+
+    }
+
+    getProgress = (progressY : number) => 0.5 * (-Math.cos(progressY * Math.PI) + 1)
 
 
     onWindowResize = () => {
@@ -456,6 +530,8 @@ class BGSceneManager {
 
         this.bloomComposer.setSize( sizes.width, sizes.height );
 		this.finalComposer.setSize( sizes.width, sizes.height );
+
+        this.onScroll();
 
         // Update renderer
         this.renderer.setSize(sizes.width, sizes.height)
