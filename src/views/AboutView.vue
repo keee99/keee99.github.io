@@ -15,9 +15,10 @@
                 <Accordion :activeIndex="0">
                     <AccordionTab header="Background">
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est
-                            laborum.
+                            I'm Jia Jun, JJ, a final year undergrad at SUTD, pursuing a Bachelor's in Computer Science and Design. 
+                            I'm interested in fullstack software dev roles. 
+                            I'm also looking to explore interactive applications, XR/VR/AR, and 3D libraries, such as three.js used to make this site!
+                            I dabble in different forms of artistic hobbies in my free time, including digital art, music, and dance.
                         </p>
                     </AccordionTab>
                     <AccordionTab header="Skills">

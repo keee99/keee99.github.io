@@ -5,7 +5,7 @@ import { ref, onMounted } from 'vue';
 
 import { bgSceneConfig } from './BGSceneConfig';
 import type { BGSceneConfigInterface } from './BGSceneConfig';
-import { BGSceneState, BGSceneHomeState, BGSceneAboutState, BGScenePortfolioState } from './BGSceneState';
+import { BGSceneState, bgSceneHomeState, bgSceneAboutState, bgScenePortfolioState } from './BGSceneState';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
@@ -336,6 +336,12 @@ class BGSceneManager {
 
     }
 
+    createPointLight = (x: number, y: number, z: number, color: number, intensity: number) => {
+        const pointLight = new THREE.PointLight(color, intensity);
+        pointLight.position.set(x, y, z);
+        return pointLight;
+    }
+
     /**
      * Create Text Light
      */
@@ -387,21 +393,13 @@ class BGSceneManager {
         const height = boundingBox.max.y - boundingBox.min.y;
         const border_hori_offset = width/2
         const border_vert_offset = height/2
+        const color = this.config.borderColor;
+        const intensity = this.config.textBorderIntensity;
 
-        const pointLight1 = new THREE.PointLight(this.config.borderColor, this.config.textBorderIntensity)
-        const pointLight2 = new THREE.PointLight(this.config.borderColor, this.config.textBorderIntensity)
-        const pointLight3 = new THREE.PointLight(this.config.borderColor, this.config.textBorderIntensity)
-        const pointLight4 = new THREE.PointLight(this.config.borderColor, this.config.textBorderIntensity)
-
-        pointLight1.position.set(border_hori_offset, border_vert_offset, 0)
-        pointLight2.position.set(-border_hori_offset , border_vert_offset, 0)
-        pointLight3.position.set(border_hori_offset, -border_vert_offset, 0)
-        pointLight4.position.set(-border_hori_offset, -border_vert_offset, 0)
-
-        borderLights.add(pointLight1)   
-        borderLights.add(pointLight2)
-        // borderLights.add(pointLight3)  
-        // borderLights.add(pointLight4)
+        borderLights.add(this.createPointLight(border_hori_offset, border_vert_offset, 0, color, intensity))
+        borderLights.add(this.createPointLight(-border_hori_offset , border_vert_offset, 0, color, intensity))
+        // borderLights.add(this.createPointLight(border_hori_offset, -border_vert_offset, 0, color, intensity))
+        // borderLights.add(this.createPointLight(-border_hori_offset, -border_vert_offset, 0, color, intensity))
 
         this.scene.add(borderLights)
         return borderLights;
@@ -455,68 +453,82 @@ class BGSceneManager {
     // Also need handle not only between sections, but AT sections, or before/after extreme sections
     initScrollData () {
         return {
-            home: BGSceneHomeState,
-            about: BGSceneAboutState,
-            portfolio: BGScenePortfolioState,
+            home: bgSceneHomeState,
+            about: bgSceneAboutState,
+            portfolio: bgScenePortfolioState,
         }
     }
     onScroll = () => {
         const sizes = this.getSizes();
         const scroll = window.scrollY;
-        const aspect = (sizes.width / sizes.height);
-
-        let page = "";
 
         if (scroll <= props.homeY) {
             // Home
-            
+            this.transitSceneState(this.scrollStates.home, this.scrollStates.home, scroll, 0, props.homeY);
         } else if (scroll <= props.aboutY) {
             // Between Home and About
-            page = "home";
+            this.transitSceneState(this.scrollStates.home, this.scrollStates.about, scroll, props.homeY, props.aboutY);
         } else {
             // About
+            this.transitSceneState(this.scrollStates.about, this.scrollStates.portfolio, scroll, props.aboutY, props.portfolioY);
         }
 
-        // If page between home and about, change camera position based on progress between the 2 sections
-        const getNewPos = (
-                oldPos: number, 
-                newPos: number, 
-                upperSectionHeight: number, 
-                lowerSectionHeight: number,
-                scroll: number) => {
+    }
 
-            const heightDiff = lowerSectionHeight - upperSectionHeight;
-            const progress = this.getProgress((scroll - upperSectionHeight) / heightDiff);
-            return progress * (newPos - oldPos) + oldPos;
-        }
+
+    transitSceneState(topState: BGSceneState, bottomState: BGSceneState, scrollY: number, topHeight: number, lowerHeight: number) {
+        const heightDiff = lowerHeight - topHeight;
+        let progress = this.getProgress((scrollY - topHeight) / heightDiff);
+        if (progress > 1) progress = 1;
+
+        const getNewPos = (oldPos: number, newPos: number) => ( progress * (newPos - oldPos) + oldPos );
+
+
+        // TODO: Refactor this!!!!!
+        // Set new camera position
+        const topX = this.computeCameraPos(topState.cam_pos_x, topState.cam_pos_x_tolerance);
+        const bottomX = this.computeCameraPos(bottomState.cam_pos_x, bottomState.cam_pos_x_tolerance);
+        this.camera.position.x = getNewPos(topX, bottomX);
+
+        const topY = this.computeCameraPos(topState.cam_pos_y, topState.cam_pos_y_tolerance);
+        const bottomY = this.computeCameraPos(bottomState.cam_pos_y, bottomState.cam_pos_y_tolerance);
+        this.camera.position.y = getNewPos(topY, bottomY);
+
+        const topZ = this.computeCameraPos(topState.cam_pos_z, topState.cam_pos_z_tolerance);
+        const bottomZ = this.computeCameraPos(bottomState.cam_pos_z, bottomState.cam_pos_z_tolerance);
+        this.camera.position.z = getNewPos(topZ, bottomZ);
         
-        // Refactor!!!!
-        // Make these reactive to aspect ratio/screen size. 
-        // May need to change the aspect ratio formulae for screensize change
-        const aboutX = 1;
-        const aboutY = 2;
-        const aboutZ = this.config.cam_pos_z / aspect + 5;
-        const minZ = this.config.cam_pos_z / aspect + this.config.cam_pos_z_min;
-        const aboutRotationY = 0.25 / aspect + -0.5;
-        if (page === "home") {
-            this.camera.position.z = getNewPos(minZ, aboutZ, props.homeY, props.aboutY, scroll)
-            this.camera.position.y = getNewPos(this.config.cam_pos_y_min, aboutY, props.homeY, props.aboutY, scroll);
-            this.camera.rotation.y = getNewPos(0, aboutRotationY, props.homeY, props.aboutY, scroll);
-            this.camera.position.x = getNewPos(this.config.cam_pos_x_min, aboutX, 0, props.aboutY, scroll);
-            
-        }
-       
-    }
 
-    setSceneState(state: BGSceneState) {
+        // Set new camera rotation
+        const topRotX = this.computeCameraRot(topState.cam_rot_x, topState.cam_rot_x_tolerance);
+        const bottomRotX = this.computeCameraRot(bottomState.cam_rot_x, bottomState.cam_rot_x_tolerance);
+        this.camera.rotation.x = getNewPos(topRotX, bottomRotX);
 
-    }
+        const topRotY = this.computeCameraRot(topState.cam_rot_y, topState.cam_rot_y_tolerance);
+        const bottomRotY = this.computeCameraRot(bottomState.cam_rot_y, bottomState.cam_rot_y_tolerance);
+        this.camera.rotation.y = getNewPos(topRotY, bottomRotY);
 
-    transitSceneState(topState: BGSceneState, bottomState: BGSceneState) {
+        const topRotZ = this.computeCameraRot(topState.cam_rot_z, topState.cam_rot_z_tolerance);
+        const bottomRotZ = this.computeCameraRot(bottomState.cam_rot_z, bottomState.cam_rot_z_tolerance);
+        this.camera.rotation.z = getNewPos(topRotZ, bottomRotZ);
+        
+        // Text Visibility get overwritten by flicker
+        // this.text.visible = bottomState.textVisibility;
+        // this.subtext.visible = bottomState.subtextVisibility;
+        // this.textBorder.visible = bottomState.textBorderVisibility;
 
+        this.config.flickerTolerance = bottomState.flickerTolerance;
     }
 
     getProgress = (progressY : number) => 0.5 * (-Math.cos(progressY * Math.PI) + 1)
+    computeCameraPos = (pos: number, threshold: number) => {
+        const sizes = this.getSizes();
+        const aspect = (sizes.width / sizes.height);
+        return threshold / aspect + pos;
+    }
+    computeCameraRot = (rot: number, threshold: number) => {
+        return this.computeCameraPos(rot, threshold);
+    }
 
 
     onWindowResize = () => {

@@ -1,26 +1,26 @@
 export class BGSceneState {
 
-    cam_pos_x_tolerance: Number;
-    cam_pos_y_tolerance: Number;
-    cam_pos_z_tolerance: Number;
+    cam_pos_x_tolerance: number;
+    cam_pos_y_tolerance: number;
+    cam_pos_z_tolerance: number;
 
-    cam_pos_x: Number;
-    cam_pos_y: Number;
-    cam_pos_z: Number;
+    cam_pos_x: number;
+    cam_pos_y: number;
+    cam_pos_z: number;
 
-    cam_rot_x_tolerance: Number;
-    cam_rot_y_tolerance: Number;
-    cam_rot_z_tolerance: Number;
+    cam_rot_x_tolerance: number;
+    cam_rot_y_tolerance: number;
+    cam_rot_z_tolerance: number;
 
-    cam_rot_x: Number;
-    cam_rot_y: Number;
-    cam_rot_z: Number;
+    cam_rot_x: number;
+    cam_rot_y: number;
+    cam_rot_z: number;
 
-    textVisibility: Boolean;
-    subtextVisibility: Boolean;
-    textBorderVisibility: Boolean;
+    textVisibility: boolean;
+    subtextVisibility: boolean;
+    textBorderVisibility: boolean;
 
-    flickerTolerance: Number;
+    flickerTolerance: number;
     
     constructor() {
         this.cam_pos_x_tolerance = 0;
@@ -46,62 +46,62 @@ export class BGSceneState {
         this.flickerTolerance = 0.005;
     }
     
-    setCameraPosTolerance(x: Number, y: Number, z: Number) {
+    setCameraPosTolerance(x: number, y: number, z: number) {
         this.cam_pos_x_tolerance = x;
         this.cam_pos_y_tolerance = y;
         this.cam_pos_z_tolerance = z;
         return this;
     }
 
-    setCameraPos(x: Number, y: Number, z: Number) {
+    setCameraPos(x: number, y: number, z: number) {
         this.cam_pos_x = x;
         this.cam_pos_y = y;
         this.cam_pos_z = z;
         return this;
     }
 
-    setCameraRot(x: Number, y: Number, z: Number) {
+    setCameraRot(x: number, y: number, z: number) {
         this.cam_rot_x = x;
         this.cam_rot_y = y;
         this.cam_rot_z = z;
         return this;
     }
 
-    setCameraRotTolerance(x: Number, y: Number, z: Number) {  
+    setCameraRotTolerance(x: number, y: number, z: number) {  
         this.cam_rot_x_tolerance = x;
         this.cam_rot_y_tolerance = y;
         this.cam_rot_z_tolerance = z;
         return this;
     }
 
-    setTextVisibility(visibility: Boolean) {
+    setTextVisibility(visibility: boolean) {
         this.textVisibility = visibility;
         return this;
     }
 
-    setSubtextVisibility(visibility: Boolean) {
+    setSubtextVisibility(visibility: boolean) {
         this.subtextVisibility = visibility;
         return this;
     }
 
-    setTextBorderVisibility(visibility: Boolean) {
+    setTextBorderVisibility(visibility: boolean) {
         this.textBorderVisibility = visibility;
         return this;
     }
 
-    setFlickerTolerance(tolerance: Number) {
+    setFlickerTolerance(tolerance: number) {
         this.flickerTolerance = tolerance;
         return this;
     }
 
 }
 
-export const BGSceneHomeState = new BGSceneState()
+export const bgSceneHomeState = new BGSceneState()
     .setCameraPos(0, 0, 2)
     .setCameraPosTolerance(0, 0, 2)
 
 
-export const BGSceneAboutState = new BGSceneState()
+export const bgSceneAboutState = new BGSceneState()
     .setCameraPos(1, 2, 5)
     .setCameraPosTolerance(0, 0, 2)
 
@@ -110,10 +110,12 @@ export const BGSceneAboutState = new BGSceneState()
 
     .setSubtextVisibility(false)
 
+    .setFlickerTolerance(0.0025)
 
-export const BGScenePortfolioState = new BGSceneState()
-    .setCameraPos(1, -10, 5)
-    .setCameraPosTolerance(0, 0, 0)
+
+export const bgScenePortfolioState = new BGSceneState()
+    .setCameraPos(1, -9, 5)
+    .setCameraPosTolerance(0, 0, 2)
 
     .setCameraRot(0, -0.5, 0)
     .setCameraRotTolerance(0, 0.25, 0)
