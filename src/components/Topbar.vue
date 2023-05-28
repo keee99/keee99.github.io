@@ -110,13 +110,13 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   .topbar-link-inactive {
-    transition: 0.25s;
+    transition: 0.15s;
     transition-timing-function: ease-in-out;
   }
   
   .topbar-link-inactive:hover {
     background-color: #959fbb69;
-    transition: 0.2s;
+    transition: 0.15s;
     transition-timing-function: ease-in-out;
   }
 

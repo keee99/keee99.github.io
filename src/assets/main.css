@@ -32,6 +32,25 @@ a {
   border-color: rgb(0, 85, 255); */
 }
 
+.app-topbar::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #00FF00;
+  box-shadow: 0 0 5px #00FF00,
+              0 0 10px #00FF00,
+              0 0 20px #00FF00,
+              0 0 40px #00FF00,
+              0 0 80px #00FF00,
+              0 0 90px #00FF00,
+              0 0 150px #00FF00,
+              0 0 200px #00FF00,
+              0 0 270px #00FF00;
+}
+
 
 .app-body {
   
@@ -181,6 +200,24 @@ a {
   outline: none;
   box-shadow: none;
   outline-offset: none;
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover  {
+  background: #ffffff;
+  border-radius: 10%;
+  border-color: #00FF00;
+  color: #6c757d;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px #00FF00,
+              0 0 10px #00FF00,
+              0 0 30px #00FF00;
+  transition: 0.15s;
+  transition-timing-function: ease-in-out;
+}
+
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover .p-menuitem-link {
+  /* border: none; */
+  background: none;
 }
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight::after {
