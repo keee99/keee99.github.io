@@ -12,6 +12,14 @@ export class BGSceneState {
     cam_rot_y_tolerance: number;
     cam_rot_z_tolerance: number;
 
+    obj_pos_x_tolerance: number;
+    obj_pos_y_tolerance: number;
+    obj_pos_z_tolerance: number;
+
+    obj_pos_x: number;
+    obj_pos_y: number;
+    obj_pos_z: number;
+
     cam_rot_x: number;
     cam_rot_y: number;
     cam_rot_z: number;
@@ -38,6 +46,14 @@ export class BGSceneState {
         this.cam_rot_x = 0;
         this.cam_rot_y = 0;
         this.cam_rot_z = 0;
+
+        this.obj_pos_x_tolerance = 0;
+        this.obj_pos_y_tolerance = 0;
+        this.obj_pos_z_tolerance = 0;
+    
+        this.obj_pos_x = 0;
+        this.obj_pos_y = 0;
+        this.obj_pos_z = 0;
 
         this.textVisibility = true;
         this.subtextVisibility = true;
@@ -74,6 +90,19 @@ export class BGSceneState {
         return this;
     }
 
+    setObjPosition(x: number, y: number, z: number) {
+        this.obj_pos_x = x;
+        this.obj_pos_y = y;
+        this.obj_pos_z = z;
+        return this;
+    }
+    setObjPositionTolerance(x: number, y: number, z: number) {
+        this.obj_pos_x_tolerance = x;
+        this.obj_pos_y_tolerance = y;
+        this.obj_pos_z_tolerance = z;
+        return this;
+    }
+
     setTextVisibility(visibility: boolean) {
         this.textVisibility = visibility;
         return this;
@@ -100,6 +129,9 @@ export const bgSceneHomeState = new BGSceneState()
     .setCameraPos(0, 0, 2)
     .setCameraPosTolerance(0, 0, 2)
 
+    // .setObjPosition(0, -1.4, 0.5)
+    .setObjPosition(0, 0, -0.5)
+
 
 export const bgSceneAboutState = new BGSceneState()
     .setCameraPos(0, 2, 5)
@@ -107,6 +139,8 @@ export const bgSceneAboutState = new BGSceneState()
 
     .setCameraRot(0, -0.5, 0)
     .setCameraRotTolerance(0, 0.25, 0)
+
+    .setObjPosition(0, 2, -0.5)
 
     .setSubtextVisibility(false)
 

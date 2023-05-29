@@ -8,7 +8,6 @@ import type { BGSceneConfigInterface } from './BGSceneConfig';
 import { BGSceneState, bgSceneHomeState, bgSceneAboutState, bgScenePortfolioState } from './BGSceneState';
 
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import { TextGeometry } from 'three/examples/jsm/geometries/TextGeometry.js'
 import { FontLoader } from 'three/examples/jsm/loaders/FontLoader.js'
@@ -46,7 +45,6 @@ class BGSceneManager {
     scene: THREE.Scene;
     renderer: THREE.WebGLRenderer;
     camera: THREE.PerspectiveCamera;
-    controls: OrbitControls | null;
     clk: THREE.Clock;
     layers: THREE.Layers[];
 
@@ -97,7 +95,6 @@ class BGSceneManager {
         this.scene = this.buildScene();
         this.camera = this.buildCamera();
         this.renderer = this.buildRenderer(canvas);
-        this.controls = (this.config.enableOrbitControls)  ? this.buildOrbitControls(canvas) : null; 
 
         
         // Build objects
@@ -292,10 +289,8 @@ class BGSceneManager {
         const group = new THREE.Group();
 
         const geometry = new THREE.SphereGeometry(0.5, 32, 32)
-        const material = new THREE.MeshLambertMaterial( { color: 'white', wireframe: true } );
+        const material = new THREE.MeshLambertMaterial( { color: 'white', wireframe: false } );
         const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.z = 0.5;
-        mesh.position.y = -1.4;
 
         mesh.receiveShadow = true;
         mesh.castShadow = true;
@@ -406,14 +401,6 @@ class BGSceneManager {
         return scene;
     }
 
-    buildOrbitControls(canvas: HTMLCanvasElement) {
-        const controls = new OrbitControls(this.camera, canvas)
-        controls.enableDamping = true;
-        controls.enableZoom = true;
-        controls.autoRotate = false;
-        controls.update();
-        return controls;
-    }
 
     buildRenderer(canvas: HTMLCanvasElement) {
         const renderer = new THREE.WebGLRenderer({
@@ -480,31 +467,46 @@ class BGSceneManager {
 
         // TODO: Refactor this!!!!!
         // Set new camera position
-        const topX = this.computeCameraPos(topState.cam_pos_x, topState.cam_pos_x_tolerance);
-        const bottomX = this.computeCameraPos(bottomState.cam_pos_x, bottomState.cam_pos_x_tolerance);
+        const topX = this.computePos(topState.cam_pos_x, topState.cam_pos_x_tolerance);
+        const bottomX = this.computePos(bottomState.cam_pos_x, bottomState.cam_pos_x_tolerance);
         this.camera.position.x = getNewPos(topX, bottomX);
 
-        const topY = this.computeCameraPos(topState.cam_pos_y, topState.cam_pos_y_tolerance);
-        const bottomY = this.computeCameraPos(bottomState.cam_pos_y, bottomState.cam_pos_y_tolerance);
+        const topY = this.computePos(topState.cam_pos_y, topState.cam_pos_y_tolerance);
+        const bottomY = this.computePos(bottomState.cam_pos_y, bottomState.cam_pos_y_tolerance);
         this.camera.position.y = getNewPos(topY, bottomY);
 
-        const topZ = this.computeCameraPos(topState.cam_pos_z, topState.cam_pos_z_tolerance);
-        const bottomZ = this.computeCameraPos(bottomState.cam_pos_z, bottomState.cam_pos_z_tolerance);
+        const topZ = this.computePos(topState.cam_pos_z, topState.cam_pos_z_tolerance);
+        const bottomZ = this.computePos(bottomState.cam_pos_z, bottomState.cam_pos_z_tolerance);
         this.camera.position.z = getNewPos(topZ, bottomZ);
         
 
         // Set new camera rotation
-        const topRotX = this.computeCameraRot(topState.cam_rot_x, topState.cam_rot_x_tolerance);
-        const bottomRotX = this.computeCameraRot(bottomState.cam_rot_x, bottomState.cam_rot_x_tolerance);
+        const topRotX = this.computeRot(topState.cam_rot_x, topState.cam_rot_x_tolerance);
+        const bottomRotX = this.computeRot(bottomState.cam_rot_x, bottomState.cam_rot_x_tolerance);
         this.camera.rotation.x = getNewPos(topRotX, bottomRotX);
 
-        const topRotY = this.computeCameraRot(topState.cam_rot_y, topState.cam_rot_y_tolerance);
-        const bottomRotY = this.computeCameraRot(bottomState.cam_rot_y, bottomState.cam_rot_y_tolerance);
+        const topRotY = this.computeRot(topState.cam_rot_y, topState.cam_rot_y_tolerance);
+        const bottomRotY = this.computeRot(bottomState.cam_rot_y, bottomState.cam_rot_y_tolerance);
         this.camera.rotation.y = getNewPos(topRotY, bottomRotY);
 
-        const topRotZ = this.computeCameraRot(topState.cam_rot_z, topState.cam_rot_z_tolerance);
-        const bottomRotZ = this.computeCameraRot(bottomState.cam_rot_z, bottomState.cam_rot_z_tolerance);
+        const topRotZ = this.computeRot(topState.cam_rot_z, topState.cam_rot_z_tolerance);
+        const bottomRotZ = this.computeRot(bottomState.cam_rot_z, bottomState.cam_rot_z_tolerance);
         this.camera.rotation.z = getNewPos(topRotZ, bottomRotZ);
+
+
+        // Set new object pos
+        const objTopX = this.computePos(topState.obj_pos_x, topState.obj_pos_x_tolerance);
+        const objBottomX = this.computePos(bottomState.obj_pos_x, bottomState.obj_pos_x_tolerance);
+        this.centralObject.position.x = getNewPos(objTopX, objBottomX);
+
+        const objTopY = this.computePos(topState.obj_pos_y, topState.obj_pos_y_tolerance);
+        const objBottomY = this.computePos(bottomState.obj_pos_y, bottomState.obj_pos_y_tolerance);
+        this.centralObject.position.y = getNewPos(objTopY, objBottomY);
+
+        const objTopZ = this.computePos(topState.obj_pos_z, topState.obj_pos_z_tolerance);
+        const objBottomZ = this.computePos(bottomState.obj_pos_z, bottomState.obj_pos_z_tolerance);
+        this.centralObject.position.z = getNewPos(objTopZ, objBottomZ);
+
         
         // Text Visibility get overwritten by flicker
         // this.text.visible = bottomState.textVisibility;
@@ -515,13 +517,13 @@ class BGSceneManager {
     }
 
     getProgress = (progressY : number) => 0.5 * (-(Math.cos(progressY * Math.PI)) + 1) ** 1.5;
-    computeCameraPos = (pos: number, threshold: number) => {
+    computePos = (pos: number, threshold: number) => {
         const sizes = this.getSizes();
         const aspect = (sizes.width / sizes.height);
         return threshold / aspect + pos;
     }
-    computeCameraRot = (rot: number, threshold: number) => {
-        return this.computeCameraPos(rot, threshold);
+    computeRot = (rot: number, threshold: number) => {
+        return this.computePos(rot, threshold);
     }
 
 
@@ -555,10 +557,6 @@ class BGSceneManager {
     update() {
         const elapsedTime = this.clk.getElapsedTime();
         const deltaTime = this.clk.getDelta();
-
-        // Update 
-        
-        if (this.controls) this.controls.update()
 
         this.flicker(elapsedTime);
         this.renderPostProcessing();

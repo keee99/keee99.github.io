@@ -8,18 +8,18 @@ export const bgSceneConfig : BGSceneConfigInterface = {
     cam_pos_y_min: 0,
     cam_pos_z_min: 2,
 
-    enableOrbitControls: false,
+    enableOrbitControls: true,
 
     bg_color: 0x000000,
     ambientColor: 0x111133,
-    ambientIntensity: 0.5,
+    ambientIntensity: 0.1,
 
     modelPath: "public/scene.gltf",
 
     text: "Jia Jun's",
     subtext: "Portfolio",
-    textFontPath: "public/fonts/beon_medium.typeface.json",
-    subtextFontPath: "public/fonts/bettina_signature_regular.typeface.json",
+    textFontPath: "/fonts/beon_medium.typeface.json",
+    subtextFontPath: "/fonts/bettina_signature_regular.typeface.json",
     textColor: 0xff8866,
     subtextColor: 0xff88aa,
     borderColor: 0x00ff00,
