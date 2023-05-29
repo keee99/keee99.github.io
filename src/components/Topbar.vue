@@ -11,6 +11,13 @@ const props = defineProps({
 
 const navStartItems = ref(["about", "portfolio"]);
 const navEndItems = ref([]);
+const socials = ref([
+  {name: "github", link: "https://github.com/keee99"}, 
+  {name: "linkedin", link: "https://www.linkedin.com/in/jayjaykoh/"}, 
+  {name: "instagram", link: "https://www.instagram.com/jayjay_koh/"}, 
+  {name: "envelope", link: "mailto:kohjim99@gmail.com"},
+]);
+
 
 const activeItem = toRef(props, "active")
 
@@ -47,6 +54,14 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
               {{ capitalize(item) }}
             </div>
           </a>
+
+          <a class="topbar-link" 
+            v-for="item in socials"
+            :href='item.link' target="_blank">
+            <i class="social-i pi" :class="'pi-' + item.name"></i>
+          </a>
+          
+          
         </div>
         
     </div>
@@ -118,6 +133,10 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
     background-color: #959fbb69;
     transition: 0.15s;
     transition-timing-function: ease-in-out;
+  }
+
+  .social-i {
+    color: #00FF00;
   }
 
 

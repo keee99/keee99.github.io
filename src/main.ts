@@ -11,6 +11,8 @@ import PrimeVue from 'primevue/config';
 import "primevue/resources/themes/lara-light-indigo/theme.css";     
 // Core CSS
 import "primevue/resources/primevue.min.css";
+// Icons
+import 'primeicons/primeicons.css';
 // Components
 import Accordion from 'primevue/accordion';
 import AccordionTab from 'primevue/accordiontab';

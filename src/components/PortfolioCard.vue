@@ -62,9 +62,10 @@ const onMinimize = () => maximized.value = false;
         @maximize="onMaximize"
         @unmaximize="onMinimize"
         :header="props.title" 
-        :style="{ width: '50vw' }">
+        :style="{ width: '50vw' }"
+        class="neon-border">
             
-            <div class="flex-center">
+            <div class="flex-center" >
 
                 <div class="col-1 flex-center" v-if="props.imgs.length > 1">
                     <Galleria :value="props.imgs" var="img" :numVisible="5" 
@@ -166,7 +167,7 @@ const onMinimize = () => maximized.value = false;
     .card-active {
         background-color: #00000090;
         color: #e4e4e4;
-        transition: 0.20s;
+        transition: 0.10s;
         transition-timing-function: ease-in-out;
     }
 

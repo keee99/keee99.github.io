@@ -8,7 +8,6 @@ import Topbar from "./components/Topbar.vue";
 
 import HomeView from "./views/HomeView.vue";
 import AboutView from "./views/AboutView.vue";
-import ContactView from "./views/ContactView.vue";
 import PortfolioView from "./views/PortfolioView.vue";
 
 let sectionObserver: IntersectionObserver;
@@ -21,12 +20,6 @@ const activeSection = ref("")
 
 // https://stackoverflow.com/questions/61645225/vue-router-change-anchor-in-route-on-scroll
 function sectionObserverHandler (entries: IntersectionObserverEntry[]) {
-  for (const entry of entries) {
-    if (entry.isIntersecting) {
-      const sectionId = entry.target.id
-    }
-  }
-
   for (const entry of entries) {
     if (entry.isIntersecting) {
         const sectionId = entry.target.id

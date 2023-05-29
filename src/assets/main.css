@@ -66,7 +66,7 @@ a {
 }
 
 .app-section {
-  min-height: 100vh;
+  min-height: 92vh;
   padding-top: 10vh;
 }
 
@@ -146,10 +146,18 @@ a {
               0 0 100px #ffa32b;
 }
 
+.neon-border {
+  border: 2px solid #c7ffc7;
+  box-shadow: 0 0 5px #00FF00,
+              0 0 15px #00FF00;
+
+}
+
 
 
 
 /* PRIMEVUE OVERRIDES */
+/* Primvue Accordion */
 .p-accordion .p-accordion-header .p-accordion-header-link {
   color:rgb(255, 0, 0);
   background-color: rgba(255, 127, 221, 0);
@@ -158,6 +166,7 @@ a {
 .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
 
   box-sizing: border-box;
+  border-color: #c7ffc7;
   box-shadow: 0 0 5px #00FF00,
               0 0 10px #00FF00,
               0 0 30px #00FF00;
@@ -169,7 +178,7 @@ a {
 }
 
 
-
+/* Primevue TabMenu */
 .p-tabmenu .p-tabmenu-nav {
   background: none;
   border: none;
@@ -205,7 +214,7 @@ a {
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover  {
   background: #ffffff;
   border-radius: 10%;
-  border-color: #00FF00;
+  border-color: #c7ffc7;
   color: #6c757d;
   box-sizing: border-box;
   box-shadow: 0 0 5px #00FF00,
@@ -234,10 +243,49 @@ a {
               0 0 40px #00FF00,
               0 0 80px #00FF00,
               0 0 90px #00FF00,
+              0 0 130px #00FF00,
+              0 0 170px #c0ffc0;
+  transition: 0.25s;
+  transition-timing-function: ease-in-out;
+}
+
+/* Primevue Dialog */
+.p-dialog .p-dialog-header .p-dialog-title {
+  font-family: 'Beon', monospace;
+  color: rgb(255, 219, 200);
+  text-shadow: 0 0 5px #ff7d0b,
+              0 0 10px #ff7d0b,
+              0 0 20px #ff7d0b;
+}
+
+.p-dialog .p-dialog-header .p-dialog-title::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #d7ffd7;
+  box-shadow: 0 0 5px #00FF00,
+              0 0 10px #00FF00,
+              0 0 20px #00FF00,
+              0 0 40px #00FF00,
+              0 0 80px #00FF00,
+              0 0 90px #00FF00,
               0 0 100px #00FF00;
   transition: 0.25s;
   transition-timing-function: ease-in-out;
 }
+
+.p-dialog .p-dialog-header {
+  background-color: #000000;
+}
+
+.p-dialog .p-dialog-content {
+  background-color: #000000;
+  color: #FFFFFF
+}
+
 /* TODO - styling: media styling */
 /* 
 @media (hover: hover) {
