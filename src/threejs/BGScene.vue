@@ -55,6 +55,8 @@ class BGSceneManager {
     subtext: THREE.Group;
     textBorder: THREE.Group;
 
+    centralObject: THREE.Group;
+
 
     lights: {
         textLight: THREE.Group;
@@ -118,7 +120,7 @@ class BGSceneManager {
         this.buildTextObject();
         this.buildSubtextObject();
 
-        this.buildSphere();
+        this.centralObject = this.buildCentralObject();
 
     
         // Build Lights
@@ -138,6 +140,7 @@ class BGSceneManager {
         // Resize and scroll Callback
         this.scrollStates = this.initScrollData();
         this.onWindowResize();
+        this.onScroll();
         window.addEventListener('resize', this.onWindowResize);
         window.addEventListener('scroll', this.onScroll);
     }
@@ -286,16 +289,20 @@ class BGSceneManager {
     }
 
     buildCentralObject() {
-        const geometry = new THREE.BoxGeometry(1.5, 2, 1)
-        const material = new THREE.MeshLambertMaterial({ color: 0xff1fff });
+        const group = new THREE.Group();
+
+        const geometry = new THREE.SphereGeometry(0.5, 32, 32)
+        const material = new THREE.MeshLambertMaterial( { color: 'white', wireframe: true } );
         const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.y = -1;
-        mesh.position.x = -1.4;
+        mesh.position.z = 0.5;
+        mesh.position.y = -1.4;
 
         mesh.receiveShadow = true;
         mesh.castShadow = true;
-
-        this.scene.add(mesh);
+        mesh.layers.disable(BLOOM_LAYER)
+        group.add(mesh);
+        this.scene.add(group);
+        return group;
 
 
         // const loader = new GLTFLoader();
@@ -313,18 +320,6 @@ class BGSceneManager {
         // );
     }
 
-    buildSphere() {
-        const geometry = new THREE.SphereGeometry(0.5, 32, 32)
-        const material = new THREE.MeshLambertMaterial( { color: 'white', wireframe: true } );
-        const mesh = new THREE.Mesh(geometry, material);
-        mesh.position.z = 0.5;
-        mesh.position.y = -1.4;
-
-        mesh.receiveShadow = true;
-        mesh.castShadow = true;
-        mesh.layers.disable(BLOOM_LAYER)
-        this.scene.add(mesh);
-    }
 
     /**
      * Create Ambient Light
@@ -459,12 +454,11 @@ class BGSceneManager {
         }
     }
     onScroll = () => {
-        const sizes = this.getSizes();
         const scroll = window.scrollY;
-
         if (scroll <= props.homeY) {
             // Home
-            this.transitSceneState(this.scrollStates.home, this.scrollStates.home, scroll, 0, props.homeY);
+            // Add 1 to homeY to buffer for division by 0
+            this.transitSceneState(this.scrollStates.home, this.scrollStates.home, scroll, 0, props.homeY + 1);
         } else if (scroll <= props.aboutY) {
             // Between Home and About
             this.transitSceneState(this.scrollStates.home, this.scrollStates.about, scroll, props.homeY, props.aboutY);
