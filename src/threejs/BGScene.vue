@@ -288,13 +288,13 @@ class BGSceneManager {
     buildCentralObject() {
         const group = new THREE.Group();
 
-        const geometry = new THREE.SphereGeometry(0.5, 32, 32)
+        const geometry = new THREE.SphereGeometry(1, 5, 5)
         const material = new THREE.MeshLambertMaterial( { color: 'white', wireframe: false } );
         const mesh = new THREE.Mesh(geometry, material);
 
         mesh.receiveShadow = true;
-        mesh.castShadow = true;
         mesh.layers.disable(BLOOM_LAYER)
+
         group.add(mesh);
         this.scene.add(group);
         return group;

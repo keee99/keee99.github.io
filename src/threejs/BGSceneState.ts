@@ -130,7 +130,7 @@ export const bgSceneHomeState = new BGSceneState()
     .setCameraPosTolerance(0, 0, 2)
 
     // .setObjPosition(0, -1.4, 0.5)
-    .setObjPosition(0, 0, -0.5)
+    .setObjPosition(0, 0, -1.1)
 
 
 export const bgSceneAboutState = new BGSceneState()
@@ -144,7 +144,6 @@ export const bgSceneAboutState = new BGSceneState()
 
     .setSubtextVisibility(false)
 
-    .setFlickerTolerance(0.0025)
 
 
 export const bgScenePortfolioState = new BGSceneState()
@@ -154,8 +153,12 @@ export const bgScenePortfolioState = new BGSceneState()
     .setCameraRot(0, -0.5, 0)
     .setCameraRotTolerance(0, 0.25, 0)
 
+    .setObjPosition(0, 0, -1.1)
+
     .setTextVisibility(false)
     .setSubtextVisibility(false)
     .setTextBorderVisibility(false)
+
+    .setFlickerTolerance(0.000)
 
 

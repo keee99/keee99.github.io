@@ -77,9 +77,11 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
   .topbar-title {
     font-size: 1.5rem;
     font-weight: bolder;
-    margin: 0 5rem;
+    margin: 0 10% 0 5%;
     display: flex;
     align-items: center;
+
+    min-width: fit-content;
 
 
     font-family: 'Beon';
