@@ -102,8 +102,8 @@ export const bgSceneHomeState = new BGSceneState()
 
 
 export const bgSceneAboutState = new BGSceneState()
-    .setCameraPos(1, 2, 5)
-    .setCameraPosTolerance(0, 0, 2)
+    .setCameraPos(0, 2, 5)
+    .setCameraPosTolerance(0.6, 0, 2)
 
     .setCameraRot(0, -0.5, 0)
     .setCameraRotTolerance(0, 0.25, 0)
@@ -114,7 +114,7 @@ export const bgSceneAboutState = new BGSceneState()
 
 
 export const bgScenePortfolioState = new BGSceneState()
-    .setCameraPos(1, -9, 5)
+    .setCameraPos(0, -9, 5)
     .setCameraPosTolerance(0, 0, 2)
 
     .setCameraRot(0, -0.5, 0)

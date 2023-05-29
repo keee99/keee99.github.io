@@ -36,7 +36,7 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
             :class="{ 'topbar-link-active': activeItem === item, 'topbar-link-inactive': activeItem !== item }"
             v-for="item in navStartItems" :to="{path: item}"
             :href="'#' + item">
-            <div>
+            <div class="topbar-text">
               {{ capitalize(item) }}
             </div>
           </a>
@@ -50,7 +50,7 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
             }"
             v-for="item in navEndItems" :to="{path: item}"
             :href="'#' + item">
-            <div>
+            <div class="topbar-text">
               {{ capitalize(item) }}
             </div>
           </a>
@@ -128,18 +128,27 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
     transition: 0.15s;
     transition-timing-function: ease-in-out;
   }
-  
+
+  .social-i {
+    color: #00FF00;
+    transition: 0.15s;
+    transition-timing-function: ease-in-out;
+  }
+
+  .topbar-link:hover .social-i {
+    color: #d0ffd0;
+    transition: 0.15s;
+    transition-timing-function: ease-in-out;
+  }
+
+  .topbar-link:hover {
+  }
+
   .topbar-link-inactive:hover {
     background-color: #959fbb69;
     transition: 0.15s;
     transition-timing-function: ease-in-out;
   }
-
-  .social-i {
-    color: #00FF00;
-  }
-
-
 
 
 

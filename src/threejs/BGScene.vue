@@ -520,7 +520,7 @@ class BGSceneManager {
         this.config.flickerTolerance = bottomState.flickerTolerance;
     }
 
-    getProgress = (progressY : number) => 0.5 * (-Math.cos(progressY * Math.PI) + 1)
+    getProgress = (progressY : number) => 0.5 * (-(Math.cos(progressY * Math.PI)) + 1) ** 1.5;
     computeCameraPos = (pos: number, threshold: number) => {
         const sizes = this.getSizes();
         const aspect = (sizes.width / sizes.height);
