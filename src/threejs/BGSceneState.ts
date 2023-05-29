@@ -142,8 +142,6 @@ export const bgSceneAboutState = new BGSceneState()
 
     .setObjPosition(0, 2, -0.5)
 
-    .setSubtextVisibility(false)
-
 
 
 export const bgScenePortfolioState = new BGSceneState()
@@ -155,10 +153,7 @@ export const bgScenePortfolioState = new BGSceneState()
 
     .setObjPosition(0, 0, -1.1)
 
-    .setTextVisibility(false)
     .setSubtextVisibility(false)
-    .setTextBorderVisibility(false)
-
-    .setFlickerTolerance(0.000)
+    .setFlickerTolerance(0.002)
 
 

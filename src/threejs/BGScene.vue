@@ -63,9 +63,17 @@ class BGSceneManager {
         ambientLight: THREE.AmbientLight;
     };
     flickerControlObject: { // TODO: Refactor!
+        // On off flicker
+        textFlicker: boolean,
+        subtextFlicker: boolean,
+        textBorderFlicker: boolean,
+
+        // Current state of flicker
         text: boolean;
         subtext: boolean;
         textBorder: boolean;
+
+        // Flicker time to turn on again after flickering off
         textFlickerTime: number;
         subtextFlickerTime: number;
         textBorderFlickerTime: number;
@@ -102,9 +110,14 @@ class BGSceneManager {
 
         // Build Neon Text Sign
         this.flickerControlObject = {
+            textFlicker: true,
+            subtextFlicker: true,
+            textBorderFlicker: true,
+
             text: true,
             subtext: true,
             textBorder: true,
+
             textFlickerTime: Number.MAX_SAFE_INTEGER,
             subtextFlickerTime: Number.MAX_SAFE_INTEGER,
             textBorderFlickerTime: Number.MAX_SAFE_INTEGER,
@@ -509,9 +522,19 @@ class BGSceneManager {
 
         
         // Text Visibility get overwritten by flicker
-        // this.text.visible = bottomState.textVisibility;
-        // this.subtext.visible = bottomState.subtextVisibility;
-        // this.textBorder.visible = bottomState.textBorderVisibility;
+        this.flickerControlObject.textFlicker = bottomState.textVisibility;
+        this.text.visible = bottomState.textVisibility;
+        this.lights.textLight.visible = bottomState.textVisibility;
+
+        this.flickerControlObject.subtextFlicker = bottomState.subtextVisibility;
+        this.subtext.visible = bottomState.subtextVisibility;
+        this.lights.subtextLight.visible = bottomState.subtextVisibility;
+
+        this.flickerControlObject.textBorderFlicker = bottomState.textBorderVisibility;
+        this.textBorder.visible = bottomState.textBorderVisibility;
+        if (this.lights.textBorderLight) this.lights.textBorderLight.visible = bottomState.textBorderVisibility;
+
+        console.log(this.subtext.visible)
 
         this.config.flickerTolerance = bottomState.flickerTolerance;
     }
@@ -569,47 +592,51 @@ class BGSceneManager {
         const maxOffTime = 0.3;
         
         // Make the text flicker at a random time interval
-        if (this.flickerControlObject.text && Math.random() < this.config.flickerTolerance) {
-            this.flickerControlObject.text = false;
-            this.flickerControlObject.textFlickerTime = elapsedTime + maxOffTime * Math.random();
-            
-        } else {
-            if (elapsedTime > this.flickerControlObject.textFlickerTime) {
-                this.flickerControlObject.text = true;
+        if (this.flickerControlObject.textFlicker) {
+            if (this.flickerControlObject.text && Math.random() < this.config.flickerTolerance) {
+                this.flickerControlObject.text = false;
+                this.flickerControlObject.textFlickerTime = elapsedTime + maxOffTime * Math.random();
+            } else {
+                if (elapsedTime > this.flickerControlObject.textFlickerTime) {
+                    this.flickerControlObject.text = true;
+                }
             }
+            this.text.visible = this.flickerControlObject.text;
+            this.lights.textLight.visible = this.flickerControlObject.text;
+
         }
 
-
-        if (this.flickerControlObject.textBorder && Math.random() < this.config.flickerTolerance) {
-            this.flickerControlObject.textBorder = false;
-            this.flickerControlObject.textBorderFlickerTime = elapsedTime + maxOffTime * Math.random();
-            
-        } else {
-            if (elapsedTime > this.flickerControlObject.textBorderFlickerTime) {
-                this.flickerControlObject.textBorder = true;
+        if (this.flickerControlObject.textBorderFlicker) {
+            if (this.flickerControlObject.textBorder && Math.random() < this.config.flickerTolerance) {
+                this.flickerControlObject.textBorder = false;
+                this.flickerControlObject.textBorderFlickerTime = elapsedTime + maxOffTime * Math.random();
+            } else {
+                if (elapsedTime > this.flickerControlObject.textBorderFlickerTime) {
+                    this.flickerControlObject.textBorder = true;
+                }
             }
+            this.textBorder.visible = this.flickerControlObject.textBorder;
+            if (this.lights.textBorderLight) this.lights.textBorderLight.visible = this.flickerControlObject.textBorder;
+
+
         }
 
-        if (this.flickerControlObject.subtext && Math.random() < this.config.flickerTolerance) {
-            this.flickerControlObject.subtext = false;
-            this.flickerControlObject.subtextFlickerTime = elapsedTime + maxOffTime * Math.random();
-            
-        } else {
-            if (elapsedTime > this.flickerControlObject.subtextFlickerTime) {
-                this.flickerControlObject.subtext = true;
+        if (this.flickerControlObject.subtextFlicker) {
+            if (this.flickerControlObject.subtext && Math.random() < this.config.flickerTolerance) {
+                this.flickerControlObject.subtext = false;
+                this.flickerControlObject.subtextFlickerTime = elapsedTime + maxOffTime * Math.random();
+            } else {
+                if (elapsedTime > this.flickerControlObject.subtextFlickerTime) {
+                    this.flickerControlObject.subtext = true;
+                }
             }
+            this.subtext.visible = this.flickerControlObject.subtext;
+            this.lights.subtextLight.visible = this.flickerControlObject.subtext;
+
         }
 
-        // Set visibility
-        this.text.visible = this.flickerControlObject.text;
-        this.lights.textLight.visible = this.flickerControlObject.text;
-
-        this.subtext.visible = this.flickerControlObject.subtext;
-        this.lights.subtextLight.visible = this.flickerControlObject.subtext;
-
-        this.textBorder.visible = this.flickerControlObject.textBorder;
-        if (this.lights.textBorderLight) this.lights.textBorderLight.visible = this.flickerControlObject.textBorder;
-
+        
+        
 
     }
 
