@@ -20,6 +20,7 @@ import Card from 'primevue/card';
 import Dialog from 'primevue/dialog';
 import Galleria from 'primevue/galleria';
 import TabMenu from 'primevue/tabmenu';
+import ScrollTop from 'primevue/scrolltop';
 
 import "./assets/main.css";
 
@@ -35,5 +36,6 @@ app.component('Card', Card);
 app.component('Dialog', Dialog);
 app.component('Galleria', Galleria);
 app.component('TabMenu', TabMenu);
+app.component('ScrollTop', ScrollTop);
 
 app.mount("#app");

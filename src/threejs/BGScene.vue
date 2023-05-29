@@ -534,8 +534,6 @@ class BGSceneManager {
         this.textBorder.visible = bottomState.textBorderVisibility;
         if (this.lights.textBorderLight) this.lights.textBorderLight.visible = bottomState.textBorderVisibility;
 
-        console.log(this.subtext.visible)
-
         this.config.flickerTolerance = bottomState.flickerTolerance;
     }
 

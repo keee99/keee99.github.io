@@ -107,6 +107,9 @@ onMounted(() => {
         :portfolioY="portfolioY"
       />
 
+      <ScrollTop />
+
+
     </div>
 
     <footer>

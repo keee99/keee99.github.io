@@ -286,6 +286,11 @@ a {
   color: #FFFFFF
 }
 
+/* Primevue ScrollTop */
+.p-scrolltop {
+  border: 2px solid white;
+}
+
 /* TODO - styling: media styling */
 /* 
 @media (hover: hover) {

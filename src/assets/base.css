@@ -97,7 +97,7 @@ body {
 
 @font-face {
   font-family: 'Beon';
-  src: url('../../public/fonts/beon_medium.otf') format('opentype');
+  src: url('/fonts/beon_medium.otf') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
