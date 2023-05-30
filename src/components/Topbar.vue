@@ -95,6 +95,7 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
 
   
   .topbar-link {
+    color: #ff88aa;
     font-family: 'Beon', 'sans-serif';
     padding: 0 1rem;
     display: flex;
@@ -144,6 +145,22 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   .topbar-link:hover {
+    color: #d0ffd0;
+    transition: 0.15s;
+    transition-timing-function: ease-in-out;
+  }
+
+  .topbar-title:hover {
+    color: rgb(255, 255, 255);
+    text-shadow: 0 0 5px #ffe8d5,
+                0 0 10px #ffe8d5,
+                0 0 20px #ffa14e,
+                0 0 40px #ffa14e,
+                0 0 80px #ffa32b,
+                0 0 90px #ffa32b,
+                0 0 100px #ffa32b;
+    transition: 0.15s;
+    transition-timing-function: ease-in-out;
   }
 
   .topbar-link-inactive:hover {

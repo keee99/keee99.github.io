@@ -43,7 +43,7 @@ const onMinimize = () => maximized.value = false;
     @mouseleave="onMouseLeave"
     >
         <h1 class="hover-overlay-title">{{ props.title }}</h1>
-        <h1 class="hover-overlay-arrow">></h1>
+        <i class="pi pi-angle-right hover-overlay-arrow" />
     </div>
 
 
@@ -56,53 +56,53 @@ const onMinimize = () => maximized.value = false;
     class="card-main"
     >
 
-    <template #content>
-        <Dialog v-model:visible="visible" 
-        modal maximizable 
-        @maximize="onMaximize"
-        @unmaximize="onMinimize"
-        :header="props.title" 
-        :style="{ width: '50vw' }"
-        class="neon-border">
-            
-            <div class="flex-center" >
+        <template #content>
+            <Dialog v-model:visible="visible" 
+            modal maximizable 
+            @maximize="onMaximize"
+            @unmaximize="onMinimize"
+            :header="props.title" 
+            :style="{ width: '50vw' }"
+            class="neon-border">
+                
+                <div class="flex-center" >
 
-                <div class="col-1 flex-center" v-if="props.imgs.length > 1">
-                    <Galleria :value="props.imgs" var="img" :numVisible="5" 
-                        :showThumbnails="true" :showItemNavigators="true"
-                        >
-                        <template #item="slotProps">
-                            <div class="flex-div">
-                                <img :class="{'dialog-img-maximized': maximized, 'dialog-img': !maximized}" 
-                                    :src="slotProps.item.i" :alt="slotProps.item.alt" />
-                            </div>
-                            
-                        </template>
-                        <template #thumbnail="slotProps">
-                            <img class="dialog-img-thumbnail" :src="slotProps.item.thumbnail" :alt="slotProps.item.alt" style="display: block;" />
-                        </template>
-                        <template #caption="slotProps">
-                            <p class="text-white">{{ slotProps.item.alt }}</p>
-                        </template>
-                    </Galleria>
-                </div>
-                <div v-else>
-                    <div class="flex-div">
-                        <img class="dialog-img-main" :src="props.imgs[0].i" :alt="props.imgs[0].alt" />
+                    <div class="col-1 flex-center" v-if="props.imgs.length > 1">
+                        <Galleria :value="props.imgs" var="img" :numVisible="5" 
+                            :showThumbnails="true" :showItemNavigators="true"
+                            >
+                            <template #item="slotProps">
+                                <div class="flex-div">
+                                    <img :class="{'dialog-img-maximized': maximized, 'dialog-img': !maximized}" 
+                                        :src="slotProps.item.i" :alt="slotProps.item.alt" />
+                                </div>
+                                
+                            </template>
+                            <template #thumbnail="slotProps">
+                                <img class="dialog-img-thumbnail" :src="slotProps.item.thumbnail" :alt="slotProps.item.alt" style="display: block;" />
+                            </template>
+                            <template #caption="slotProps">
+                                <p class="text-white">{{ slotProps.item.alt }}</p>
+                            </template>
+                        </Galleria>
+                    </div>
+                    <div v-else>
+                        <div class="flex-div">
+                            <img class="dialog-img-main" :src="props.imgs[0].i" :alt="props.imgs[0].alt" />
+                        </div>
+                    </div>
+
+
+                    <div class="col-1" :class="{'dialog-text-maximized': maximized, 'dialog-text': !maximized}">
+                        <h3>{{ props.subtitle }}</h3>
+                        <p>{{ props.desc }}</p>
                     </div>
                 </div>
-
-
-                <div class="col-1" :class="{'dialog-text-maximized': maximized, 'dialog-text': !maximized}">
-                    <h3>{{ props.subtitle }}</h3>
-                    <p>{{ props.desc }}</p>
-                </div>
-            </div>
-        
             
-        </Dialog>
-    </template>
-</Card>
+                
+            </Dialog>
+        </template>
+    </Card>
 
 </div>
 
@@ -141,6 +141,7 @@ const onMinimize = () => maximized.value = false;
         align-items: center;
 
         font-size:  small;
+        cursor: pointer;
         
     }
 
@@ -159,6 +160,7 @@ const onMinimize = () => maximized.value = false;
         position: absolute;
         z-index: 4;
         left: 80%;
+        font-size: 2rem;
 
         font-weight: bolder;
     }

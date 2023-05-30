@@ -175,6 +175,11 @@ a {
 .p-accordion-header-text {
   font-family: 'Beon';
   font-weight: bolder;
+  
+}
+
+.p-accordion .p-accordion-header:not(.p-highlight) .p-accordion-header-link {
+  color: #ff88aa;
 }
 
 
@@ -192,7 +197,7 @@ a {
 
   font-family: 'Beon';
   font-weight: bolder;
-  color:rgb(255, 94, 94);
+  color: #ff88aa;
 
 }
 
@@ -201,7 +206,7 @@ a {
   border: none;
   font-family: 'Beon';
   font-weight: bolder;
-  color:rgb(255, 94, 94);
+  color: #ff88aa;
 
 }
 
