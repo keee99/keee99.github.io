@@ -61,6 +61,7 @@ class BGSceneManager {
         subtextLight: THREE.Group;
         textBorderLight: THREE.Group | null;
         ambientLight: THREE.AmbientLight;
+        // mouseLight: THREE.SpotLight;
     };
     flickerControlObject: { // TODO: Refactor!
         // On off flicker
@@ -139,6 +140,7 @@ class BGSceneManager {
             subtextLight: this.buildSubtextLight(),
             textBorderLight: null, // Built in the callback of buildTextObject
             ambientLight: this.buildAmbientLight(),
+            // mouseLight: this.buildMouseLight(),
         };
 
         // Post Processing
@@ -151,6 +153,8 @@ class BGSceneManager {
         this.scrollStates = this.initScrollData();
         this.onWindowResize();
         this.onScroll();
+
+        window.addEventListener('mousemove', this.onMouseMove);
         window.addEventListener('resize', this.onWindowResize);
         window.addEventListener('scroll', this.onScroll);
     }
@@ -407,6 +411,14 @@ class BGSceneManager {
         this.scene.add(borderLights)
         return borderLights;
     }
+
+    buildMouseLight() {
+        const mouseLight = new THREE.SpotLight(0x9dffb6, 0.7, 10, Math.PI/8, 0.5, 2);
+        mouseLight.lookAt(this.centralObject.position);
+        mouseLight.position.set(0,0,2);
+        this.scene.add(mouseLight);
+        return mouseLight;
+    }
     
 
     buildScene() {
@@ -545,6 +557,19 @@ class BGSceneManager {
     }
     computeRot = (rot: number, threshold: number) => {
         return this.computePos(rot, threshold);
+    }
+
+    /** */
+    onMouseMove = (event: MouseEvent) => {
+        // (event.clientX / window.innerWidth) * 2 - 1;
+        // console.log((event.clientY / window.innerHeight))
+        // this.lights.mouseLight.position.x = (event.clientX / window.innerWidth) * 4 - 2;
+        // this.lights.mouseLight.position.y = - (event.clientY / window.innerHeight) * 4 + 6;
+        // console.log(this.lights.mouseLight.position.x, this.lights.mouseLight.position.y, this.lights.mouseLight.position.z);
+
+        this.centralObject.rotation.x = -(event.clientY / window.innerHeight) * 0.1 - 0.1;
+        this.centralObject.rotation.y = -(event.clientX / window.innerWidth) * 0.1 - 0.1;
+        
     }
 
 
