@@ -1,46 +1,8 @@
 <script setup lang="ts">
 
 import { ref } from "vue";
+import { skillsLanguages, skillsBackend, skillsFrontend, skillsDevOps, skillsOthers } from "../common/SkillsItems";
 
-const skillsLanguages = [
-    "Java",
-    "Python",
-    "C",
-    "Javascript",
-    "Typescript",
-    "HTML",
-    "CSS",
-    "SQL",
-];
-
-const skillsFrontend = [
-    "Vue.js",
-    "React.js",
-    "Three.js",
-];
-
-const skillsBackend = [
-    "Spring Boot",
-    "Node.js",
-    "Express.js",
-    "Android Studio",
-    "Firebase",
-    "SQLite",
-    "MongoDB",
-];
-
-const skillsDevOps = [
-    "Spring Boot",
-    "Node.js",
-    "Express.js",
-];
-
-const skillsOthers = [
-    "Adobe Illustrator",
-    "Adobe Photoshop",
-    "Krita",
-    "MS Office",
-];
 
 const formatSkills = (skills: string[], key: number) => {
 

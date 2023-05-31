@@ -4,16 +4,24 @@ import PortfolioCard from '../components/PortfolioCard.vue';
 import { onMounted, ref } from "vue";
 
 // Data
-import designCards from '../common/PortfolioItems'
+import { designCards, codeCards } from '../common/PortfolioItems'
+
+
+const allItems = designCards.concat(codeCards);
+
+const sortByDate = (arr: any[]) => arr.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+sortByDate(designCards);
+sortByDate(codeCards);
+sortByDate(allItems);
 
 
 // TabMenu Items
-const activeTab = ref(3);
+const activeTab = ref(0);
 const items = ref([
-    { label: 'Code' },  // activeTab == 0
+    { label: 'Programming' },  // activeTab == 0
     { label: 'Design'}, // activeTab == 1
-    { label: 'Casual Art'}, // activeTab == 2
-    { label: 'All' },   // activeTab == 3
+    { label: 'All' },   // activeTab == 2
 ]);
 
 const activeHeight = ref("100px");
@@ -48,35 +56,19 @@ onMounted(() => {
       <div class="height-container"/>
       <div class="sub-container flex-left shift-right" 
         :class="{'active-container': activeTab === 0, 'inactive-container': activeTab !== 0}" 
-        v-for="card in designCards">
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
+        >
+        <PortfolioCard v-for="card in codeCards" class=".col-4 portfolio-card" v-bind="card" />
       </div>
 
       <div class="sub-container flex-left shift-right" 
-        :class="{'active-container': activeTab === 1, 'inactive-container': activeTab !== 1}" 
-        v-for="card in designCards">
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
+        :class="{'active-container': activeTab === 1, 'inactive-container': activeTab !== 1}">
+        <PortfolioCard v-for="card in designCards" class=".col-4 portfolio-card" v-bind="card" />
       </div>
 
       <div class="sub-container flex-left shift-right" 
         :class="{'active-container': activeTab === 2, 'inactive-container': activeTab !== 2}" 
-        v-for="card in designCards">
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
-      </div>
-
-      <div class="sub-container flex-left shift-right" 
-        :class="{'active-container': activeTab === 3, 'inactive-container': activeTab !== 3}" 
-        v-for="card in designCards">
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
-        <PortfolioCard class=".col-4 portfolio-card" v-bind="card" />
+        >
+        <PortfolioCard v-for="card in allItems" class=".col-4 portfolio-card" v-bind="card" />
 
       </div>
     </div>

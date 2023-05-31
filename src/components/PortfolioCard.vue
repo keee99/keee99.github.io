@@ -12,12 +12,21 @@ const props = defineProps({
     type: String,
     required: true
   },
+  date: {
+    type: Date,
+    required: true
+  },
   subtitle: String,
   desc: String,
   imgs: {
     type: Array as PropType<img[]>,
     required: true
-  }
+  },
+  tags: {
+    type: Array as PropType<string[]>,
+    required: true
+  },
+  link: String,
 })
 
 
@@ -30,6 +39,12 @@ const onMouseEnter = () => hover.value = true;
 const onMouseLeave = () => hover.value = false;
 const onMaximize = () => maximized.value = true;
 const onMinimize = () => maximized.value = false;
+
+const monthIndex = [
+  "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
+  "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+const getDateString = () => monthIndex[props.date.getMonth()] + " " + props.date.getFullYear();
+
 
 
 </script>
@@ -67,9 +82,10 @@ const onMinimize = () => maximized.value = false;
                 
                 <div class="flex-center" >
 
-                    <div class="col-1 flex-center" v-if="props.imgs.length > 1">
+                    <div class="col-1 flex-center">
                         <Galleria :value="props.imgs" var="img" :numVisible="5" 
-                            :showThumbnails="true" :showItemNavigators="true"
+                            :showThumbnails="false" :showItemNavigators="false" 
+                            :showIndicators="true" :changeItemOnIndicatorHover="true"
                             >
                             <template #item="slotProps">
                                 <div class="flex-div">
@@ -78,24 +94,30 @@ const onMinimize = () => maximized.value = false;
                                 </div>
                                 
                             </template>
-                            <template #thumbnail="slotProps">
-                                <img class="dialog-img-thumbnail" :src="slotProps.item.thumbnail" :alt="slotProps.item.alt" style="display: block;" />
-                            </template>
                             <template #caption="slotProps">
                                 <p class="text-white">{{ slotProps.item.alt }}</p>
                             </template>
+
                         </Galleria>
                     </div>
-                    <div v-else>
+                    <!-- <div v-else>
                         <div class="flex-div">
-                            <img class="dialog-img-main" :src="props.imgs[0].i" :alt="props.imgs[0].alt" />
+                            <img class="dialog-img" :src="props.imgs[0].i" :alt="props.imgs[0].alt" />
                         </div>
-                    </div>
+                    </div> -->
 
 
                     <div class="col-1" :class="{'dialog-text-maximized': maximized, 'dialog-text': !maximized}">
-                        <h3>{{ props.subtitle }}</h3>
+                        <p v-if="props.link">
+                            Link: 
+                            <a :href="props.link" target="_blank">{{ props.link }}</a>
+                        </p>
+                        <p class="date">{{ getDateString() }}</p>
                         <p>{{ props.desc }}</p>
+                    </div>
+
+                    <div class="dialog-chips-container">
+                        <Chip v-for="tag in props.tags" :label="tag" class="" style="margin: 0.2rem;"/>
                     </div>
                 </div>
             
@@ -113,6 +135,10 @@ const onMinimize = () => maximized.value = false;
 <style scoped>
 
     @import '../assets/base.css';
+
+    a {
+        color: var(--color-text-header);
+    }
 
     .main-container {
         margin: 0.1em;
@@ -193,12 +219,30 @@ const onMinimize = () => maximized.value = false;
     }
 
     .dialog-text {
+        margin-top: 1rem;
         padding: 1rem;
         
     }
 
     .dialog-text-maximized {
         padding: 2rem 10rem;
+    }
+
+    .date {
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: var(--color-text-dark);
+
+    }
+
+    .dialog-chips-container {
+        padding:  0 16px;
+        display: flex;
+        flex-wrap: wrap;
+
+        justify-content: left;
+        width: 100%;
+        margin: 0 1rem;
     }
 
     
