@@ -1,6 +1,81 @@
 <script setup lang="ts">
 
+import { ref } from "vue";
 
+const skillsLanguages = [
+    "Java",
+    "Python",
+    "C",
+    "Javascript",
+    "Typescript",
+    "HTML",
+    "CSS",
+    "SQL",
+];
+
+const skillsFrontend = [
+    "Vue.js",
+    "React.js",
+    "Three.js",
+];
+
+const skillsBackend = [
+    "Spring Boot",
+    "Node.js",
+    "Express.js",
+    "Android Studio",
+];
+
+const skillsDevOps = [
+    "Spring Boot",
+    "Node.js",
+    "Express.js",
+];
+
+const skillsOthers = [
+    "Adobe Illustrator",
+    "Adobe Photoshop",
+    "Krita",
+    "MS Office",
+];
+
+const formatSkills = (skills: string[], key: number) => {
+
+    return skills.map((skill, i) => {
+        return {
+            key: key + "_" + i,
+            label: skill,
+        }
+    })
+}
+
+const skills = ref([
+    {
+        key: '0',
+        label: 'Programming Languages',
+        items: formatSkills(skillsLanguages, 0),
+    },
+    {
+        key: '1',
+        label: 'Backend',
+        items: formatSkills(skillsBackend, 1),
+    },
+    {
+        key: '2',
+        label: 'Frontend',
+        items: formatSkills(skillsFrontend, 2),
+    },
+    {
+        key: '3',
+        label: 'DevOps',
+        items: formatSkills(skillsDevOps, 3),
+    },
+    {
+        key: '4',
+        label: 'Design/Others',
+        items: formatSkills(skillsOthers, 4),
+    },
+]);
 
 </script>
 
@@ -16,54 +91,73 @@
 
 
                     <AccordionTab header="Background">
-                        <p>
-                            I'm Jia Jun, JJ, a final year undergrad at SUTD, pursuing a Bachelor's in Computer Science and Design. 
-                            I'm interested in fullstack software dev roles. 
-                            I'm also looking to explore interactive applications, XR/VR/AR, and 3D libraries, such as three.js used to make this site!
-                            I dabble in different forms of artistic hobbies in my free time, including digital art, music, and dance.
-                        </p>
-                    </AccordionTab>
 
+                        <div class="tab-content">   
+                            <p>
+                                I'm Jia Jun, JJ, a final year undergrad at SUTD, pursuing a Bachelor's in Computer Science and Design. 
+                                I'm interested in fullstack software dev roles. 
+                                I'm also looking to explore interactive applications, XR/VR/AR, and 3D libraries, such as three.js used to make this site!
+                                I dabble in different forms of artistic hobbies in my free time, including digital art, music, and dance.
+                            </p>                 
+                        </div>
+                    </AccordionTab>
 
                     <AccordionTab header="Education">
-                        <p>
-                            At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in
-                            culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-                        </p>
+                        <div class="tab-content">
+                            <div class="tab-title">Undergraduate, Computer Science & Design</div>   
+                            <div>Singapore University of Techology and Design</div>
+                            <div>Grade: 4.9/5.0</div> 
+                            <div class="tab-date">Sep 2020 - May 2024</div> 
+                            <div>
+                                <strong>Achievements:</strong> 
+                                <ul>
+                                    <li>Honour's List (AY20/21, AY21/22)</li>
+                                    <li>SUTD Global Merit Scholarship</li>
+                                    <li>President, Modern Visual Media Circle, AY 21/22</li>
+                                    <li>Secretary, FUNKtion Dance Club, AY 21/22</li>
+                                </ul>
+                            </div>
+                        </div>
                     </AccordionTab>
 
-
                     <AccordionTab header="Skills">
-                        <p>
-                            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo
-                            enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-                        </p>
+                        <div class="tab-content">
+                            <PanelMenu :model="skills" />                    
+                        </div>
                     </AccordionTab>
 
 
                     <AccordionTab header="Experience">
                         <div class="tab-content">
-                            <div>SHINE Software Development Intern</div>   
+                            <div class="tab-title">SHINE Software Development Intern</div>   
                             <div>Singtel, 5G Platform & Product Dept.</div>
-                            <div>June 2021 - Aug 2021</div> 
+                            <div class="tab-date">June 2021 - Aug 2021</div> 
                             <div>
-                                <strong>Tools:</strong> 
-                                Spring Boot, Vue.js, Docker, Jenkins, Ansible, Kubernetes, Keycloak
+                                <strong>Tools:</strong>
+                                <ul>
+                                    <li><strong>Backend:</strong> Spring Boot, Keycloak</li>
+                                    <li><strong>Frontend:</strong> Vue.js</li>
+                                    <li><strong>DB:</strong> MongoDB </li>
+                                    <li><strong>DevOps:</strong> Docker, Kubernetes, Jenkins, Ansible</li>
+                                </ul>
                             </div>
                             <br>
                             <p>
-                                Resumed and the development & deployment of an internal Credential Management tool.
+                                Resumed the development of an internal Credential Management tool.
                                 Managed to successfully debug, deploy and develop new features.
-                                Development work primarily focused on backend programming, but also involved frontend work.
+                                Development work primarily focused on backend programming, but also involved frontend work for integration.
                             </p>                        
                         </div>
                         <div class="tab-content">
-                            <div>Backend Lead</div>
-                            <div>SUTD, Web Platform Dev Research Project</div>  
-                            <div>June 2021 - Aug 2021</div>
+                            <div class="tab-title">Research Project Backend Lead</div>
+                            <div>Singapore University of Technology and Design</div>  
+                            <div class="tab-date">June 2021 - Aug 2021</div>
                             <div>
                                 <strong>Tools:</strong> 
-                                Node.js, Express.js, MongoDB Atlas  
+                                <ul>
+                                    <li><strong>Backend:</strong> Node.js, Express.js</li>
+                                    <li><strong>DB:</strong> MongoDB Atlas</li>
+                                </ul>  
                             </div>  
                             <br>
                             <p>
@@ -144,6 +238,21 @@ strong {
     align-items: flex-end;
     justify-content: flex-end;
     text-align: right;
+}
+
+.tab-title {
+    font-family: 'Beon', monospace;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.tab-date {
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: #aaa;
+
 }
 
 

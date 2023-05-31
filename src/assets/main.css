@@ -158,9 +158,12 @@ a {
 
 /* PRIMEVUE OVERRIDES */
 /* Primvue Accordion */
+.p-accordion .p-accordion-content {
+    /* font-family: 'Courier New', Courier, monospace; */
+}
 .p-accordion .p-accordion-header .p-accordion-header-link {
   color:rgb(255, 0, 0);
-  background-color: rgba(255, 127, 221, 0);
+  background-color: black;
 }
 
 .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
@@ -180,6 +183,18 @@ a {
 
 .p-accordion .p-accordion-header:not(.p-highlight) .p-accordion-header-link {
   color: #ff88aa;
+}
+
+/* .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+
+
+} */
+
+.p-accordion-tab.p-accordion-tab-active {
+  border-radius: 6px;
+  box-shadow: 0 0 5px #00FF00,
+              0 0 10px #00FF00,
+              0 0 12px #00FF00;
 }
 
 

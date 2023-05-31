@@ -19,8 +19,9 @@ import AccordionTab from 'primevue/accordiontab';
 import Card from 'primevue/card';
 import Dialog from 'primevue/dialog';
 import Galleria from 'primevue/galleria';
-import TabMenu from 'primevue/tabmenu';
+import PanelMenu from 'primevue/panelmenu';
 import ScrollTop from 'primevue/scrolltop';
+import TabMenu from 'primevue/tabmenu';
 
 import "./assets/main.css";
 
@@ -35,7 +36,9 @@ app.component('AccordionTab', AccordionTab);
 app.component('Card', Card);
 app.component('Dialog', Dialog);
 app.component('Galleria', Galleria);
-app.component('TabMenu', TabMenu);
+app.component('PanelMenu', PanelMenu);
 app.component('ScrollTop', ScrollTop);
+app.component('TabMenu', TabMenu);
+
 
 app.mount("#app");
