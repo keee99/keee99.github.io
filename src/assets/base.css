@@ -32,20 +32,40 @@
   --c-accent-light: var(--vt-c-indigo);
   --c-accent-dark: var(--vt-c-indigo);
 
+
+
+  /**
+  Custom
+  */
+
   --color-background: #000000;
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
+  --color-background-light: #ffffff;
 
   --color-topbar: #000000;
-  --color-topbar-title: var(--vt-c-white);
+  --color-topbar-title: var(#);
 
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
+  /* --section-gap: 160px; */
 
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
+  --color-primary: #ff9a02;
+  --color-primary-light: #ffba6c;
+  --color-primary-lighter: #ffdbc8;
 
-  --section-gap: 160px;
+  --color-secondary: #00FF00;
+  --color-secondary-light: #c0ffc0;
+  --color-secondary-lighter: #d7ffd7;
+
+  --color-text-header: #ff628e;
+  --color-text-focus: #ffd8e3;
+  --color-text: #ffffff;
+  --color-text-dark:#7c7d7e;
+
+  --color-light: #ffffff;
+  --color-light-focus: #f1f1f1;
+  --color-dark: #919191;
+  --color-dark-focus: #555555;
+
+  --color-overlay-transparent: rgba(0, 0, 0, 0);
+  --color-overlay: #00000090;
 }
 
 /* TODO - styling: Dark mode impl */
@@ -55,9 +75,6 @@
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
     --color-background-mute: var(--vt-c-black-mute);
-
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
 
     --color-heading: var(--vt-c-text-dark-1);
     --color-text: var(--vt-c-text-dark-2);

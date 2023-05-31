@@ -84,7 +84,7 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
     min-width: fit-content;
 
 
-    font-family: 'Beon';
+    font-family: 'Beon', monospace;
 }
 
 
@@ -95,8 +95,8 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
 
   
   .topbar-link {
-    color: #ff88aa;
-    font-family: 'Beon', 'sans-serif';
+    color: var(--color-text-header);
+    font-family: 'Beon', monospace;
     padding: 0 1rem;
     display: flex;
     align-items: center;
@@ -115,14 +115,14 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
     left: 0;
     width: 100%;
     height: 2px;
-    background-color: #d7ffd7;
-    box-shadow: 0 0 5px #00FF00,
-                0 0 10px #00FF00,
-                0 0 20px #00FF00,
-                0 0 40px #00FF00,
-                0 0 80px #00FF00,
-                0 0 90px #00FF00,
-                0 0 100px #00FF00;
+    background-color: var(--color-secondary-lighter);
+    box-shadow: 0 0 5px var(--color-secondary),
+                0 0 10px var(--color-secondary),
+                0 0 20px var(--color-secondary),
+                0 0 40px var(--color-secondary),
+                0 0 80px var(--color-secondary),
+                0 0 90px var(--color-secondary),
+                0 0 100px var(--color-secondary);
     transition: 0.25s;
     transition-timing-function: ease-in-out;
   }
@@ -133,40 +133,44 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
   }
 
   .social-i {
-    color: #00FF00;
+    color: var(--color-secondary);
     transition: 0.15s;
     transition-timing-function: ease-in-out;
   }
 
   .topbar-link:hover .social-i {
-    color: #d0ffd0;
+    color: var(--color-secondary-light);
     transition: 0.15s;
     transition-timing-function: ease-in-out;
   }
 
-  .topbar-link:hover {
-    color: #d0ffd0;
+  /* .topbar-link:hover {
+    color: var(--color-text-focus);
     transition: 0.15s;
     transition-timing-function: ease-in-out;
-  }
+  } */
 
   .topbar-title:hover {
-    color: rgb(255, 255, 255);
-    text-shadow: 0 0 5px #ffe8d5,
-                0 0 10px #ffe8d5,
-                0 0 20px #ffa14e,
-                0 0 40px #ffa14e,
-                0 0 80px #ffa32b,
-                0 0 90px #ffa32b,
-                0 0 100px #ffa32b;
+    color: var(--color-lighter);
+    text-shadow: 0 0 5px var(--color-primary-lighter),
+                0 0 10px var(--color-primary-lighter),
+                0 0 20px var(--color-primary-light),
+                0 0 40px var(--color-primary-light),
+                0 0 80px var(--color-primary-light),
+                0 0 90px var(--color-primary-light),
+                0 0 100px var(--color-primary-light);
     transition: 0.15s;
     transition-timing-function: ease-in-out;
   }
 
   .topbar-link-inactive:hover {
-    background-color: #959fbb69;
+    color: var(--color-text-dark);
     transition: 0.15s;
     transition-timing-function: ease-in-out;
+    background-color: var(--color-background-light);
+    box-shadow: 0 0 5px var(--color-secondary),
+                0 0 10px var(--color-secondary),
+                0 0 20px var(--color-secondary);
   }
 
 

@@ -484,8 +484,8 @@ class BGSceneManager {
 
     transitSceneState(topState: BGSceneState, bottomState: BGSceneState, scrollY: number, topHeight: number, lowerHeight: number) {
         const heightDiff = lowerHeight - topHeight;
-        let progress = this.getProgress((scrollY - topHeight) / heightDiff);
-        if (progress > 1) progress = 1;
+        const progressY = (scrollY - topHeight) / heightDiff
+        let progress = progressY > 1 ? 1 : this.getProgress(progressY);
 
         const getNewPos = (oldPos: number, newPos: number) => ( progress * (newPos - oldPos) + oldPos );
 
@@ -549,7 +549,7 @@ class BGSceneManager {
         this.config.flickerTolerance = bottomState.flickerTolerance;
     }
 
-    getProgress = (progressY : number) => 0.5 * (-(Math.cos(progressY * Math.PI)) + 1) ** 1.5;
+    getProgress = (progressY : number) => (0.5 * (-(Math.cos(progressY * Math.PI)) + 1)) ** 1.5;
     computePos = (pos: number, threshold: number) => {
         const sizes = this.getSizes();
         const aspect = (sizes.width / sizes.height);

@@ -24,6 +24,9 @@ const skillsBackend = [
     "Node.js",
     "Express.js",
     "Android Studio",
+    "Firebase",
+    "SQLite",
+    "MongoDB",
 ];
 
 const skillsDevOps = [
@@ -198,6 +201,8 @@ const skills = ref([
 
 <style scoped>
 
+@import "../assets/base.css";
+
 .main-container {
     height: 100%;
 
@@ -222,7 +227,7 @@ strong {
     margin-bottom: 1rem;
     padding-bottom: 2rem;
     position: relative;
-    border-bottom: 1px black solid;
+    border-bottom: 1px var(--color-dark) solid;
 }
 
 .quote-author-name {
@@ -251,7 +256,7 @@ strong {
     font-size: 0.9rem;
     font-weight: 500;
     margin-bottom: 0.5rem;
-    color: #aaa;
+    color: var(--color-text-dark);
 
 }
 

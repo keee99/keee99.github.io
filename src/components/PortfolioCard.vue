@@ -129,7 +129,6 @@ const onMinimize = () => maximized.value = false;
     }
 
     .hover-overlay {
-        background-color: aqua;
         height: 100%;
         width: 100%;
         position: absolute;
@@ -167,15 +166,15 @@ const onMinimize = () => maximized.value = false;
 
 
     .card-active {
-        background-color: #00000090;
-        color: #e4e4e4;
+        background-color: var(--color-overlay);
+        color: var(--color-text);
         transition: 0.10s;
         transition-timing-function: ease-in-out;
     }
 
     .card-inactive {
-        background-color: #e4e4e400;
-        color: #39487a00;
+        background-color: var(--color-overlay-transparent);
+        color: var(--color-overlay-transparent);
         transition: 0.20s;
         transition-timing-function: ease-in-out;
     }

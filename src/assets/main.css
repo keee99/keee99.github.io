@@ -39,16 +39,16 @@ a {
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #00FF00;
-  box-shadow: 0 0 5px #00FF00,
-              0 0 10px #00FF00,
-              0 0 20px #00FF00,
-              0 0 40px #00FF00,
-              0 0 80px #00FF00,
-              0 0 90px #00FF00,
-              0 0 150px #00FF00,
-              0 0 200px #00FF00,
-              0 0 270px #00FF00;
+  background-color: var(--color-secondary);
+  box-shadow: 0 0 5px var(--color-secondary),
+              0 0 10px var(--color-secondary),
+              0 0 20px var(--color-secondary),
+              0 0 40px var(--color-secondary),
+              0 0 80px var(--color-secondary),
+              0 0 90px var(--color-secondary),
+              0 0 150px var(--color-secondary),
+              0 0 200px var(--color-secondary),
+              0 0 270px var(--color-secondary);
 }
 
 
@@ -128,28 +128,28 @@ a {
 }
 
 .neon-text-secondary {
-  color: #c7ffc7;
-  text-shadow: 0 0 5px #00FF00,
-               0 0 10px #00FF00,
-               0 0 20px #00FF00,
-               0 0 40px #00FF00;
+  color: var(--color-secondary-lighter);
+  text-shadow: 0 0 5px var(--color-secondary),
+               0 0 10px var(--color-secondary),
+               0 0 20px var(--color-secondary),
+               0 0 40px var(--color-secondary);
 }
 
 .neon-text-primary {
-  color: rgb(255, 219, 200);
-  text-shadow: 0 0 5px #ff7d0b,
-              0 0 10px #ff7d0b,
-              0 0 20px #ff7d0b,
-              0 0 40px #ff7d0b,
-              0 0 80px #ffa32b,
-              0 0 90px #ffa32b,
-              0 0 100px #ffa32b;
+  color: var(--color-primary-lighter);
+  text-shadow: 0 0 5px var(--color-primary),
+              0 0 10px var(--color-primary),
+              0 0 20px var(--color-primary),
+              0 0 40px var(--color-primary),
+              0 0 80px var(--color-primary-light),
+              0 0 90px var(--color-primary-light),
+              0 0 100px var(--color-primary-light);
 }
 
 .neon-border {
-  border: 2px solid #c7ffc7;
-  box-shadow: 0 0 5px #00FF00,
-              0 0 15px #00FF00;
+  border: 2px solid var(--color-secondary-lighter);
+  box-shadow: 0 0 5px var(--color-secondary),
+              0 0 15px var(--color-secondary);
 
 }
 
@@ -157,10 +157,11 @@ a {
 
 
 /* PRIMEVUE OVERRIDES */
+
 /* Primvue Accordion */
-.p-accordion .p-accordion-content {
-    /* font-family: 'Courier New', Courier, monospace; */
-}
+/* .p-accordion .p-accordion-content {
+} */
+
 .p-accordion .p-accordion-header .p-accordion-header-link {
   color:rgb(255, 0, 0);
   background-color: black;
@@ -169,10 +170,10 @@ a {
 .p-accordion .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link {
 
   box-sizing: border-box;
-  border-color: #c7ffc7;
-  box-shadow: 0 0 5px #00FF00,
-              0 0 10px #00FF00,
-              0 0 30px #00FF00;
+  border-color: var(--color-secondary-lighter);
+  box-shadow: 0 0 5px var(--color-secondary),
+              0 0 10px var(--color-secondary),
+              0 0 30px var(--color-secondary);
 }
 
 .p-accordion-header-text {
@@ -182,7 +183,7 @@ a {
 }
 
 .p-accordion .p-accordion-header:not(.p-highlight) .p-accordion-header-link {
-  color: #ff88aa;
+  color: var(--color-text-header);
 }
 
 /* .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
@@ -192,9 +193,9 @@ a {
 
 .p-accordion-tab.p-accordion-tab-active {
   border-radius: 6px;
-  box-shadow: 0 0 5px #00FF00,
-              0 0 10px #00FF00,
-              0 0 12px #00FF00;
+  box-shadow: 0 0 5px var(--color-secondary),
+              0 0 10px var(--color-secondary),
+              0 0 12px var(--color-secondary);
 }
 
 
@@ -212,7 +213,7 @@ a {
 
   font-family: 'Beon';
   font-weight: bolder;
-  color: #ff88aa;
+  color: var(--color-text-header);
 
 }
 
@@ -221,7 +222,7 @@ a {
   border: none;
   font-family: 'Beon';
   font-weight: bolder;
-  color: #ff88aa;
+  color: var(--color-text-header);
 
 }
 
@@ -232,14 +233,14 @@ a {
 }
 
 .p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover  {
-  background: #ffffff;
+  background: var(--color-light);
   border-radius: 10%;
-  border-color: #c7ffc7;
-  color: #6c757d;
+  border-color: var(--color-secondary-lighter);
+  color: var(--color-text-dark);
   box-sizing: border-box;
-  box-shadow: 0 0 5px #00FF00,
-              0 0 10px #00FF00,
-              0 0 30px #00FF00;
+  box-shadow: 0 0 5px var(--color-secondary),
+              0 0 10px var(--color-secondary),
+              0 0 30px var(--color-secondary);
   transition: 0.15s;
   transition-timing-function: ease-in-out;
 }
@@ -256,15 +257,15 @@ a {
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #d7ffd7;
-  box-shadow: 0 0 5px #00FF00,
-              0 0 10px #00FF00,
-              0 0 20px #00FF00,
-              0 0 40px #00FF00,
-              0 0 80px #00FF00,
-              0 0 90px #00FF00,
-              0 0 130px #00FF00,
-              0 0 170px #c0ffc0;
+  background-color: var(--color-secondary-lighter);
+  box-shadow: 0 0 5px var(--color-secondary),
+              0 0 10px var(--color-secondary),
+              0 0 20px var(--color-secondary),
+              0 0 40px var(--color-secondary),
+              0 0 80px var(--color-secondary),
+              0 0 90px var(--color-secondary),
+              0 0 130px var(--color-secondary),
+              0 0 170px var(--color-secondary-light);
   transition: 0.25s;
   transition-timing-function: ease-in-out;
 }
@@ -272,10 +273,9 @@ a {
 /* Primevue Dialog */
 .p-dialog .p-dialog-header .p-dialog-title {
   font-family: 'Beon', monospace;
-  color: rgb(255, 219, 200);
-  text-shadow: 0 0 5px #ff7d0b,
-              0 0 10px #ff7d0b,
-              0 0 20px #ff7d0b;
+  color: var(--color-primary-light);
+  text-shadow: 0 0 5px var(--color-primary),
+              0 0 8px var(--color-primary);
 }
 
 .p-dialog .p-dialog-header .p-dialog-title::after {
@@ -285,32 +285,50 @@ a {
   left: 0;
   width: 100%;
   height: 2px;
-  background-color: #d7ffd7;
-  box-shadow: 0 0 5px #00FF00,
-              0 0 10px #00FF00,
-              0 0 20px #00FF00,
-              0 0 40px #00FF00,
-              0 0 80px #00FF00,
-              0 0 90px #00FF00,
-              0 0 100px #00FF00;
+  background-color: var(--color-secondary-lighter);
+  box-shadow: 0 0 5px var(--color-secondary),
+              0 0 10px var(--color-secondary),
+              0 0 20px var(--color-secondary),
+              0 0 40px var(--color-secondary),
+              0 0 80px var(--color-secondary),
+              0 0 90px var(--color-secondary),
+              0 0 100px var(--color-secondary);
   transition: 0.25s;
   transition-timing-function: ease-in-out;
 }
 
 .p-dialog .p-dialog-header {
-  background-color: #000000;
+  background-color: var(--color-background);
 }
 
 .p-dialog .p-dialog-content {
-  background-color: #000000;
-  color: #FFFFFF
+  background-color: var(--color-background);
+  color: var(--color-text)
 }
 
 /* Primevue ScrollTop */
 .p-scrolltop {
-  border: 2px solid white;
+  border: 2px solid var(--color-light);
 }
 
+/* Primevue PanelMenu */
+.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action {
+  font-family: 'Beon', monospace;
+
+}
+
+.p-panelmenu .p-menuitem-content .p-menuitem-link {
+  cursor: default;
+}
+
+.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content {
+  background: var(--color-background-light);
+}
+
+.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover {
+  background: var(--color-light-focus);
+
+}
 /* TODO - styling: media styling */
 /* 
 @media (hover: hover) {
