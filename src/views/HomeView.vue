@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
 import { useCounterStore } from '@/stores/counter'
+import CtdProject from '@/threejs/CtdProject.vue';
 
 // Store test
 const counterStore = useCounterStore()
@@ -10,18 +11,9 @@ const counterStore = useCounterStore()
 <template>
   <main>
     <div class="flex-left">
-      <!-- <div class="col-2">
-
-        <div class="title-card">
-          <div class="title-header">
-            <h1>Jia Jun.</h1>
-          </div>
-          <div class="title-desc">
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum quasi consequatur labore provident repellendus eius ipsum culpa odio, id voluptates vitae reprehenderit eum. Culpa velit quae, aliquam dignissimos exercitationem sunt!</p>
-          </div>
-        </div>
-        
-      </div> -->
+      <div class="col-2">
+                
+      </div>
     </div>
     
     

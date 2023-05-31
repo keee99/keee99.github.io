@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 // Views
-import HomeView from "../views/HomeView.vue";
+import RootView from "../views/RootView.vue";
+import CtdProject from "../threejs/CtdProject.vue";
 
 
 const router = createRouter({
@@ -9,14 +10,14 @@ const router = createRouter({
   routes: [
     {
       path: "/",
-      name: "home",
-      component: HomeView,
+      name: "JJ's Portfolio",
+      component: RootView,
     },
-    // {
-    //   path: "/about",
-    //   name: "about",
-    //   component: AboutView,
-    // },
+    {
+      path: "/ctd-project",
+      name: "JJ's CTD Project",
+      component: CtdProject,
+    },
     // {
     //   path: "/portfolio",
     //   name: "porfolio",

@@ -2,6 +2,12 @@
 import { useRoute } from "vue-router";
 import { onMounted, computed, ref } from "vue";
 
+import BGScene from "../threejs/BGScene.vue";
+import Topbar from "../components/Topbar.vue";
+
+import HomeView from "./HomeView.vue";
+import AboutView from "./AboutView.vue";
+import PortfolioView from "./PortfolioView.vue";
 
 let sectionObserver: IntersectionObserver;
 const route = useRoute();
@@ -70,29 +76,48 @@ onMounted(() => {
   window.addEventListener('resize', updateScrollDistances)
 })
 
+
 </script>
 
 <template>
-  <router-view v-slot="{ Component }">
-      <transition>
-      <component :is="Component"></component>
-      </transition>
-  </router-view>
+  <main>
+    <header>
+        <Topbar :active="activeSection"/>
+    </header>
+    
+    <body> 
+        <div class="app-body">
+        <!-- <router-view v-slot="{ Component }">
+            <transition>
+            <component :is="Component"></component>
+            </transition>
+        </router-view> -->
+
+        <div class="app-section" id="home" ><HomeView/></div>
+        <div class="app-section-break" />
+        <div class="app-section" id="about"><AboutView/></div>
+        <div class="app-section-break" />
+        <div class="app-section" id="portfolio"><PortfolioView/></div>
+        <div class="app-section-break" />
+        <!-- <div class="app-section"  id="contact"><ContactView/></div> -->
+        
+        <BGScene 
+            class="bg" 
+            :homeY="homeY" 
+            :aboutY="aboutY"
+            :portfolioY="portfolioY"
+        />
+
+        <ScrollTop />
+
+
+        </div>
+
+        <footer>
+        
+        </footer>
+        
+
+    </body>
+  </main>
 </template>
-
-<style>
-
-  @import './assets/base.css';
-
-  .bg {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    width: 100%;
-    height: 100%;
-    background-color: var(--color-background);
-  }
-
-
-</style>
