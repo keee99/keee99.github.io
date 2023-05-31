@@ -194,7 +194,7 @@ const getDateString = () => monthIndex[props.date.getMonth()] + " " + props.date
     .card-active {
         background-color: var(--color-overlay);
         color: var(--color-text);
-        transition: 0.10s;
+        transition: 0.20s;
         transition-timing-function: ease-in-out;
     }
 

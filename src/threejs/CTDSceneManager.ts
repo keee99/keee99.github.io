@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import * as dat from 'lil-gui'
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 import type { CTDSceneConfigInterface } from './CTDSceneConfig'
 
@@ -17,27 +18,34 @@ export class CTDSceneManager {
         spiral_rotation_rads: [],
         circle_heights: []
     }
+    config: CTDSceneConfigInterface;
+    canvas: HTMLCanvasElement;
     scene : THREE.Scene = new THREE.Scene();
     renderer : THREE.WebGLRenderer;
+    
     camera : THREE.PerspectiveCamera;
     clock : THREE.Clock = new THREE.Clock();
+    controls: OrbitControls;
+    
     parameters = {
         rotation_rad: 0,
         playback: true
     };
-    config: CTDSceneConfigInterface;
+    
     sizes =  {
         width: window.innerWidth,
         height: window.innerHeight
     }
 
     constructor(canvas: HTMLCanvasElement, config: CTDSceneConfigInterface) {
+        this.canvas = canvas;
         this.config = config;
         this.buildMesh();
         this.addDebugUI();
 
         this.camera = this.buildCamera();
-        this.renderer = this.getNewRenderer(canvas);
+        this.renderer = this.buildRenderer(canvas);
+        this.controls = this.buildControls();
 
         window.addEventListener('resize', this.resizeCallback)
         this.resizeCallback()
@@ -91,7 +99,7 @@ export class CTDSceneManager {
     /* 
     Inits a new renderer 
     */
-    getNewRenderer(canvas: HTMLCanvasElement): THREE.WebGLRenderer {
+    buildRenderer(canvas: HTMLCanvasElement): THREE.WebGLRenderer {
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas
         });
@@ -100,6 +108,12 @@ export class CTDSceneManager {
         renderer.setClearColor(this.config.bg_color);
         renderer.render(this.scene, this.camera);
         return renderer;
+    }
+
+    buildControls(): OrbitControls {
+        const controls = new OrbitControls(this.camera, this.canvas);
+        controls.enableDamping = true;
+        return controls;
     }
 
     /* 
