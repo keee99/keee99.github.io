@@ -4,16 +4,17 @@ import PortfolioCard from '../components/PortfolioCard.vue';
 import { onMounted, ref } from "vue";
 
 // Data
-import { designCards, codeCards } from '../common/PortfolioItems'
+import { cards } from '../common/PortfolioItems'
 
-
-const allItems = designCards.concat(codeCards);
-
+const filterByTag = (arr: any[], tag: string) => arr.filter((item) => item.tags.includes(tag));
 const sortByDate = (arr: any[]) => arr.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+const designCards = filterByTag(cards, "Design");
+const codeCards = filterByTag(cards, "Programming");
 
 sortByDate(designCards);
 sortByDate(codeCards);
-sortByDate(allItems);
+sortByDate(cards);
 
 
 // TabMenu Items
@@ -68,7 +69,7 @@ onMounted(() => {
       <div class="sub-container flex-left shift-right" 
         :class="{'active-container': activeTab === 2, 'inactive-container': activeTab !== 2}" 
         >
-        <PortfolioCard v-for="card in allItems" class=".col-4 portfolio-card" v-bind="card" />
+        <PortfolioCard v-for="card in cards" class=".col-4 portfolio-card" v-bind="card" />
 
       </div>
     </div>

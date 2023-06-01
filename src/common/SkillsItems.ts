@@ -37,6 +37,7 @@ export const skillsDevOps = [
 export const skillsOthers = [
     "Adobe Illustrator",
     "Adobe Photoshop",
+    "Rhino3D",
     "Krita",
     "MS Office",
 ];

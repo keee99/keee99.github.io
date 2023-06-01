@@ -14,8 +14,8 @@ const router = createRouter({
       component: RootView,
     },
     {
-      path: "/ctd-project",
-      name: "JJ's CTD Project",
+      path: "/ctd",
+      name: "CTD Project",
       component: CtdProject,
     },
     // {
