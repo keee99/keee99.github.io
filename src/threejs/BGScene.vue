@@ -43,16 +43,17 @@ const props = defineProps({
 class BGSceneManager {
 
     scene: THREE.Scene;
-    renderer: THREE.WebGLRenderer;
     camera: THREE.PerspectiveCamera;
-    clk: THREE.Clock;
-    layers: THREE.Layers[];
+    clk = new THREE.Clock();
+
+    layers: THREE.Layers[] = this.initLayers(2);
 
 
-    text: THREE.Group;
-    subtext: THREE.Group;
-    textBorder: THREE.Group;
+    text = new THREE.Group();
+    subtext = new THREE.Group();
+    textBorder = new THREE.Group();
 
+    renderer: THREE.WebGLRenderer;
     centralObject: THREE.Group;
 
 
@@ -61,28 +62,27 @@ class BGSceneManager {
         subtextLight: THREE.Group;
         textBorderLight: THREE.Group | null;
         ambientLight: THREE.AmbientLight;
-        // mouseLight: THREE.SpotLight;
+        mouseLight: THREE.SpotLight;
     };
-    flickerControlObject: { // TODO: Refactor!
-        // On off flicker
-        textFlicker: boolean,
-        subtextFlicker: boolean,
-        textBorderFlicker: boolean,
 
-        // Current state of flicker
-        text: boolean;
-        subtext: boolean;
-        textBorder: boolean;
+    flickerControlObject = {
+        textFlicker: true,
+        subtextFlicker: true,
+        textBorderFlicker: true,
 
-        // Flicker time to turn on again after flickering off
-        textFlickerTime: number;
-        subtextFlickerTime: number;
-        textBorderFlickerTime: number;
+        text: true,
+        subtext: true,
+        textBorder: true,
+
+        textFlickerTime: Number.MAX_SAFE_INTEGER,
+        subtextFlickerTime: Number.MAX_SAFE_INTEGER,
+        textBorderFlickerTime: Number.MAX_SAFE_INTEGER,
     };
-    scrollStates: {
-        home: BGSceneState;
-        about: BGSceneState;
-        portfolio: BGSceneState;
+
+    scrollStates = {
+        home: bgSceneHomeState,
+        about: bgSceneAboutState,
+        portfolio: bgScenePortfolioState,
     }
 
     
@@ -91,66 +91,35 @@ class BGSceneManager {
     materials: Map<string, THREE.Material>;
 
     config: BGSceneConfigInterface;
-    parameters: Map<string, any>;
+    parameters: Map<string, any> = new Map();
 
     constructor(canvas: HTMLCanvasElement, config: BGSceneConfigInterface) {
 
-        this.layers = this.initLayers(2);
-        this.parameters = new Map();
         this.config = config;
-        this.clk = new THREE.Clock();
-
-        // Build scene
         this.scene = this.buildScene();
+
         this.camera = this.buildCamera();
-        this.renderer = this.buildRenderer(canvas);
-
-        
-        // Build objects
-        // this.buildCentralObject();
-
-        // Build Neon Text Sign
-        this.flickerControlObject = {
-            textFlicker: true,
-            subtextFlicker: true,
-            textBorderFlicker: true,
-
-            text: true,
-            subtext: true,
-            textBorder: true,
-
-            textFlickerTime: Number.MAX_SAFE_INTEGER,
-            subtextFlickerTime: Number.MAX_SAFE_INTEGER,
-            textBorderFlickerTime: Number.MAX_SAFE_INTEGER,
-        };
-
-        this.text = new THREE.Group();
-        this.subtext = new THREE.Group();
-        this.textBorder = new THREE.Group();
 
         this.buildTextObject();
         this.buildSubtextObject();
-
         this.centralObject = this.buildCentralObject();
 
-    
-        // Build Lights
-        this.lights = {
+        this.lights =  {
             textLight: this.buildTextLight(),
             subtextLight: this.buildSubtextLight(),
             textBorderLight: null, // Built in the callback of buildTextObject
             ambientLight: this.buildAmbientLight(),
-            // mouseLight: this.buildMouseLight(),
+            mouseLight: this.buildMouseLight(),
         };
 
         // Post Processing
+        this.renderer = this.buildRenderer(canvas);
         this.materials = this.recordMaterials();
         let composers = this.postProcess();
         this.bloomComposer = composers.bloomComposer;
         this.finalComposer = composers.finalComposer;
 
         // Resize and scroll Callback
-        this.scrollStates = this.initScrollData();
         this.onWindowResize();
         this.onScroll();
 
@@ -405,8 +374,6 @@ class BGSceneManager {
 
         borderLights.add(this.createPointLight(border_hori_offset, border_vert_offset, 0, color, intensity))
         borderLights.add(this.createPointLight(-border_hori_offset , border_vert_offset, 0, color, intensity))
-        // borderLights.add(this.createPointLight(border_hori_offset, -border_vert_offset, 0, color, intensity))
-        // borderLights.add(this.createPointLight(-border_hori_offset, -border_vert_offset, 0, color, intensity))
 
         this.scene.add(borderLights)
         return borderLights;
@@ -456,15 +423,6 @@ class BGSceneManager {
         return camera;
     }
 
-    // On scroll to a certain distance, change the camera position
-    // Also need handle not only between sections, but AT sections, or before/after extreme sections
-    initScrollData () {
-        return {
-            home: bgSceneHomeState,
-            about: bgSceneAboutState,
-            portfolio: bgScenePortfolioState,
-        }
-    }
     onScroll = () => {
         const scroll = window.scrollY;
         if (scroll <= props.homeY) {
@@ -487,53 +445,27 @@ class BGSceneManager {
         const progressY = (scrollY - topHeight) / heightDiff
         let progress = progressY > 1 ? 1 : this.getProgress(progressY);
 
-        const getNewPos = (oldPos: number, newPos: number) => ( progress * (newPos - oldPos) + oldPos );
+        const setNewAttrOnAxis = (obj: THREE.Object3D, attr: string, axis: string, state_attr: string) => {
+            const tolerance_attr = state_attr + "_tolerance";
 
+            const top: number = this.computePos((topState as any)[state_attr], (topState as any)[tolerance_attr]);
+            const bottom: number = this.computePos((bottomState as any)[state_attr], (bottomState as any)[tolerance_attr]);
 
-        // TODO: Refactor this!!!!!
-        // Set new camera position
-        const topX = this.computePos(topState.cam_pos_x, topState.cam_pos_x_tolerance);
-        const bottomX = this.computePos(bottomState.cam_pos_x, bottomState.cam_pos_x_tolerance);
-        this.camera.position.x = getNewPos(topX, bottomX);
+            (obj as any)[attr][axis] = ( progress * (bottom - top) + top );
+        }
 
-        const topY = this.computePos(topState.cam_pos_y, topState.cam_pos_y_tolerance);
-        const bottomY = this.computePos(bottomState.cam_pos_y, bottomState.cam_pos_y_tolerance);
-        this.camera.position.y = getNewPos(topY, bottomY);
+        const setNewAttr = (obj: THREE.Object3D, attr: string, state_attr_prefix: string) => {
+            setNewAttrOnAxis(obj, attr, "x", state_attr_prefix + "_x");
+            setNewAttrOnAxis(obj, attr, "y", state_attr_prefix + "_y");
+            setNewAttrOnAxis(obj, attr, "z", state_attr_prefix + "_z");
+        }
 
-        const topZ = this.computePos(topState.cam_pos_z, topState.cam_pos_z_tolerance);
-        const bottomZ = this.computePos(bottomState.cam_pos_z, bottomState.cam_pos_z_tolerance);
-        this.camera.position.z = getNewPos(topZ, bottomZ);
-        
-
-        // Set new camera rotation
-        const topRotX = this.computeRot(topState.cam_rot_x, topState.cam_rot_x_tolerance);
-        const bottomRotX = this.computeRot(bottomState.cam_rot_x, bottomState.cam_rot_x_tolerance);
-        this.camera.rotation.x = getNewPos(topRotX, bottomRotX);
-
-        const topRotY = this.computeRot(topState.cam_rot_y, topState.cam_rot_y_tolerance);
-        const bottomRotY = this.computeRot(bottomState.cam_rot_y, bottomState.cam_rot_y_tolerance);
-        this.camera.rotation.y = getNewPos(topRotY, bottomRotY);
-
-        const topRotZ = this.computeRot(topState.cam_rot_z, topState.cam_rot_z_tolerance);
-        const bottomRotZ = this.computeRot(bottomState.cam_rot_z, bottomState.cam_rot_z_tolerance);
-        this.camera.rotation.z = getNewPos(topRotZ, bottomRotZ);
-
-
-        // Set new object pos
-        const objTopX = this.computePos(topState.obj_pos_x, topState.obj_pos_x_tolerance);
-        const objBottomX = this.computePos(bottomState.obj_pos_x, bottomState.obj_pos_x_tolerance);
-        this.centralObject.position.x = getNewPos(objTopX, objBottomX);
-
-        const objTopY = this.computePos(topState.obj_pos_y, topState.obj_pos_y_tolerance);
-        const objBottomY = this.computePos(bottomState.obj_pos_y, bottomState.obj_pos_y_tolerance);
-        this.centralObject.position.y = getNewPos(objTopY, objBottomY);
-
-        const objTopZ = this.computePos(topState.obj_pos_z, topState.obj_pos_z_tolerance);
-        const objBottomZ = this.computePos(bottomState.obj_pos_z, bottomState.obj_pos_z_tolerance);
-        this.centralObject.position.z = getNewPos(objTopZ, objBottomZ);
+        setNewAttr(this.camera, "position", "cam_pos");        
+        setNewAttr(this.camera, "rotation", "cam_rot")
+        setNewAttr(this.centralObject, "position", "obj_pos");
 
         
-        // Text Visibility get overwritten by flicker
+        // REFACTOR THIS
         this.flickerControlObject.textFlicker = bottomState.textVisibility;
         this.text.visible = bottomState.textVisibility;
         this.lights.textLight.visible = bottomState.textVisibility;
@@ -561,11 +493,11 @@ class BGSceneManager {
 
     /** */
     onMouseMove = (event: MouseEvent) => {
-        // (event.clientX / window.innerWidth) * 2 - 1;
-        // console.log((event.clientY / window.innerHeight))
-        // this.lights.mouseLight.position.x = (event.clientX / window.innerWidth) * 4 - 2;
-        // this.lights.mouseLight.position.y = - (event.clientY / window.innerHeight) * 4 + 6;
-        // console.log(this.lights.mouseLight.position.x, this.lights.mouseLight.position.y, this.lights.mouseLight.position.z);
+        (event.clientX / window.innerWidth) * 2 - 1;
+        console.log((event.clientY / window.innerHeight))
+        this.lights.mouseLight.position.x = (event.clientX / window.innerWidth) * 4 - 2;
+        this.lights.mouseLight.position.y = - (event.clientY / window.innerHeight) * 4 + 6;
+        console.log(this.lights.mouseLight.position.x, this.lights.mouseLight.position.y, this.lights.mouseLight.position.z);
 
         this.centralObject.rotation.x = -(event.clientY / window.innerHeight) * 0.1 - 0.1;
         this.centralObject.rotation.y = -(event.clientX / window.innerWidth) * 0.1 - 0.1;
