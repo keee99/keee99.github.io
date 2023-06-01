@@ -1,28 +1,3 @@
-
-import img_feeling_funky_back from  "/images/portfolio/design/feeling_funky_back.png"
-import img_feeling_funky_front from  "/images/portfolio/design/feeling_funky_front.png"
-import img_feeling_funky_draft from  "/images/portfolio/design/feeling_funky_draft.png"
-import img_feeling_funky_final from  "/images/portfolio/design/feeling_funky_final.png"
-import img_feeling_funky_front_draft from  "/images/portfolio/design/feeling_funky_front_draft.png"
-
-import img_manners from  "/images/portfolio/design/manners.png"
-
-import img_help_logo from "/images/portfolio/design/help_logo.png"
-import img_help_feed from "/images/portfolio/design/help_feed.png"
-import img_help_sys_arch from "/images/portfolio/design/help_sys_arch.png"
-
-import img_ctd_closeup from "/images/portfolio/design/ctd_closeup.png"
-import img_ctd_cross from "/images/portfolio/design/ctd_cross.png"
-import img_ctd_inside from "/images/portfolio/design/ctd_inside.png"
-import img_ctd_star from "/images/portfolio/design/ctd_star.png"
-
-import img_rainyday_logo from "/images/portfolio/design/rainyday_logo.png"
-import img_rainyday_child from "/images/portfolio/design/rainyday_child.png"
-import img_rainyday_parent from "/images/portfolio/design/rainyday_parent.png"
-import img_rainyday_uml from "/images/portfolio/design/rainyday_uml.png"
-import img_rainyday_userflow from "/images/portfolio/design/rainyday_userflow.png"
-
-
 export interface card {
     title: string, 
     date: Date,
@@ -37,6 +12,12 @@ export interface img {
     alt: string,
 }
   
+
+import img_feeling_funky_back from  "/images/portfolio/design/feeling_funky_back.png"
+import img_feeling_funky_front from  "/images/portfolio/design/feeling_funky_front.png"
+import img_feeling_funky_draft from  "/images/portfolio/design/feeling_funky_draft.png"
+import img_feeling_funky_final from  "/images/portfolio/design/feeling_funky_final.png"
+import img_feeling_funky_front_draft from  "/images/portfolio/design/feeling_funky_front_draft.png"
 
 const card_feeling_funky = {
     title: "FUNKtion Club Shirt Design", 
@@ -76,6 +57,9 @@ const card_feeling_funky = {
     link: "",
 };
 
+
+import img_manners from  "/images/portfolio/design/manners.png"
+
 const card_manners = {
     title: "MAN-Ners Band Logo", 
     date: new Date(2022, 11), 
@@ -96,6 +80,11 @@ const card_manners = {
     ],
     link: "",
 };
+
+
+import img_help_logo from "/images/portfolio/design/help_logo.png"
+import img_help_feed from "/images/portfolio/design/help_feed.png"
+import img_help_sys_arch from "/images/portfolio/design/help_sys_arch.png"
 
 const card_help_gebirah = {
     title: "Gebirah HELP", 
@@ -132,6 +121,12 @@ const card_help_gebirah = {
     link: "https://sites.google.com/mymail.sutd.edu.sg/pelican/home",
 };
 
+
+import img_ctd_closeup from "/images/portfolio/design/ctd_closeup.png"
+import img_ctd_cross from "/images/portfolio/design/ctd_cross.png"
+import img_ctd_inside from "/images/portfolio/design/ctd_inside.png"
+import img_ctd_star from "/images/portfolio/design/ctd_star.png"
+
 const card_ctd = {
     title: "Cradle To Dust", 
     date: new Date(2023, 4), 
@@ -166,6 +161,13 @@ const card_ctd = {
     ],
     link: "/ctd",
 };
+
+
+import img_rainyday_logo from "/images/portfolio/design/rainyday_logo.png"
+import img_rainyday_child from "/images/portfolio/design/rainyday_child.png"
+import img_rainyday_parent from "/images/portfolio/design/rainyday_parent.png"
+import img_rainyday_uml from "/images/portfolio/design/rainyday_uml.png"
+import img_rainyday_userflow from "/images/portfolio/design/rainyday_userflow.png"
 
 const card_rainyday = {
     title: "Rainy Day", 
@@ -204,6 +206,33 @@ const card_rainyday = {
     ],
     link: "https://istd.sutd.edu.sg/term4-design-exhibition/50001/rainy-day",
 };
+
+
+import img_urop from "/images/portfolio/design/UROP.png"
+
+const card_urop = {
+    title: "EQ App Research Project", 
+    date: new Date(2021, 5), 
+    desc: `Worked in a small team to build a Web platform for enterprise evaluation and training of employee EQ, as part of a University Research Project.
+            Developed a simple backend server, including RESTful API and authentication, and integrated with the frontend.
+            Presented the working prototype to the stakeholder and project supervisor.
+            (Image shown is a prototype. I am unable to share the actual project.)`,
+    imgs: [
+        {
+            i: img_urop,
+            alt: "Prototype of the EQ Training App",
+        },
+    ],
+    tags: [
+        "Javascript",
+        "Express.js",
+        "HTML",
+        "CSS",
+        "Programming",
+        "MongoDB"
+    ],
+    link: "",
+};
     
 export const cards: card[] = [
     card_feeling_funky,
@@ -211,6 +240,7 @@ export const cards: card[] = [
     card_help_gebirah,
     card_ctd,
     card_rainyday,
+    card_urop,
 ]
 
 export default cards;
