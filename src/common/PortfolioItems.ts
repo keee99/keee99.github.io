@@ -209,6 +209,7 @@ const card_rainyday = {
 
 
 import img_urop from "/images/portfolio/design/UROP.png"
+import img_urop_logo from "/images/portfolio/design/UROP_logo.png"
 
 const card_urop = {
     title: "EQ App Research Project", 
@@ -219,8 +220,12 @@ const card_urop = {
             (Image shown is a prototype. I am unable to share the actual project.)`,
     imgs: [
         {
+            i: img_urop_logo,
+            alt: "Main logo of the app prototype",
+        },
+        {
             i: img_urop,
-            alt: "Prototype of the EQ Training App",
+            alt: "Prototype of the EQ Training app",
         },
     ],
     tags: [
