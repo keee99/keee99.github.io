@@ -233,6 +233,39 @@ const card_urop = {
     ],
     link: "",
 };
+
+
+import img_sutdopoly_logo from "/images/portfolio/design/sutdopoly_logo.png"
+import img_sutdopoly_board from "/images/portfolio/design/sutdopoly_board.png"
+import img_sutdopoly_go from "/images/portfolio/design/sutdopoly_go.png"
+
+const card_sutdopoly = {
+    title: "SUTDopoly", 
+    date: new Date(2020, 10), 
+    desc: `SUTDopoly is a text-based boardgame that is run straight from the command line. 
+            A variation of Monopoly, SUTDopoly is structured around the setting of SUTD whereby the properties names are the names of Fifth Rows and the Chance and Chest cards are relatable to SUTD students. 
+            This version of SUTDopoly plays wholely on the CLI, and supports various features such as animated board movement, offline play with multiple users on a single computer, or online play across CLIs and computers!`,
+    imgs: [
+        {
+            i: img_sutdopoly_logo,
+            alt: "SUTDopoly logo at startup screen",
+        },
+        {
+            i: img_sutdopoly_board,
+            alt: "SUTDopoly animated board",
+        },
+        {
+            i: img_sutdopoly_go,
+            alt: "Passing GO!",
+        },
+    ],
+    tags: [
+        "Python",
+        "Firebase",
+        "Programming",
+    ],
+    link: "https://github.com/keee99/SUTDopoly",
+};
     
 export const cards: card[] = [
     card_feeling_funky,
@@ -241,6 +274,7 @@ export const cards: card[] = [
     card_ctd,
     card_rainyday,
     card_urop,
+    card_sutdopoly,
 ]
 
 export default cards;
