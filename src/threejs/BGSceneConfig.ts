@@ -24,8 +24,8 @@ export const bgSceneConfig : BGSceneConfigInterface = {
     subtextColor: 0xff88aa,
     borderColor: 0x00ff00,
     textIntensity: 0.3,
-    subtextIntensity: 0.2,
-    textBorderIntensity: 0.15,
+    subtextIntensity: 0.3,
+    textBorderIntensity: 0.2,
     
     borderPosOffset: 0.15,
     thickness: 0.025,
