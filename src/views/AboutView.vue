@@ -71,7 +71,7 @@ const skills = ref([
                         <div class="tab-content">
                             <div class="tab-title">Undergraduate, Computer Science & Design</div>   
                             <div>Singapore University of Techology and Design</div>
-                            <div>Grade: 4.9/5.0</div> 
+                            <div>Grade: 4.90/5</div> 
                             <div class="tab-date">Sep 2020 - May 2024</div> 
                             <div>
                                 <strong>Achievements:</strong> 

@@ -1,12 +1,5 @@
 // TODO: Change to camel case
 export const bgSceneConfig : BGSceneConfigInterface = {
-    cam_pos_x: 0,
-    cam_pos_y: 0,
-    cam_pos_z: 2,
-
-    cam_pos_x_min: 0,
-    cam_pos_y_min: 0,
-    cam_pos_z_min: 2,
 
     enableOrbitControls: true,
 
@@ -37,13 +30,6 @@ export const bgSceneConfig : BGSceneConfigInterface = {
 }
 
 export interface BGSceneConfigInterface {
-    cam_pos_x: number;
-    cam_pos_y: number;
-    cam_pos_z: number;
-
-    cam_pos_x_min: number;
-    cam_pos_y_min: number;
-    cam_pos_z_min: number;
 
     enableOrbitControls: boolean;
 

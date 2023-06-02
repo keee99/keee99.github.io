@@ -21,6 +21,11 @@ export interface BGProps {
 
 }
 
+
+/**
+ * Tracks the state of an Three.js object/group flickering animation.
+ * Used in BGSceneManager.
+ */
 class FlickerState {
     obj: THREE.Group;
     flickerTime: number;
@@ -36,6 +41,13 @@ class FlickerState {
         this.max_flicker_time = max_flicker_time;
     }
 
+    /**
+     * Performs the flicker operation if enabled.
+     *      - If visible, randomly set obj visibility to false, and set flickerTime to some time in the future
+     *      - If not visible, if the flickerTime has passed, set obj visibility back to true
+     * @param flickerTolerance Likelihood of flickering per update call
+     * @param elapsedTime Time elapsed since initialization
+     */
     performFlicker (flickerTolerance: number, elapsedTime: number) {
         if (this.flickerEnabled) {
             if (this.obj.visible && Math.random() < flickerTolerance) {
@@ -48,18 +60,22 @@ class FlickerState {
         }
     }
 
+    /**
+     * Enable/Disables flicker
+     * @param enabled If true, enable flicker. 
+     * @param toggleVisibility If true, "enabled" param enable/disables the obj as well (obj visibility)
+     */
     setFlickerEnabled (enabled: boolean, toggleVisibility: boolean = false) {
         this.flickerEnabled = enabled;
         if (toggleVisibility) this.obj.visible = enabled;
     }
-
 }
 
 
 export class BGSceneManager {
 
     // Essentials
-    scene: THREE.Scene;
+    scene = new THREE.Scene();
     camera: THREE.PerspectiveCamera;
     renderer: THREE.WebGLRenderer;
     config: BGSceneConfigInterface;
@@ -73,12 +89,12 @@ export class BGSceneManager {
     text = new THREE.Group();
     subtext = new THREE.Group();
     textBorder = new THREE.Group();
-    centralObject: THREE.Group = new THREE.Group();
+    centralObject = new THREE.Group();
 
     // Lights
-    lights: {
-        ambientLight: THREE.AmbientLight;
-        mouseLight: THREE.SpotLight;
+    lights = {
+        ambientLight: new THREE.Group(),
+        mouseLight: new THREE.Group(),
     };
 
     // States
@@ -88,7 +104,6 @@ export class BGSceneManager {
         subtext: new FlickerState(this.subtext),
         textBorder: new FlickerState(this.textBorder),
     };
-
     scrollStates = {
         home: bgSceneHomeState,
         about: bgSceneAboutState,
@@ -100,24 +115,21 @@ export class BGSceneManager {
     finalComposer: EffectComposer;
     materials: Map<string, THREE.Material> = new Map();
 
+    
     constructor(canvas: HTMLCanvasElement, config: BGSceneConfigInterface, props: BGProps) {
         this.props = props;
         this.config = config;
-
-        this.scene = this.buildScene();
-        this.camera = this.buildCamera();
+        this.camera = this.createCamera();
+        this.renderer = this.createRenderer(canvas);
 
         this.buildTextandTextBorderObject();
         this.buildSubtextObject();
         this.buildCentralObject();
 
-        this.lights =  {
-            ambientLight: this.buildAmbientLight(),
-            mouseLight: this.buildMouseLight(),
-        };
+        this.buildAmbientLight();
+        this.buildMouseLight();
 
         // Post Processing
-        this.renderer = this.buildRenderer(canvas);
         let composers = this.getComposers();
         this.bloomComposer = composers.bloomComposer;
         this.finalComposer = composers.finalComposer;
@@ -148,6 +160,10 @@ export class BGSceneManager {
 
     }
 
+    /**
+     * Get size of the scene to render
+     * @returns object containing width and height
+     */
     getSizes() {
         return {
             width: window.innerWidth,
@@ -155,36 +171,33 @@ export class BGSceneManager {
         }
     }
 
-    buildScene() {
-        const scene = new THREE.Scene();
-        return scene;
-    }
-
-
-    buildRenderer(canvas: HTMLCanvasElement) {
+    /**
+     * Create Renderer for the canvas and renders the scene.
+     * @param canvas HTML <canvas> element to render into
+     * @returns renderer
+     */
+    createRenderer(canvas: HTMLCanvasElement) {
         const renderer = new THREE.WebGLRenderer({
             canvas: canvas
         });
-        const sizes = this.getSizes()
+        const sizes = this.getSizes();
         renderer.setSize(sizes.width, sizes.height);
         renderer.setClearColor(this.config.bg_color);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
         renderer.shadowMap.enabled = true;
 
         renderer.render(this.scene, this.camera);
         return renderer;
     }
 
-    buildCamera() {
+    /**
+     * Creates a Perspective Camera for the scene. 
+     * @returns Camera object
+     */
+    createCamera() {
         const sizes = this.getSizes()
         const aspect = (sizes.width / sizes.height);
         const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
-
-
-        camera.position.x = this.config.cam_pos_x / aspect + this.config.cam_pos_x_min;
-        camera.position.y = this.config.cam_pos_y / aspect + this.config.cam_pos_y_min;
-        camera.position.z = this.config.cam_pos_z / aspect + this.config.cam_pos_z_min;
         
         this.scene.add(camera)
         return camera;
@@ -193,7 +206,9 @@ export class BGSceneManager {
 
     /*****************  OBJECTS  ******************/   
 
-
+    /**
+     * Create and add the subtext object and it's lighting to the scene
+     */
     buildSubtextObject() {
         const fontLoader = new FontLoader();
         const textMaterial = new THREE.MeshBasicMaterial({ color: this.config.subtextColor });
@@ -205,16 +220,17 @@ export class BGSceneManager {
                 textMesh.position.y = -0.8;
                 textMesh.layers.toggle(this.BLOOM_LAYER)
                 this.subtext.add(textMesh)
-                this.subtext.add(this.buildSubtextLight())
+                this.subtext.add(this.createSubtextLight())
                 this.scene.add(this.subtext)
         });
 
     }
 
+    /**
+     * Create and add the text and textBorder objects and their lighting to the scene
+     * "Async" function: objects only created once font loader returns.
+     */
     buildTextandTextBorderObject() {
-        /**
-         * Fonts
-         */
         const fontLoader = new FontLoader();
         const textMaterial = new THREE.MeshBasicMaterial({ color: this.config.textColor });
 
@@ -228,7 +244,7 @@ export class BGSceneManager {
                 const textMesh = this.createTextMesh(font, textMaterial, this.config.text, 0.5);
                 textMesh.layers.toggle(this.BLOOM_LAYER)      
                 this.text.add(textMesh)
-                this.text.add(this.buildTextLight());
+                this.text.add(this.creaeteTextLight());
                 this.scene.add(this.text)
 
 
@@ -237,13 +253,21 @@ export class BGSceneManager {
                  */
                 const boundingBox = new THREE.Box3().setFromObject(textMesh);
                 this.textBorder.add(this.createBorderMesh(boundingBox));
-                this.textBorder.add(this.buildBorderLights(boundingBox));
+                this.textBorder.add(this.createTextBorderLight(boundingBox));
                 this.scene.add(this.textBorder)
 
             }
         )
     }
 
+    /**
+     * Create a 3D text Mesh based on parameters given
+     * @param font Font loaded from FontLoader
+     * @param textMaterial Material of mesh
+     * @param text Text displayed by mesh
+     * @param size Size of mesh
+     * @returns 3D text Mesh based on parameters given
+     */
     createTextMesh(font: any, textMaterial: THREE.MeshBasicMaterial, text: string, size: number) {
         const textGeometry = new TextGeometry(
             text,
@@ -261,6 +285,11 @@ export class BGSceneManager {
         return textMesh;
     }
 
+    /**
+     * Create Border around a given bounding box, offset by an amount specified in config.
+     * @param boundingBox Box3 Object to border on the x-y plane
+     * @returns Border Mesh bordering the given box on the x-y plane, at z=0
+     */
     createBorderMesh(boundingBox: THREE.Box3 = new THREE.Box3().setFromObject(this.text)) {
         
         const borderMaterial = new THREE.MeshBasicMaterial({ color: this.config.borderColor });
@@ -312,7 +341,7 @@ export class BGSceneManager {
         
 
         const textBorder = new THREE.Group(); 
-        for (let key of this.getObjKeys(borderMeshes)) {
+        for (let key of this.keys(borderMeshes)) {
             borderMeshes[key].layers.toggle(this.BLOOM_LAYER);
             textBorder.add(borderMeshes[key]);
         }
@@ -320,6 +349,9 @@ export class BGSceneManager {
         return textBorder;
     }
 
+    /**
+     * Create and add the central object to the scene
+     */
     buildCentralObject() {
         const geometry = new THREE.SphereGeometry(1, 5, 5)
         const material = new THREE.MeshLambertMaterial( { color: 'white', wireframe: false } );
@@ -350,13 +382,24 @@ export class BGSceneManager {
 
     /*****************  LIGHTS  ******************/    
     /**
-     * Create Ambient Light
+     * Create and add Ambient Light to the scene
      */
     buildAmbientLight() {
         const ambientLight = new THREE.AmbientLight(this.config.ambientColor);
-        this.scene.add(ambientLight);
-        return ambientLight;
+        this.lights.ambientLight.add(ambientLight);
+        this.scene.add(this.lights.ambientLight);
+    }
 
+    /**
+     * Create and add SpotLight to the scene.
+     * This light follows the mouse position.
+     */
+    buildMouseLight() {
+        const mouseLight = new THREE.SpotLight(0x9dffb6, 0.3, 10, Math.PI/8, 0.5, 2);
+        mouseLight.lookAt(this.centralObject.position);
+        mouseLight.position.set(0,0,2);
+        this.lights.mouseLight.add(mouseLight);
+        this.scene.add(this.lights.mouseLight);
     }
 
     createPointLight = (x: number, y: number, z: number, color: number, intensity: number) => {
@@ -366,31 +409,30 @@ export class BGSceneManager {
     }
 
     /**
-     * Create Text Light
+     * Create a group of lights emitted by the text object
      */
-    buildTextLight() {
+    creaeteTextLight() {
         const textLightGroup = new THREE.Group();
         textLightGroup.add(this.createPointLight(0, 0, 0, this.config.textColor, this.config.textIntensity));
         textLightGroup.add(this.createPointLight(-1, 0, 0, this.config.textColor, this.config.textIntensity));
         textLightGroup.add(this.createPointLight(1, 0, 0, this.config.textColor, this.config.textIntensity));
-        
         return textLightGroup;
         
     }
 
     /**
-     * Create Subtext Light
+     * Create a group of lights emitted by the subtext object
      */
-     buildSubtextLight() {
+     createSubtextLight() {
         const subtextLightGroup = new THREE.Group();
         subtextLightGroup.add(this.createPointLight(0, -0.8, 0, this.config.subtextColor, this.config.subtextIntensity));
         return subtextLightGroup;
     }
 
     /**
-     * Create Border Lights
+     * Create a group of lights emitted by the textBorder object
      */
-    buildBorderLights(boundingBox: THREE.Box3) {
+    createTextBorderLight(boundingBox: THREE.Box3) {
         const borderLights = new THREE.Group();
 
         // Create 2D bounding Border
@@ -405,21 +447,16 @@ export class BGSceneManager {
         borderLights.add(this.createPointLight(-border_hori_offset , border_vert_offset, 0, color, intensity))
         return borderLights;
     }
-
-    buildMouseLight() {
-        const mouseLight = new THREE.SpotLight(0x9dffb6, 0.3, 10, Math.PI/8, 0.5, 2);
-        mouseLight.lookAt(this.centralObject.position);
-        mouseLight.position.set(0,0,2);
-        this.scene.add(mouseLight);
-        return mouseLight;
-    }
     
 
     
     /*****************  EVENT LISTENERS  ******************/ 
 
     
-    /** */
+    /** 
+     * "mousemove" Event Handler.
+     * Updates the mouseLight position and the centralObject rotation.
+     */
     onMouseMove = (event: MouseEvent) => {
         this.lights.mouseLight.position.x = (event.clientX / window.innerWidth) * 4 - 2;
         this.lights.mouseLight.position.y = - (event.clientY / window.innerHeight) * 4 + 6;
@@ -430,25 +467,35 @@ export class BGSceneManager {
     }
 
 
+    /**
+     * "resize" Event Handler.
+     * Updates relevant attributes of renderer, composer, and camera.
+     * Invokes the onScroll callback to update scene to new scroll position after resize event.
+     */
     onWindowResize = () => {
         const sizes = this.getSizes()
         const aspect = (sizes.width / sizes.height);
 
         // Update camera's aspect and PROJECT MATRIX
+        // Camera position updated with onScroll.
         this.camera.aspect = aspect;
-        this.camera.position.z = this.config.cam_pos_z / aspect + this.config.cam_pos_z_min;
-        this.camera.updateProjectionMatrix()
+        this.camera.updateProjectionMatrix();
 
         this.bloomComposer.setSize( sizes.width, sizes.height );
 		this.finalComposer.setSize( sizes.width, sizes.height );
 
-        this.onScroll();
-
         // Update renderer
         this.renderer.setSize(sizes.width, sizes.height)
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+        this.onScroll();
     }
 
+    
+    /**
+     * "scroll" Event Handler.
+     * Updates scene based on scroll Y
+     */
     onScroll = () => {
         const scroll = window.scrollY;
         if (scroll <= this.props.homeY) {
@@ -466,17 +513,50 @@ export class BGSceneManager {
     }
 
 
+    /**
+     * Updates scene based on scroll progress between two states. 
+     * Progress is set to a maximum of 1. Animation hence stops if there is a Y overflow
+     * between scrollY and lowerHeight.
+     * @param topState BGSceneState to transit from
+     * @param bottomState BGSceneState to transit to
+     * @param scrollY Y position of current scroll
+     * @param topHeight Y height of topState
+     * @param lowerHeight Y height of bottomState
+     */
     transitSceneState(topState: BGSceneState, bottomState: BGSceneState, scrollY: number, topHeight: number, lowerHeight: number) {
+
+        /**
+         * The progress of the scroll normalized to a range [0, 1].
+         * Topstate Y represents 0 and bottomState Y represents 1.
+         * @param progressY Progress of scroll between topState and bottomState
+         * @returns Normalized progress
+         */
+        const getProgress = (progressY : number) => (0.5 * (-(Math.cos(progressY * Math.PI)) + 1)) ** 1.5;
+
         const heightDiff = lowerHeight - topHeight;
         const progressY = (scrollY - topHeight) / heightDiff
-        let progress = progressY > 1 ? 1 : this.getProgress(progressY);
+        let progress = progressY > 1 ? 1 : getProgress(progressY);
 
-        const computeNewAttribute = (pos: number, threshold: number) => {
+        /**
+         * Computes value of an attribute based on the aspect ratio.
+         * @param pos Value of attribute
+         * @param adjustment_factor Degree of flexibility of attribute to change with aspect ratio
+         * @returns Adjusted value of attribute
+         */
+        const computeNewAttribute = (pos: number, adjustment_factor: number) => {
             const sizes = this.getSizes();
             const aspect = (sizes.width / sizes.height);
-            return threshold / aspect + pos;
+            return adjustment_factor / aspect + pos;
         }
 
+        /**
+         * Sets the new attribute of an object on a single specified axis, based on the progress between two states.
+         * Calculates the 
+         * @param obj Object to change
+         * @param attr Attribute to change
+         * @param axis Axis on attribute to change
+         * @param state_attr Value of specified attribute on bottomState
+         */
         const setNewAttrOnAxis = (obj: THREE.Object3D, attr: string, axis: string, state_attr: string) => {
             const tolerance_attr = state_attr + "_tolerance";
             const top: number = computeNewAttribute((topState as any)[state_attr], (topState as any)[tolerance_attr]);
@@ -485,11 +565,18 @@ export class BGSceneManager {
             (obj as any)[attr][axis] = ( progress * (bottom - top) + top );
         }
 
+        /**
+         * Sets the new attribute of an object on all axes, based on the progress between two states
+         * @param obj 
+         * @param attr 
+         * @param state_attr_prefix 
+         */
         const setNewAttr = (obj: THREE.Object3D, attr: string, state_attr_prefix: string) => {
             setNewAttrOnAxis(obj, attr, "x", state_attr_prefix + "_x");
             setNewAttrOnAxis(obj, attr, "y", state_attr_prefix + "_y");
             setNewAttrOnAxis(obj, attr, "z", state_attr_prefix + "_z");
         }
+
 
         // Set new attributes for position and rotation
         setNewAttr(this.camera, "position", "cam_pos");        
@@ -507,15 +594,13 @@ export class BGSceneManager {
     }
 
 
-    getProgress = (progressY : number) => (0.5 * (-(Math.cos(progressY * Math.PI)) + 1)) ** 1.5;
-
 
    /*****************  TICK  ******************/
 
-    getObjKeys<T extends object>(obj: T) {
-        return Object.keys(obj) as Array<keyof T>;
-    }
-
+    /**
+    * Update function called per tick.
+    * Invokes flicker, and post processing pipeline for final render.
+    */
     update() {
         const elapsedTime = this.clk.getElapsedTime();
 
@@ -523,28 +608,46 @@ export class BGSceneManager {
         this.renderPostProcessing();
     }
 
+    /**
+     * Performs the flicker animation per update call.
+     * @param elapsedTime Time since initialization
+     */
     flicker(elapsedTime: number) {
         if (!this.text) return;
-        for (let key of this.getObjKeys(this.flickerStates)) {
+        for (let key of this.keys(this.flickerStates)) {
             this.flickerStates[key].performFlicker(this.config.flickerTolerance, elapsedTime);
         }
     }
 
-    /*****************  POST PROCESSING & RENDER  ******************/
+    /*****************  POST PROCESSING & RENDER  ******************
+     * Post processing pipeline in this section is heavily referenced from an official three.js example:
+     * https://github.com/mrdoob/three.js/blob/dev/examples/webgl_postprocessing_unreal_bloom_selective.html 
+     */
 
+
+    /**
+     * Calls the post processing pipeline for final render.
+     */
     renderPostProcessing() {
         this.renderBloom();
         this.finalComposer.render();
     }
 
+    /**
+     * Renders the bloom effect.
+     * Darkens non-bloomed objects (not in the Bloom Layer) to black material before render to ensure no bloom is applied. 
+     * Then, applies bloom to all objects (no effect on darkened objects), and restores materials of the darkened objects.
+     */
     renderBloom() {
         this.scene.traverse( this.darkenNonBloomed );
         this.bloomComposer.render();
         this.scene.traverse( this.restoreMaterial );
     }
 
-    // Heavy Reference from: https://threejs.org/examples/webgl_postprocessing_unreal_bloom.html 
-    // https://github.com/mrdoob/three.js/blob/dev/examples/webgl_postprocessing_unreal_bloom_selective.html
+    /**
+     * Initializes and returns the relevant composers for the post processing pipeline.
+     * @returns Object containing created composers
+     */
     getComposers() {
         this.recordMaterials();
 
@@ -596,6 +699,10 @@ export class BGSceneManager {
 
     }
 
+    /**
+     * Records materials at initialization for use in post processing pipeline.
+     * Aids material restoration after darkening.
+     */
     recordMaterials() {
         this.scene.traverse((obj : any) => {
             if (obj.material) {
@@ -604,6 +711,10 @@ export class BGSceneManager {
         })
     }
 
+    /**
+     * Darkens object's material if the object is not in the Bloom Layer.
+     * @param obj Object to check
+     */
     darkenNonBloomed = (obj: any) => {
         const darkMat = new THREE.MeshBasicMaterial( { color: 'black' } )
         if ( obj.isMesh && this.layers[this.BLOOM_LAYER].test( obj.layers ) === false ) {
@@ -611,10 +722,26 @@ export class BGSceneManager {
         }
     }
 
+    /**
+     * Restores the material of a darkened object
+     * @param obj Object to check
+     */
     restoreMaterial = (obj: any ) => {
         if ( this.materials.get(obj.uuid as string) ) {
             obj.material = this.materials.get(obj.uuid as string);
         }
+    }
+
+
+    /*****************  HELPERS  ******************/
+
+    /**
+     * Gets key values of an Object
+     * @param obj Object
+     * @returns Array of object keys
+     */
+    keys<T extends object>(obj: T) {
+        return Object.keys(obj) as Array<keyof T>;
     }
 
  
