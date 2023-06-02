@@ -4,7 +4,12 @@ export interface card {
     desc: string,
     imgs: img[],
     tags: string[]
-    link: string,
+    link: link[],
+}
+
+export interface link {
+    desc: string,
+    url: string,
 }
 
 export interface img {
@@ -54,7 +59,7 @@ const card_feeling_funky = {
         "Graphic",
         "Vector"
     ],
-    link: "",
+    link: [],
 };
 
 
@@ -78,7 +83,7 @@ const card_manners = {
         "Graphic",
         "Vector"
     ],
-    link: "",
+    link: [],
 };
 
 
@@ -118,7 +123,12 @@ const card_help_gebirah = {
         "Software",
         "Programming"
     ],
-    link: "https://sites.google.com/mymail.sutd.edu.sg/pelican/home",
+    link: [
+        {
+            desc: "Project Website",
+            url: "https://sites.google.com/mymail.sutd.edu.sg/pelican/home",
+        },
+    ]
 };
 
 
@@ -159,7 +169,16 @@ const card_ctd = {
         "Design",
         "Programming"
     ],
-    link: "/ctd",
+    link: [
+        {
+            desc: "Demo Link",
+            url: "/ctd",
+        },
+        {
+            desc: "File Repo",
+            url: "https://github.com/keee99/portfolio-app-1/blob/main/src/threejs/CTDSceneManager.ts",
+        },
+    ],
 };
 
 
@@ -204,7 +223,16 @@ const card_rainyday = {
         "Firebase",
         "Programming"
     ],
-    link: "https://istd.sutd.edu.sg/term4-design-exhibition/50001/rainy-day",
+    link: [ 
+        {
+            desc: "Project Website",
+            url: "https://istd.sutd.edu.sg/term4-design-exhibition/50001/rainy-day",
+        },
+        {
+            desc: "Project Repo",
+            url: "https://github.com/keee99/RainyDayApp",
+        },
+    ],
 };
 
 
@@ -236,7 +264,7 @@ const card_urop = {
         "Programming",
         "MongoDB"
     ],
-    link: "",
+    link: [],
 };
 
 
@@ -269,7 +297,12 @@ const card_sutdopoly = {
         "Firebase",
         "Programming",
     ],
-    link: "https://github.com/keee99/SUTDopoly",
+    link: [
+        {
+            desc: "Project Repo",
+            url: "https://github.com/keee99/SUTDopoly",
+        },
+    ]
 };
     
 export const cards: card[] = [

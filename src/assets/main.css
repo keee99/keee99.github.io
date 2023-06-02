@@ -317,6 +317,8 @@ a {
 /* Primevue PanelMenu */
 .p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action {
   font-family: 'Beon', monospace;
+  color: var(--color-text-darkest);
+  font-weight: bold;
 
 }
 
@@ -330,7 +332,17 @@ a {
 
 .p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover {
   background: var(--color-light-focus);
+}
 
+.p-panelmenu .p-panelmenu-content .p-menuitem > .p-menuitem-content .p-menuitem-link {
+  padding: 0.25rem 1.25rem;
+}
+
+.p-panelmenu .p-panelmenu-content .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
+  color: var(--color-text-dark);
+  font-weight: light;
+  border-bottom: 1px dotted var(--color-medium);
+  width: 100%;
 }
 
 /* Primevue Sidebar */

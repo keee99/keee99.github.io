@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-import type { img } from '../common/PortfolioItems'
+import type { img, link } from '../common/PortfolioItems'
 import type { PropType } from 'vue'
 
 import { ref } from "vue";
@@ -26,7 +26,7 @@ const props = defineProps({
     type: Array as PropType<string[]>,
     required: true
   },
-  link: String,
+  link: Array as PropType<link[]>,
 })
 
 
@@ -44,7 +44,7 @@ const monthIndex = [
   "Jan", "Feb", "Mar", "Apr", "May", "Jun", 
   "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 const getDateString = () => monthIndex[props.date.getMonth()] + " " + props.date.getFullYear();
-
+const getLinkDesc = (link: link) => (link.url.startsWith("http")) ? link.desc + " (External Link)" : link.desc;
 
 
 </script>
@@ -107,8 +107,8 @@ const getDateString = () => monthIndex[props.date.getMonth()] + " " + props.date
 
 
                     <div class="col-1" :class="{'dialog-text-maximized': maximized, 'dialog-text': !maximized}">
-                        <p v-if="props.link">
-                            <a :href="props.link" target="_blank">Link</a>
+                        <p v-if="props.link" v-for="link in props.link" >
+                            <a :href="link.url" target="_blank">{{ getLinkDesc(link) }}</a>
                         </p>
                         <p class="date">{{ getDateString() }}</p>
                         <p>{{ props.desc }}</p>

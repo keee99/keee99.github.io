@@ -56,7 +56,7 @@ onMounted(() => {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100%;
+  width: 50%;
   height: 100px;
   z-index: 1;
   display: flex;
@@ -65,10 +65,18 @@ onMounted(() => {
 
 h1 {
   font-family: Beon, monospace;
+  font-size: 1rem;
 }
 
 h2 {
   font-family: monospace;
+  font-size: 0.7rem;
+}
+
+p {
+  margin-top: 1rem;
+  font-family: monospace;
+  font-size: 0.7rem;
 }
 
 </style>

@@ -58,9 +58,11 @@
   --color-text-focus: #ffd8e3;
   --color-text: #ffffff;
   --color-text-dark:#7c7d7e;
+  --color-text-darkest: #000000;
 
   --color-light: #ffffff;
   --color-light-focus: #f1f1f1;
+  --color-medium: #d5d5d5;
   --color-dark: #919191;
   --color-dark-focus: #555555;
 
