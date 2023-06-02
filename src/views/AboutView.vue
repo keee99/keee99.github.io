@@ -47,7 +47,7 @@ const skills = ref([
 <template>
     <main class="main-container">
     
-        <div class="flex-right">
+        <div id="about-tabs-container" class="flex-right">
             <div class="col-2">
 
                 <!-- <img src="../assets/images/profile.png" style="width: 50vw"/> -->
@@ -221,6 +221,15 @@ strong {
     color: var(--color-text-dark);
 
 }
+
+
+@media (max-width: 768px) {
+    #about-tabs-container .col-2 {
+        flex: 0 0 99%
+    }
+
+} 
+
 
 
 

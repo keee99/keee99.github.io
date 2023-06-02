@@ -77,7 +77,6 @@ const getDateString = () => monthIndex[props.date.getMonth()] + " " + props.date
             @maximize="onMaximize"
             @unmaximize="onMinimize"
             :header="props.title" 
-            :style="{ width: '50vw' }"
             class="neon-border">
                 
                 <div class="flex-center" >
@@ -109,8 +108,7 @@ const getDateString = () => monthIndex[props.date.getMonth()] + " " + props.date
 
                     <div class="col-1" :class="{'dialog-text-maximized': maximized, 'dialog-text': !maximized}">
                         <p v-if="props.link">
-                            Link: 
-                            <a :href="props.link" target="_blank">{{ props.link }}</a>
+                            <a :href="props.link" target="_blank">Link</a>
                         </p>
                         <p class="date">{{ getDateString() }}</p>
                         <p>{{ props.desc }}</p>
@@ -138,6 +136,8 @@ const getDateString = () => monthIndex[props.date.getMonth()] + " " + props.date
 
     a {
         color: var(--color-text-header);
+        border-bottom: 1px solid var(--color-text-header);
+        box-sizing: border-box;
     }
 
     .main-container {
@@ -219,6 +219,7 @@ const getDateString = () => monthIndex[props.date.getMonth()] + " " + props.date
     }
 
     .dialog-text {
+        max-width: 100%;
         margin-top: 1rem;
         padding: 1rem;
         
@@ -245,6 +246,13 @@ const getDateString = () => monthIndex[props.date.getMonth()] + " " + props.date
         margin: 0 1rem;
     }
 
+    @media (max-width: 768px) {
+        .dialog-img {
+            width: 60%;
+            height: auto;
+        }
+
+    }
     
 
 

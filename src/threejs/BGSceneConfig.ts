@@ -1,8 +1,6 @@
 // TODO: Change to camel case
 export const bgSceneConfig : BGSceneConfigInterface = {
 
-    enableOrbitControls: true,
-
     bg_color: 0x000000,
     ambientColor: 0x111133,
     ambientIntensity: 0.1,
@@ -30,8 +28,6 @@ export const bgSceneConfig : BGSceneConfigInterface = {
 }
 
 export interface BGSceneConfigInterface {
-
-    enableOrbitControls: boolean;
 
     bg_color: number;
     ambientColor: number;

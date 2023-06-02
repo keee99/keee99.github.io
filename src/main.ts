@@ -22,6 +22,7 @@ import Dialog from 'primevue/dialog';
 import Galleria from 'primevue/galleria';
 import PanelMenu from 'primevue/panelmenu';
 import ScrollTop from 'primevue/scrolltop';
+import Sidebar from 'primevue/sidebar';
 import TabMenu from 'primevue/tabmenu';
 
 import "./assets/main.css";
@@ -40,6 +41,7 @@ app.component('Dialog', Dialog);
 app.component('Galleria', Galleria);
 app.component('PanelMenu', PanelMenu);
 app.component('ScrollTop', ScrollTop);
+app.component('Sidebar', Sidebar);
 app.component('TabMenu', TabMenu);
 
 

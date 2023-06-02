@@ -131,8 +131,7 @@ a {
   color: var(--color-secondary-lighter);
   text-shadow: 0 0 5px var(--color-secondary),
                0 0 10px var(--color-secondary),
-               0 0 20px var(--color-secondary),
-               0 0 40px var(--color-secondary);
+               0 0 20px var(--color-secondary);
 }
 
 .neon-text-primary {
@@ -297,6 +296,10 @@ a {
   transition-timing-function: ease-in-out;
 }
 
+.p-dialog-mask .p-dialog {
+  width: 50%;
+}
+
 .p-dialog .p-dialog-header {
   background-color: var(--color-background);
 }
@@ -329,23 +332,49 @@ a {
   background: var(--color-light-focus);
 
 }
-/* TODO - styling: media styling */
-/* 
-@media (hover: hover) {
-  a:hover {
-    background-color: hsla(160, 100%, 37%, 0.2);
+
+/* Primevue Sidebar */
+.p-sidebar {
+  background-color: var(--color-background);
+  color: var(--color-text);
+}
+
+.p-sidebar .p-sidebar-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20vh 10vw;
+  
+}
+
+@media (max-width: 768px) {
+
+  .app-topbar {
+    padding: 5%;
+  }
+
+  .p-dialog-mask .p-dialog {
+    width: 90%;
+  }
+
+  .dialog-img {
+    width: 60vw;
+    height: 40vw;
+  }
+
+  .p-dialog .p-dialog-header .p-dialog-header-maximize {
+    visibility: hidden;
   }
 }
 
-@media (min-width: 1024px) {
-  body {
-    display: flex;
-    place-items: center;
+
+@media (max-width: 480px) {
+
+  .p-galleria .p-galleria-caption {
+    visibility: hidden;
   }
 
-  #app {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 0 2rem;
-  }
-} */
+
+}

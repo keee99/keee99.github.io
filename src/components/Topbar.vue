@@ -17,20 +17,24 @@ const socials = ref([
   {name: "instagram", link: "https://www.instagram.com/jayjay_koh/"}, 
   {name: "envelope", link: "mailto:kohjim99@gmail.com"},
 ]);
-
-
-const activeItem = toRef(props, "active")
-
+const screenWidth = ref(window.innerWidth);
+const activeItem = toRef(props, "active");
+const sideBarVisible = ref(false);
 
 const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
+
+const onResize = () => screenWidth.value = window.innerWidth;
+const screenThreshold = 767;
+window.addEventListener('resize', onResize);
+
 </script>
 
 <template>
   <main>
-    <div class="app-topbar">
+    <div class="app-topbar" v-if="screenWidth > screenThreshold ">
         
         <div class="topbar-start">
-          <a class="topbar-title neon-text-primary" href="/#home">J  j</a>
+          <a class="topbar-title neon-text-primary" href="/#home">Jj</a>
           
           <a class="topbar-link" 
             :class="{ 'topbar-link-active': activeItem === item, 'topbar-link-inactive': activeItem !== item }"
@@ -62,6 +66,41 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
           </a>
           
           
+        </div>
+        
+    </div>
+
+    <!-- Small screen size topbar -->
+    <div class="app-topbar" v-if="screenWidth <= 768 ">
+        
+        <div class="topbar-start">
+          <a class="topbar-title neon-text-primary" href="/#home">Jj</a>
+        </div>
+        <div class="topbar-end">
+          <Sidebar v-model:visible="sideBarVisible" position="full" id="app-sidebar" class="neon-border">
+            
+            <div class="sidebar-links">
+              <a class="topbar-link sidebar-col" 
+                :class="{ 'topbar-link-active': activeItem === item, 'topbar-link-inactive': activeItem !== item }"
+                v-for="item in navStartItems" :to="{path: item}"
+                :href="'#' + item" 
+                @click="sideBarVisible=false">
+                <div class="topbar-text">
+                  {{ capitalize(item) }}
+                </div>
+              </a>
+            </div>
+
+            <div class="sidebar-socials">
+              <a class="topbar-link sidebar-col" 
+                v-for="item in socials"
+                :href='item.link' target="_blank">
+                <i class="social-i pi" :class="'pi-' + item.name"></i>
+              </a>
+            </div>
+            
+          </Sidebar>
+          <i class="pi pi-bars topbar-hamburger neon-text-secondary" @click="sideBarVisible=true" />
         </div>
         
     </div>
@@ -173,6 +212,55 @@ const capitalize = (str: String) => str.charAt(0).toUpperCase() + str.slice(1);
                 0 0 20px var(--color-secondary);
   }
 
+  .topbar-hamburger {
+    color: var(--color-secondary);
+    font-size: 1.5rem;
+    font-weight: bolder;
+    margin: 0 5% 0 0;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .topbar-hamburger:hover {
+    color: white;
+    text-shadow: 0 0 5px var(--color-secondary-light),
+                0 0 10px var(--color-secondary-light),
+                0 0 20px var(--color-secondary-light);
+    transition-timing-function: ease-in-out;
+    transition: 0.15s;
+  }
+
+  .topbar-link.sidebar-col {
+    font-size: 1.5rem;
+    width: 100%;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+
+  }
+
+  .sidebar-links + .sidebar-socials {
+    border-top: 1px solid var(--color-text-dark);
+    padding-top: 3rem;
+    margin-top: 2rem;
+  }
+  .sidebar-socials {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .sidebar-socials .topbar-link.sidebar-col {
+    font-size: 3rem;
+    height: 4.5rem;
+
+  }
+  .sidebar-socials .topbar-link.sidebar-col i {
+    font-size: 1.5rem;
+
+  }
 
 
 </style>
