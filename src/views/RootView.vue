@@ -23,7 +23,7 @@ function sectionObserverHandler (entries: IntersectionObserverEntry[]) {
     if (entry.isIntersecting) {
         const sectionId = entry.target.id
         if (route.name === null) return;
-        addHashToLocation(sectionId)
+        // addHashToLocation(sectionId)
         activeSection.value = sectionId;
     }
   }
