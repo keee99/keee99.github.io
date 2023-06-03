@@ -9,8 +9,8 @@ export const bgSceneConfig : BGSceneConfigInterface = {
 
     text: "Jia Jun's",
     subtext: "Portfolio",
-    textFontPath: "/fonts/beon_medium.typeface.json",
-    subtextFontPath: "/fonts/bettina_signature_regular.typeface.json",
+    textFontPath: "fonts/beon_medium.typeface.json",
+    subtextFontPath: "fonts/bettina_signature_regular.typeface.json",
     textColor: 0xff8866,
     subtextColor: 0xff88aa,
     borderColor: 0x00ff00,
