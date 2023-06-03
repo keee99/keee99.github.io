@@ -34,7 +34,7 @@ window.addEventListener('resize', onResize);
     <div class="app-topbar" v-if="screenWidth > screenThreshold ">
         
         <div class="topbar-start">
-          <a class="topbar-title neon-text-primary" href="/#home">Jj</a>
+          <a class="topbar-title neon-text-primary" href="#home">Jj</a>
           
           <a class="topbar-link" 
             :class="{ 'topbar-link-active': activeItem === item, 'topbar-link-inactive': activeItem !== item }"

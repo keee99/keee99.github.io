@@ -172,7 +172,7 @@ const card_ctd = {
     link: [
         {
             desc: "Demo Link",
-            url: "/ctd",
+            url: "./ctd",
         },
         {
             desc: "File Repo",
