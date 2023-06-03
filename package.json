@@ -10,7 +10,7 @@
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "deploy": "node scripts/gh-pages-deploy.js"
+    "deploy": "node scripts/deploy_ghpages.js"
   },
   "dependencies": {
     "lil-gui": "^0.18.1",
