@@ -38,7 +38,7 @@ window.addEventListener('resize', onResize);
           
           <a class="topbar-link" 
             :class="{ 'topbar-link-active': activeItem === item, 'topbar-link-inactive': activeItem !== item }"
-            v-for="item in navStartItems" :to="{path: item}"
+            v-for="item in navStartItems"
             :href="'#' + item">
             <div class="topbar-text">
               {{ capitalize(item) }}
@@ -52,7 +52,7 @@ window.addEventListener('resize', onResize);
               'topbar-link-active': activeItem === item, 
               'topbar-link-inactive': activeItem !== item 
             }"
-            v-for="item in navEndItems" :to="{path: item}"
+            v-for="item in navEndItems" 
             :href="'#' + item">
             <div class="topbar-text">
               {{ capitalize(item) }}
@@ -82,7 +82,7 @@ window.addEventListener('resize', onResize);
             <div class="sidebar-links">
               <a class="topbar-link sidebar-col" 
                 :class="{ 'topbar-link-active': activeItem === item, 'topbar-link-inactive': activeItem !== item }"
-                v-for="item in navStartItems" :to="{path: item}"
+                v-for="item in navStartItems"
                 :href="'#' + item" 
                 @click="sideBarVisible=false">
                 <div class="topbar-text">
@@ -242,8 +242,7 @@ window.addEventListener('resize', onResize);
 
   .sidebar-links + .sidebar-socials {
     border-top: 1px solid var(--color-text-dark);
-    padding-top: 3rem;
-    margin-top: 2rem;
+    padding-top: 5rem;
   }
   .sidebar-socials {
     display: flex;

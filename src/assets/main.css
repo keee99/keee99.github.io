@@ -158,8 +158,10 @@ a {
 /* PRIMEVUE OVERRIDES */
 
 /* Primvue Accordion */
-/* .p-accordion .p-accordion-content {
-} */
+.p-accordion .p-accordion-content {
+  max-height: 60vh;
+  overflow-y: scroll;
+}
 
 .p-accordion .p-accordion-header .p-accordion-header-link {
   color:rgb(255, 0, 0);

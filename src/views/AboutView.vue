@@ -58,7 +58,7 @@ const skills = ref([
                     <AccordionTab header="Background">
 
                         <div class="tab-content">   
-                            <p>
+                            <p class="tab-text">
                                 I'm Jia Jun, JJ, a final year undergrad at SUTD, pursuing a Bachelor's in Computer Science and Design. 
                                 I'm interested in fullstack software dev roles. 
                                 I'm also looking to explore interactive applications, XR/VR/AR, and 3D libraries, such as three.js used to make this site!
@@ -73,7 +73,7 @@ const skills = ref([
                             <div>Singapore University of Techology and Design</div>
                             <div>Grade: 4.90/5</div> 
                             <div class="tab-date">Sep 2020 - May 2024</div> 
-                            <div>
+                            <div class="tab-text">
                                 <strong>Achievements:</strong> 
                                 <ul>
                                     <li>Honour's List (AY20/21, AY21/22)</li>
@@ -97,7 +97,7 @@ const skills = ref([
                             <div class="tab-title">SHINE Software Development Intern</div>   
                             <div>Singtel, 5G Platform & Product Dept.</div>
                             <div class="tab-date">June 2021 - Aug 2021</div> 
-                            <div>
+                            <div class="tab-text">
                                 <strong>Tools:</strong>
                                 <ul>
                                     <li><strong>Backend:</strong> Spring Boot, Keycloak</li>
@@ -107,7 +107,7 @@ const skills = ref([
                                 </ul>
                             </div>
                             <br>
-                            <p>
+                            <p class="tab-text">
                                 Resumed the development of an internal Credential Management tool.
                                 Managed to successfully debug, deploy and develop new features.
                                 Development work primarily focused on backend programming, but also involved frontend work for integration.
@@ -117,7 +117,7 @@ const skills = ref([
                             <div class="tab-title">Research Project Backend Lead</div>
                             <div>Singapore University of Technology and Design</div>  
                             <div class="tab-date">June 2021 - Aug 2021</div>
-                            <div>
+                            <div class="tab-text">
                                 <strong>Tools:</strong> 
                                 <ul>
                                     <li><strong>Backend:</strong> Node.js, Express.js</li>
@@ -125,7 +125,7 @@ const skills = ref([
                                 </ul>  
                             </div>  
                             <br>
-                            <p>
+                            <p class="tab-text">
                                 Worked in a small team to build a Web platform for enterprise evaluation and training of employee EQ.
                                 Developed the backend server, including RESTful API and user authentication system.
                                 Presented the working prototype to the stakeholder and project supervisor.
@@ -220,6 +220,10 @@ strong {
     margin-bottom: 0.5rem;
     color: var(--color-text-dark);
 
+}
+
+.tab-text {
+    font-size: 0.95rem;
 }
 
 

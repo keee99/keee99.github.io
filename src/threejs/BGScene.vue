@@ -32,7 +32,14 @@ onMounted(() => {
 
     function animate() {
         sceneManager.update();
-        requestAnimationFrame(animate);  
+        // requestAnimationFrame(animate);
+
+        /* Limit to 60FPS */
+        setTimeout( function() {
+                requestAnimationFrame(animate);
+            }, 
+            1000 / 60
+        );
     }
     animate();
 });
@@ -51,3 +58,10 @@ onMounted(() => {
 </template>
 
 
+<style>
+
+.webgl {
+    transform: translateZ(0); /* Does this work? */
+}
+
+</style>
