@@ -3,9 +3,7 @@
 
 /* Global CSS */
 
-#app {
-
-}
+#app {}
 
 a {
   text-decoration: none;
@@ -19,14 +17,19 @@ a {
   justify-content: space-between;
   align-items: stretch;
 
-  position:fixed; 
-  left:0;           /* top left corner should start at leftmost spot */
-  top:0;            /* top left corner should start at topmost spot */
-  width:100%;      /* take up the full browser width */
-  z-index:200;  /* high z index so other content scrolls underneath */
+  position: fixed;
+  left: 0;
+  /* top left corner should start at leftmost spot */
+  top: 0;
+  /* top left corner should start at topmost spot */
+  width: 100%;
+  /* take up the full browser width */
+  z-index: 200;
+  /* high z index so other content scrolls underneath */
   height: 8vh;
   padding: 0 20%;
-  background-color: var(--color-topbar);;
+  background-color: var(--color-topbar);
+  ;
 
   /* border: 2px solid;
   border-color: rgb(0, 85, 255); */
@@ -41,23 +44,23 @@ a {
   height: 2px;
   background-color: var(--color-secondary);
   box-shadow: 0 0 5px var(--color-secondary),
-              0 0 10px var(--color-secondary),
-              0 0 20px var(--color-secondary),
-              0 0 40px var(--color-secondary),
-              0 0 80px var(--color-secondary),
-              0 0 90px var(--color-secondary),
-              0 0 150px var(--color-secondary),
-              0 0 200px var(--color-secondary),
-              0 0 270px var(--color-secondary);
+    0 0 10px var(--color-secondary),
+    0 0 20px var(--color-secondary),
+    0 0 40px var(--color-secondary),
+    0 0 80px var(--color-secondary),
+    0 0 90px var(--color-secondary),
+    0 0 150px var(--color-secondary),
+    0 0 200px var(--color-secondary),
+    0 0 270px var(--color-secondary);
 }
 
 
 .app-body {
-  
+
   font-weight: normal;
   border: 1rem;
   padding: 2rem 20%;
-  left:0;
+  left: 0;
   top: 8vh;
 
 
@@ -130,25 +133,25 @@ a {
 .neon-text-secondary {
   color: var(--color-secondary-lighter);
   text-shadow: 0 0 5px var(--color-secondary),
-               0 0 10px var(--color-secondary),
-               0 0 20px var(--color-secondary);
+    0 0 10px var(--color-secondary),
+    0 0 20px var(--color-secondary);
 }
 
 .neon-text-primary {
   color: var(--color-primary-lighter);
   text-shadow: 0 0 5px var(--color-primary),
-              0 0 10px var(--color-primary),
-              0 0 20px var(--color-primary),
-              0 0 40px var(--color-primary),
-              0 0 80px var(--color-primary-light),
-              0 0 90px var(--color-primary-light),
-              0 0 100px var(--color-primary-light);
+    0 0 10px var(--color-primary),
+    0 0 20px var(--color-primary),
+    0 0 40px var(--color-primary),
+    0 0 80px var(--color-primary-light),
+    0 0 90px var(--color-primary-light),
+    0 0 100px var(--color-primary-light);
 }
 
 .neon-border {
   border: 2px solid var(--color-secondary-lighter);
   box-shadow: 0 0 5px var(--color-secondary),
-              0 0 15px var(--color-secondary);
+    0 0 15px var(--color-secondary);
 
 }
 
@@ -164,7 +167,7 @@ a {
 }
 
 .p-accordion .p-accordion-header .p-accordion-header-link {
-  color:rgb(255, 0, 0);
+  color: rgb(255, 0, 0);
   background-color: black;
 }
 
@@ -173,14 +176,14 @@ a {
   box-sizing: border-box;
   border-color: var(--color-secondary-lighter);
   box-shadow: 0 0 5px var(--color-secondary),
-              0 0 10px var(--color-secondary),
-              0 0 30px var(--color-secondary);
+    0 0 10px var(--color-secondary),
+    0 0 30px var(--color-secondary);
 }
 
 .p-accordion-header-text {
   font-family: 'Beon';
   font-weight: bolder;
-  
+
 }
 
 .p-accordion .p-accordion-header:not(.p-highlight) .p-accordion-header-link {
@@ -195,8 +198,8 @@ a {
 .p-accordion-tab.p-accordion-tab-active {
   border-radius: 6px;
   box-shadow: 0 0 5px var(--color-secondary),
-              0 0 10px var(--color-secondary),
-              0 0 12px var(--color-secondary);
+    0 0 10px var(--color-secondary),
+    0 0 12px var(--color-secondary);
 }
 
 
@@ -233,15 +236,15 @@ a {
   outline-offset: none;
 }
 
-.p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover  {
+.p-tabmenu .p-tabmenu-nav .p-tabmenuitem:not(.p-highlight):not(.p-disabled):hover {
   background: var(--color-light);
   border-radius: 10%;
   border-color: var(--color-secondary-lighter);
   color: var(--color-text-dark);
   box-sizing: border-box;
   box-shadow: 0 0 5px var(--color-secondary),
-              0 0 10px var(--color-secondary),
-              0 0 30px var(--color-secondary);
+    0 0 10px var(--color-secondary),
+    0 0 30px var(--color-secondary);
   transition: 0.15s;
   transition-timing-function: ease-in-out;
 }
@@ -260,13 +263,13 @@ a {
   height: 2px;
   background-color: var(--color-secondary-lighter);
   box-shadow: 0 0 5px var(--color-secondary),
-              0 0 10px var(--color-secondary),
-              0 0 20px var(--color-secondary),
-              0 0 40px var(--color-secondary),
-              0 0 80px var(--color-secondary),
-              0 0 90px var(--color-secondary),
-              0 0 130px var(--color-secondary),
-              0 0 170px var(--color-secondary-light);
+    0 0 10px var(--color-secondary),
+    0 0 20px var(--color-secondary),
+    0 0 40px var(--color-secondary),
+    0 0 80px var(--color-secondary),
+    0 0 90px var(--color-secondary),
+    0 0 130px var(--color-secondary),
+    0 0 170px var(--color-secondary-light);
   transition: 0.25s;
   transition-timing-function: ease-in-out;
 }
@@ -276,7 +279,7 @@ a {
   font-family: 'Beon', monospace;
   color: var(--color-primary-light);
   text-shadow: 0 0 5px var(--color-primary),
-              0 0 8px var(--color-primary);
+    0 0 8px var(--color-primary);
 }
 
 .p-dialog .p-dialog-header .p-dialog-title::after {
@@ -288,12 +291,12 @@ a {
   height: 2px;
   background-color: var(--color-secondary-lighter);
   box-shadow: 0 0 5px var(--color-secondary),
-              0 0 10px var(--color-secondary),
-              0 0 20px var(--color-secondary),
-              0 0 40px var(--color-secondary),
-              0 0 80px var(--color-secondary),
-              0 0 90px var(--color-secondary),
-              0 0 100px var(--color-secondary);
+    0 0 10px var(--color-secondary),
+    0 0 20px var(--color-secondary),
+    0 0 40px var(--color-secondary),
+    0 0 80px var(--color-secondary),
+    0 0 90px var(--color-secondary),
+    0 0 100px var(--color-secondary);
   transition: 0.25s;
   transition-timing-function: ease-in-out;
 }
@@ -328,19 +331,19 @@ a {
   cursor: default;
 }
 
-.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus > .p-menuitem-content {
+.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled).p-focus>.p-menuitem-content {
   background: var(--color-background-light);
 }
 
-.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled) > .p-menuitem-content:hover {
+.p-panelmenu .p-panelmenu-content .p-menuitem:not(.p-highlight):not(.p-disabled)>.p-menuitem-content:hover {
   background: var(--color-light-focus);
 }
 
-.p-panelmenu .p-panelmenu-content .p-menuitem > .p-menuitem-content .p-menuitem-link {
+.p-panelmenu .p-panelmenu-content .p-menuitem>.p-menuitem-content .p-menuitem-link {
   padding: 0.25rem 1.25rem;
 }
 
-.p-panelmenu .p-panelmenu-content .p-menuitem > .p-menuitem-content .p-menuitem-link .p-menuitem-text {
+.p-panelmenu .p-panelmenu-content .p-menuitem>.p-menuitem-content .p-menuitem-link .p-menuitem-text {
   color: var(--color-text-dark);
   font-weight: light;
   border-bottom: 1px dotted var(--color-medium);
@@ -358,9 +361,8 @@ a {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: auto 10vw;
 
-  padding: 20vh 10vw;
-  
 }
 
 @media (max-width: 768px) {
