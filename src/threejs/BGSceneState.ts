@@ -29,7 +29,7 @@ export class BGSceneState {
     textBorderVisibility: boolean;
 
     flickerTolerance: number;
-    
+
     constructor() {
         this.cam_pos_x_tolerance = 0;
         this.cam_pos_y_tolerance = 0;
@@ -50,7 +50,7 @@ export class BGSceneState {
         this.obj_pos_x_tolerance = 0;
         this.obj_pos_y_tolerance = 0;
         this.obj_pos_z_tolerance = 0;
-    
+
         this.obj_pos_x = 0;
         this.obj_pos_y = 0;
         this.obj_pos_z = 0;
@@ -61,7 +61,7 @@ export class BGSceneState {
 
         this.flickerTolerance = 0.005;
     }
-    
+
     setCameraPosTolerance(x: number, y: number, z: number) {
         this.cam_pos_x_tolerance = x;
         this.cam_pos_y_tolerance = y;
@@ -83,7 +83,7 @@ export class BGSceneState {
         return this;
     }
 
-    setCameraRotTolerance(x: number, y: number, z: number) {  
+    setCameraRotTolerance(x: number, y: number, z: number) {
         this.cam_rot_x_tolerance = x;
         this.cam_rot_y_tolerance = y;
         this.cam_rot_z_tolerance = z;
@@ -135,10 +135,10 @@ export const bgSceneHomeState = new BGSceneState()
 
 export const bgSceneAboutState = new BGSceneState()
     .setCameraPos(0, 2, 5)
-    .setCameraPosTolerance(0.6, 0, 2)
+    .setCameraPosTolerance(0.6, 0, 3)
 
     .setCameraRot(0, -0.5, 0)
-    .setCameraRotTolerance(0, 0.25, 0)
+    .setCameraRotTolerance(0, 0.3, 0)
 
     .setSubtextVisibility(false)
 
