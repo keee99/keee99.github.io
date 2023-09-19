@@ -35,9 +35,9 @@ onMounted(() => {
         // requestAnimationFrame(animate);
 
         /* Limit to 60FPS */
-        setTimeout( function() {
-                requestAnimationFrame(animate);
-            }, 
+        setTimeout(function () {
+            requestAnimationFrame(animate);
+        },
             1000 / 60
         );
     }
@@ -50,18 +50,17 @@ onMounted(() => {
 
 
 <template>
-  <main>
-    <div>
-        <canvas ref="bgscene" class="webgl"></canvas>
-    </div>
-  </main>
+    <main>
+        <div>
+            <canvas ref="bgscene" class="webgl"></canvas>
+        </div>
+    </main>
 </template>
 
 
 <style>
-
 .webgl {
-    transform: translateZ(0); /* Does this work? */
+    transform: translateZ(0);
+    /* Does this work? */
 }
-
 </style>

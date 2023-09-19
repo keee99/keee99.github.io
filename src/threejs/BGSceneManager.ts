@@ -48,12 +48,12 @@ class FlickerState {
      * @param flickerTolerance Likelihood of flickering per update call
      * @param elapsedTime Time elapsed since initialization
      */
-    performFlicker (flickerTolerance: number, elapsedTime: number) {
+    performFlicker(flickerTolerance: number, elapsedTime: number) {
         if (this.flickerEnabled) {
             if (this.obj.visible && Math.random() < flickerTolerance) {
                 this.obj.visible = false;
                 this.flickerTime = elapsedTime + this.max_flicker_time * Math.random();
-                
+
             } else if (elapsedTime > this.flickerTime) {
                 this.obj.visible = true;
             }
@@ -65,7 +65,7 @@ class FlickerState {
      * @param enabled If true, enable flicker. 
      * @param toggleVisibility If true, "enabled" param enable/disables the obj as well (obj visibility)
      */
-    setFlickerEnabled (enabled: boolean, toggleVisibility: boolean = false) {
+    setFlickerEnabled(enabled: boolean, toggleVisibility: boolean = false) {
         this.flickerEnabled = enabled;
         if (toggleVisibility) this.obj.visible = enabled;
     }
@@ -115,7 +115,7 @@ export class BGSceneManager {
     finalComposer: EffectComposer;
     materials: Map<string, THREE.Material> = new Map();
 
-    
+
     constructor(canvas: HTMLCanvasElement, config: BGSceneConfigInterface, props: BGProps) {
         this.props = props;
         this.config = config;
@@ -145,7 +145,7 @@ export class BGSceneManager {
 
 
     /*****************  ESSENTIALS  ******************/
-    
+
     /**
      * Initializes a number of layers for the scene. Default number = 2
      */
@@ -198,13 +198,13 @@ export class BGSceneManager {
         const sizes = this.getSizes()
         const aspect = (sizes.width / sizes.height);
         const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 1, 100);
-        
+
         this.scene.add(camera)
         return camera;
     }
 
 
-    /*****************  OBJECTS  ******************/   
+    /*****************  OBJECTS  ******************/
 
     /**
      * Create and add the subtext object and it's lighting to the scene
@@ -222,7 +222,7 @@ export class BGSceneManager {
                 this.subtext.add(textMesh)
                 this.subtext.add(this.createSubtextLight())
                 this.scene.add(this.subtext)
-        });
+            });
 
     }
 
@@ -242,7 +242,7 @@ export class BGSceneManager {
                  * Text 3D
                  */
                 const textMesh = this.createTextMesh(font, textMaterial, this.config.text, 0.5);
-                textMesh.layers.toggle(this.BLOOM_LAYER)      
+                textMesh.layers.toggle(this.BLOOM_LAYER)
                 this.text.add(textMesh)
                 this.text.add(this.creaeteTextLight());
                 this.scene.add(this.text)
@@ -291,7 +291,7 @@ export class BGSceneManager {
      * @returns Border Mesh bordering the given box on the x-y plane, at z=0
      */
     createBorderMesh(boundingBox: THREE.Box3 = new THREE.Box3().setFromObject(this.text)) {
-        
+
         const borderMaterial = new THREE.MeshBasicMaterial({ color: this.config.borderColor });
 
         // Border parameters
@@ -299,21 +299,21 @@ export class BGSceneManager {
         const thickness = this.config.thickness;
         const borderRad = pos_offset;
 
-        
+
         // Create 2D bounding Border
         const width = boundingBox.max.x - boundingBox.min.x;
         const height = boundingBox.max.y - boundingBox.min.y;
 
-        const hori_pos = width/2 + pos_offset
-        const vert_pos = height/2 + pos_offset
+        const hori_pos = width / 2 + pos_offset
+        const vert_pos = height / 2 + pos_offset
         const border_hori_offset = hori_pos - borderRad
         const border_vert_offset = vert_pos - borderRad
-        
-        const borderConnectorTorus = new THREE.TorusGeometry(borderRad, thickness, 12, 12, Math.PI/2)
+
+        const borderConnectorTorus = new THREE.TorusGeometry(borderRad, thickness, 12, 12, Math.PI / 2)
         const vertBorder = new THREE.CylinderGeometry(thickness, thickness, height)
         const horiBorder = new THREE.CylinderGeometry(thickness, thickness, width).rotateZ(Math.PI / 2)
-        
-        
+
+
         const borderMeshes = {
             t: new THREE.Mesh(horiBorder, borderMaterial),
             b: new THREE.Mesh(horiBorder, borderMaterial),
@@ -323,7 +323,7 @@ export class BGSceneManager {
             tl: new THREE.Mesh(borderConnectorTorus, borderMaterial),
             br: new THREE.Mesh(borderConnectorTorus, borderMaterial),
             bl: new THREE.Mesh(borderConnectorTorus, borderMaterial),
-        } 
+        }
 
         borderMeshes.t.position.set(0, vert_pos, 0)
         borderMeshes.b.position.set(0, -vert_pos, 0)
@@ -331,16 +331,16 @@ export class BGSceneManager {
         borderMeshes.r.position.set(-hori_pos, 0, 0)
 
         borderMeshes.tr.position.set(border_hori_offset, border_vert_offset, 0)
-        borderMeshes.tl.position.set(-border_hori_offset , border_vert_offset, 0)
+        borderMeshes.tl.position.set(-border_hori_offset, border_vert_offset, 0)
         borderMeshes.br.position.set(border_hori_offset, -border_vert_offset, 0)
         borderMeshes.bl.position.set(-border_hori_offset, -border_vert_offset, 0)
 
-        borderMeshes.tl.rotation.z = Math.PI / 2 
+        borderMeshes.tl.rotation.z = Math.PI / 2
         borderMeshes.bl.rotation.z = Math.PI
-        borderMeshes.br.rotation.z = 3 * Math.PI / 2 
-        
+        borderMeshes.br.rotation.z = 3 * Math.PI / 2
 
-        const textBorder = new THREE.Group(); 
+
+        const textBorder = new THREE.Group();
         for (let key of this.keys(borderMeshes)) {
             borderMeshes[key].layers.toggle(this.BLOOM_LAYER);
             textBorder.add(borderMeshes[key]);
@@ -354,7 +354,7 @@ export class BGSceneManager {
      */
     buildCentralObject() {
         const geometry = new THREE.SphereGeometry(1, 5, 5)
-        const material = new THREE.MeshLambertMaterial( { color: 'white', wireframe: false } );
+        const material = new THREE.MeshLambertMaterial({ color: 'white', wireframe: false });
         const mesh = new THREE.Mesh(geometry, material);
 
         mesh.receiveShadow = true;
@@ -380,7 +380,7 @@ export class BGSceneManager {
     }
 
 
-    /*****************  LIGHTS  ******************/    
+    /*****************  LIGHTS  ******************/
     /**
      * Create and add Ambient Light to the scene
      */
@@ -395,9 +395,9 @@ export class BGSceneManager {
      * This light follows the mouse position.
      */
     buildMouseLight() {
-        const mouseLight = new THREE.SpotLight(0x9dffb6, 0.3, 10, Math.PI/8, 0.5, 2);
+        const mouseLight = new THREE.SpotLight(0x9dffb6, 0.3, 10, Math.PI / 8, 0.5, 2);
         mouseLight.lookAt(this.centralObject.position);
-        mouseLight.position.set(0,0,2);
+        mouseLight.position.set(0, 0, 2);
         this.lights.mouseLight.add(mouseLight);
         this.scene.add(this.lights.mouseLight);
     }
@@ -417,13 +417,13 @@ export class BGSceneManager {
         textLightGroup.add(this.createPointLight(-1, 0, 0, this.config.textColor, this.config.textIntensity));
         textLightGroup.add(this.createPointLight(1, 0, 0, this.config.textColor, this.config.textIntensity));
         return textLightGroup;
-        
+
     }
 
     /**
      * Create a group of lights emitted by the subtext object
      */
-     createSubtextLight() {
+    createSubtextLight() {
         const subtextLightGroup = new THREE.Group();
         subtextLightGroup.add(this.createPointLight(0, -0.8, 0, this.config.subtextColor, this.config.subtextIntensity));
         return subtextLightGroup;
@@ -438,21 +438,21 @@ export class BGSceneManager {
         // Create 2D bounding Border
         const width = boundingBox.max.x - boundingBox.min.x;
         const height = boundingBox.max.y - boundingBox.min.y;
-        const border_hori_offset = width/2
-        const border_vert_offset = height/2
+        const border_hori_offset = width / 2
+        const border_vert_offset = height / 2
         const color = this.config.borderColor;
         const intensity = this.config.textBorderIntensity;
 
         borderLights.add(this.createPointLight(border_hori_offset, border_vert_offset, 0, color, intensity))
-        borderLights.add(this.createPointLight(-border_hori_offset , border_vert_offset, 0, color, intensity))
+        borderLights.add(this.createPointLight(-border_hori_offset, border_vert_offset, 0, color, intensity))
         return borderLights;
     }
-    
 
-    
-    /*****************  EVENT LISTENERS  ******************/ 
 
-    
+
+    /*****************  EVENT LISTENERS  ******************/
+
+
     /** 
      * "mousemove" Event Handler.
      * Updates the mouseLight position and the centralObject rotation.
@@ -463,7 +463,7 @@ export class BGSceneManager {
 
         this.centralObject.rotation.x = -(event.clientY / window.innerHeight) * 0.1 - 0.1;
         this.centralObject.rotation.y = -(event.clientX / window.innerWidth) * 0.1 - 0.1;
-        
+
     }
 
 
@@ -481,8 +481,8 @@ export class BGSceneManager {
         this.camera.aspect = aspect;
         this.camera.updateProjectionMatrix();
 
-        this.bloomComposer.setSize( sizes.width, sizes.height );
-		this.finalComposer.setSize( sizes.width, sizes.height );
+        this.bloomComposer.setSize(sizes.width, sizes.height);
+        this.finalComposer.setSize(sizes.width, sizes.height);
 
         // Update renderer
         this.renderer.setSize(sizes.width, sizes.height)
@@ -491,7 +491,7 @@ export class BGSceneManager {
         this.onScroll();
     }
 
-    
+
     /**
      * "scroll" Event Handler.
      * Updates scene based on scroll Y
@@ -531,7 +531,7 @@ export class BGSceneManager {
          * @param progressY Progress of scroll between topState and bottomState
          * @returns Normalized progress
          */
-        const getProgress = (progressY : number) => (0.5 * (-(Math.cos(progressY * Math.PI)) + 1)) ** 1.5;
+        const getProgress = (progressY: number) => (0.5 * (-(Math.cos(progressY * Math.PI)) + 1)) ** 1.5;
 
         const heightDiff = lowerHeight - topHeight;
         const progressY = (scrollY - topHeight) / heightDiff
@@ -562,7 +562,7 @@ export class BGSceneManager {
             const top: number = computeNewAttribute((topState as any)[state_attr], (topState as any)[tolerance_attr]);
             const bottom: number = computeNewAttribute((bottomState as any)[state_attr], (bottomState as any)[tolerance_attr]);
 
-            (obj as any)[attr][axis] = ( progress * (bottom - top) + top );
+            (obj as any)[attr][axis] = (progress * (bottom - top) + top);
         }
 
         /**
@@ -579,7 +579,7 @@ export class BGSceneManager {
 
 
         // Set new attributes for position and rotation
-        setNewAttr(this.camera, "position", "cam_pos");        
+        setNewAttr(this.camera, "position", "cam_pos");
         setNewAttr(this.camera, "rotation", "cam_rot")
         setNewAttr(this.centralObject, "position", "obj_pos");
 
@@ -595,7 +595,7 @@ export class BGSceneManager {
 
 
 
-   /*****************  TICK  ******************/
+    /*****************  TICK  ******************/
 
     /**
     * Update function called per tick.
@@ -639,9 +639,9 @@ export class BGSceneManager {
      * Then, applies bloom to all objects (no effect on darkened objects), and restores materials of the darkened objects.
      */
     renderBloom() {
-        this.scene.traverse( this.darkenNonBloomed );
+        this.scene.traverse(this.darkenNonBloomed);
         this.bloomComposer.render();
-        this.scene.traverse( this.restoreMaterial );
+        this.scene.traverse(this.restoreMaterial);
     }
 
     /**
@@ -652,7 +652,7 @@ export class BGSceneManager {
         this.recordMaterials();
 
         const renderScene = new RenderPass(this.scene, this.camera);
-    
+
         const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
         bloomPass.threshold = this.config.bloomThreshold;
         bloomPass.strength = this.config.bloomStrength;
@@ -687,13 +687,13 @@ export class BGSceneManager {
             }), "baseTexture"
         );
         mixPass.needsSwap = true;
-        
+
         const finalComposer = new EffectComposer(this.renderer);
         finalComposer.addPass(renderScene);
         finalComposer.addPass(mixPass);
 
         return {
-            bloomComposer: bloomComposer, 
+            bloomComposer: bloomComposer,
             finalComposer: finalComposer
         };
 
@@ -704,7 +704,7 @@ export class BGSceneManager {
      * Aids material restoration after darkening.
      */
     recordMaterials() {
-        this.scene.traverse((obj : any) => {
+        this.scene.traverse((obj: any) => {
             if (obj.material) {
                 this.materials.set(obj.uuid as string, obj.material);
             }
@@ -716,8 +716,8 @@ export class BGSceneManager {
      * @param obj Object to check
      */
     darkenNonBloomed = (obj: any) => {
-        const darkMat = new THREE.MeshBasicMaterial( { color: 'black' } )
-        if ( obj.isMesh && this.layers[this.BLOOM_LAYER].test( obj.layers ) === false ) {
+        const darkMat = new THREE.MeshBasicMaterial({ color: 'black' })
+        if (obj.isMesh && this.layers[this.BLOOM_LAYER].test(obj.layers) === false) {
             obj.material = darkMat;
         }
     }
@@ -726,8 +726,8 @@ export class BGSceneManager {
      * Restores the material of a darkened object
      * @param obj Object to check
      */
-    restoreMaterial = (obj: any ) => {
-        if ( this.materials.get(obj.uuid as string) ) {
+    restoreMaterial = (obj: any) => {
+        if (this.materials.get(obj.uuid as string)) {
             obj.material = this.materials.get(obj.uuid as string);
         }
     }
@@ -744,5 +744,5 @@ export class BGSceneManager {
         return Object.keys(obj) as Array<keyof T>;
     }
 
- 
+
 }
