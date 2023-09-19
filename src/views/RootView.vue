@@ -18,23 +18,24 @@ const activeSection = ref("")
 // INTERSECTION OBSERVER ================================
 
 // https://stackoverflow.com/questions/61645225/vue-router-change-anchor-in-route-on-scroll
-function sectionObserverHandler (entries: IntersectionObserverEntry[]) {
+function sectionObserverHandler(entries: IntersectionObserverEntry[]) {
   for (const entry of entries) {
     if (entry.isIntersecting) {
-        const sectionId = entry.target.id
-        if (route.name === null) return;
-        // addHashToLocation(sectionId)
-        activeSection.value = sectionId;
+      const sectionId = entry.target.id
+      if (route.name === null) return;
+      // addHashToLocation(sectionId)
+      activeSection.value = sectionId;
     }
   }
 }
 
 function observeSections() {
   if (sectionObserver) {
-    try { sectionObserver.disconnect()
-    } catch (error) {}
+    try {
+      sectionObserver.disconnect()
+    } catch (error) { }
   }
-  
+
   const options = {
     rootMargin: '0px 0px',
     threshold: 0
@@ -82,42 +83,41 @@ onMounted(() => {
 <template>
   <main>
     <header>
-        <Topbar :active="activeSection"/>
+      <Topbar :active="activeSection" />
     </header>
-    
-    <body> 
-        <div class="app-body">
+
+    <body>
+      <div class="app-body">
         <!-- <router-view v-slot="{ Component }">
             <transition>
             <component :is="Component"></component>
             </transition>
         </router-view> -->
 
-        <div class="app-section" id="home" ><HomeView/></div>
+        <div class="app-section" id="home">
+          <HomeView />
+        </div>
         <div class="app-section-break" />
-        <div class="app-section" id="about"><AboutView/></div>
+        <div class="app-section" id="about">
+          <AboutView />
+        </div>
         <div class="app-section-break" />
-        <div class="app-section" id="portfolio"><PortfolioView/></div>
+        <div class="app-section" id="portfolio">
+          <PortfolioView />
+        </div>
         <div class="app-section-break" />
         <!-- <div class="app-section"  id="contact"><ContactView/></div> -->
-        
-        <BGScene 
-            class="bg" 
-            :homeY="homeY" 
-            :aboutY="aboutY"
-            :portfolioY="portfolioY"
-        />
 
-        <ScrollTop />
+      </div>
 
+      <footer>
 
-        </div>
+      </footer>
 
-        <footer>
-        
-        </footer>
-        
 
     </body>
+    <BGScene class="bg" :homeY="homeY" :aboutY="aboutY" :portfolioY="portfolioY" />
+
+    <ScrollTop />
   </main>
 </template>

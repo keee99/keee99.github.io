@@ -57,7 +57,7 @@
   --color-text-header: #ff628e;
   --color-text-focus: #ffd8e3;
   --color-text: #ffffff;
-  --color-text-dark:#7c7d7e;
+  --color-text-dark: #7c7d7e;
   --color-text-darkest: #000000;
 
   --color-light: #ffffff;
@@ -94,7 +94,7 @@
 
 /* TODO - styling: change body defaults */
 body {
-  min-height: 100vh;
+  min-height: 100dvh;
   color: var(--color-text);
   /* background: var(--color-background); */
   transition: color 0.5s, background-color 0.5s;
