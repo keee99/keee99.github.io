@@ -1,5 +1,5 @@
 export interface card {
-    title: string, 
+    title: string,
     date: Date,
     desc: string,
     imgs: img[],
@@ -16,17 +16,17 @@ export interface img {
     i: string,
     alt: string,
 }
-  
 
-import img_feeling_funky_back from  "/images/portfolio/design/feeling_funky_back.png"
-import img_feeling_funky_front from  "/images/portfolio/design/feeling_funky_front.png"
-import img_feeling_funky_draft from  "/images/portfolio/design/feeling_funky_draft.png"
-import img_feeling_funky_final from  "/images/portfolio/design/feeling_funky_final.png"
-import img_feeling_funky_front_draft from  "/images/portfolio/design/feeling_funky_front_draft.png"
+
+import img_feeling_funky_back from "/images/portfolio/design/feeling_funky_back.png"
+import img_feeling_funky_front from "/images/portfolio/design/feeling_funky_front.png"
+import img_feeling_funky_draft from "/images/portfolio/design/feeling_funky_draft.png"
+import img_feeling_funky_final from "/images/portfolio/design/feeling_funky_final.png"
+import img_feeling_funky_front_draft from "/images/portfolio/design/feeling_funky_front_draft.png"
 
 const card_feeling_funky = {
-    title: "FUNKtion Club Shirt Design", 
-    date: new Date(2023, 1), 
+    title: "FUNKtion Club Shirt Design",
+    date: new Date(2023, 1),
     desc: `Shirt design for my University funkstyle dance club.
             Used Illustrator for vector design, and Procreate for drafting. 
             Design was an iterative process with input from the club members, including colour scheme and text elements.`,
@@ -63,11 +63,11 @@ const card_feeling_funky = {
 };
 
 
-import img_manners from  "/images/portfolio/design/manners.png"
+import img_manners from "/images/portfolio/design/manners.png"
 
 const card_manners = {
-    title: "MAN-Ners Band Logo", 
-    date: new Date(2022, 11), 
+    title: "MAN-Ners Band Logo",
+    date: new Date(2022, 11),
     desc: `Logo design for my University band.
             Inspired by the Kingsman franchise, parodied the Johnny Walker logo to achieve a "gentleman-ly" design. 
             All rights of the original Johnny Walker logo to JOHN WALKER & SONS.`,
@@ -92,8 +92,8 @@ import img_help_feed from "/images/portfolio/design/help_feed.png"
 import img_help_sys_arch from "/images/portfolio/design/help_sys_arch.png"
 
 const card_help_gebirah = {
-    title: "Gebirah HELP", 
-    date: new Date(2022, 6), 
+    title: "Gebirah HELP",
+    date: new Date(2022, 6),
     desc: `A humanitarian web app that supports users in crisis regions by providing a platform for them to seek help from nearby volunteers.
             This app is a collaboration between SUTD and Gebirah, a humanitarian non-profit organisation, with support from Google, and it allows users to offer help, or request for help, supported via Google Maps API and Google Cloud for deployment.
             I was in charge of backend development of the main feed server using Ruby on Rails, as well as unit and system testing with RSpec, Capybara, and Cucumber.`,
@@ -138,8 +138,8 @@ import img_ctd_inside from "/images/portfolio/design/ctd_inside.png"
 import img_ctd_star from "/images/portfolio/design/ctd_star.png"
 
 const card_ctd = {
-    title: "Cradle To Dust", 
-    date: new Date(2023, 4), 
+    title: "Cradle To Dust",
+    date: new Date(2023, 4),
     desc: `A generative design project, viewable at the link above.
             The design comprises of towers of wireframe circles rotating around the center, where this simple rotation results in various interesting patterns at various rotation "phases".
             The design eventually rotates back to its original position, depicting a sense of inevitability and circularity.
@@ -189,8 +189,8 @@ import img_rainyday_uml from "/images/portfolio/design/rainyday_uml.png"
 import img_rainyday_userflow from "/images/portfolio/design/rainyday_userflow.png"
 
 const card_rainyday = {
-    title: "Rainy Day", 
-    date: new Date(2022, 4), 
+    title: "Rainy Day",
+    date: new Date(2022, 4),
     desc: `An Android Application that helps kids understand the value of money and encourages them to save up for a "Rainy Day".
             It helps the child to track their expenses, set a savings goal, and tracks their progress towards it. 
             It also helps parents log and track their children's expenditures to facilitate accountability.
@@ -214,7 +214,7 @@ const card_rainyday = {
         },
         {
             i: img_rainyday_userflow,
-            alt: "Userflow daigram of the app (red boxed: unimplemented)",
+            alt: "Userflow diagram of the app (red boxed: unimplemented)",
         },
     ],
     tags: [
@@ -223,7 +223,7 @@ const card_rainyday = {
         "Firebase",
         "Programming"
     ],
-    link: [ 
+    link: [
         {
             desc: "Project Website",
             url: "https://istd.sutd.edu.sg/term4-design-exhibition/50001/rainy-day",
@@ -240,8 +240,8 @@ import img_urop from "/images/portfolio/design/UROP.png"
 import img_urop_logo from "/images/portfolio/design/UROP_logo.png"
 
 const card_urop = {
-    title: "EQ App Research Project", 
-    date: new Date(2021, 5), 
+    title: "EQ App Research Project",
+    date: new Date(2021, 5),
     desc: `Worked in a small team to build a Web platform for enterprise evaluation and training of employee EQ, as part of a University Research Project.
             Developed a simple backend server, including RESTful API and authentication, and integrated with the frontend.
             Presented the working prototype to the stakeholder and project supervisor.
@@ -273,8 +273,8 @@ import img_sutdopoly_board from "/images/portfolio/design/sutdopoly_board.png"
 import img_sutdopoly_go from "/images/portfolio/design/sutdopoly_go.png"
 
 const card_sutdopoly = {
-    title: "SUTDopoly", 
-    date: new Date(2020, 10), 
+    title: "SUTDopoly",
+    date: new Date(2020, 10),
     desc: `SUTDopoly is a text-based boardgame that is run straight from the command line. 
             A variation of Monopoly, SUTDopoly is structured around the setting of SUTD whereby the properties names are the names of Fifth Rows and the Chance and Chest cards are relatable to SUTD students. 
             This version of SUTDopoly plays wholely on the CLI, and supports various features such as animated board movement, offline play with multiple users on a single computer, or online play across CLIs and computers!`,
@@ -304,7 +304,43 @@ const card_sutdopoly = {
         },
     ]
 };
-    
+
+import img_bitop_logo from "/images/portfolio/design/bitop_logo.png"
+import img_bitop_brochure from "/images/portfolio/design/bitop_brochure.png"
+import img_bitop_datapath from "/images/portfolio/design/bitop_datapath.png"
+
+const card_bitop = {
+    title: "Bit Op!",
+    date: new Date(2022, 3),
+    desc: `Bit Op! is a modified version of the original Bop it! by Hasbro Gaming, made with the Alchitry Au Field Programmable Gate Array (FPGA) using the Lucid Hardware Description Language.
+            Buzzers and LED signal lights correspond to each input (Push, Twist, Pull), and the LED signals also show the player’s current score in binary encoding. 
+            There are a total of 3 levels, with progressive difficulty and varying scoring systems.
+            To allow more focus to be put towards designing a robust and efficient datapath, the hardware and exterior for the Bit Op! Game unit, including the 3 inputs (Push, Twist, Pull) were modified and repurposed from an existing Bop it! unit.`,
+    imgs: [
+        {
+            i: img_bitop_logo,
+            alt: "Bit Op! logo",
+        },
+        {
+            i: img_bitop_brochure,
+            alt: "Brochure created for presentation to mock a Bop It! toy",
+        },
+        {
+            i: img_bitop_datapath,
+            alt: "Internal Bit Op! Datapath",
+        },
+    ],
+    tags: [
+        "Programming",
+    ],
+    link: [
+        {
+            desc: "Project Website",
+            url: "https://istd.sutd.edu.sg/term4-design-exhibition/50002/bit-op",
+        },
+    ]
+};
+
 export const cards: card[] = [
     card_feeling_funky,
     card_manners,
@@ -313,6 +349,7 @@ export const cards: card[] = [
     card_rainyday,
     card_urop,
     card_sutdopoly,
+    card_bitop,
 ]
 
 export default cards;
