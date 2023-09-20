@@ -20,6 +20,8 @@
   z-index: -1;
   width: 100%;
   height: 100dvh;
-  background-color: var(--color-background);
+  /* background-color: var(--color-background); */
+  margin: 0;
+  overflow: hidden
 }
 </style>
