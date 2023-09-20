@@ -15,6 +15,15 @@ const route = useRoute();
 const activeSection = ref("")
 
 
+function resizeBackground() {
+  const bgElements = document.querySelectorAll<HTMLElement>(".bg");
+  const windowHeight = window.innerHeight + 60;
+
+  bgElements.forEach((element) => {
+    element.style.height = `${windowHeight}px`;
+  })
+}
+
 // INTERSECTION OBSERVER ================================
 
 // https://stackoverflow.com/questions/61645225/vue-router-change-anchor-in-route-on-scroll
@@ -74,7 +83,8 @@ const updateScrollDistances = () => {
 onMounted(() => {
   updateScrollDistances();
   observeSections();
-  window.addEventListener('resize', updateScrollDistances)
+  window.addEventListener('resize', updateScrollDistances);
+  window.addEventListener('resize', resizeBackground);
 })
 
 
@@ -86,7 +96,7 @@ onMounted(() => {
       <Topbar :active="activeSection" />
     </header>
 
-    <body>
+    <body class="">
       <div class="app-body">
         <!-- <router-view v-slot="{ Component }">
             <transition>

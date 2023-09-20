@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
@@ -19,7 +18,7 @@
   left: 0;
   z-index: -1;
   width: 100%;
-  height: 100dvh;
+  height: 120dvh;
   /* background-color: var(--color-background); */
   margin: 0;
   overflow: hidden
