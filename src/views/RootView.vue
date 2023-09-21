@@ -126,7 +126,9 @@ onMounted(() => {
 
 
     </body>
-    <BGScene class="bg" :homeY="homeY" :aboutY="aboutY" :portfolioY="portfolioY" />
+    <div class="bg-wrapper">
+      <BGScene class="bg" :homeY="homeY" :aboutY="aboutY" :portfolioY="portfolioY" />
+    </div>
 
     <ScrollTop />
   </main>
