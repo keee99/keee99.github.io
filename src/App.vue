@@ -20,7 +20,6 @@
   width: 100%;
   height: 120dvh;
   /* background-color: var(--color-background); */
-  margin: 0;
-  overflow: hidden
+  transform: scale(1.0);
 }
 </style>
