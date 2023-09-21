@@ -84,7 +84,7 @@ onMounted(() => {
   updateScrollDistances();
   observeSections();
   window.addEventListener('resize', updateScrollDistances);
-  window.addEventListener('resize', resizeBackground);
+  // window.addEventListener('resize', resizeBackground);
 })
 
 
