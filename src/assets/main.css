@@ -10,6 +10,10 @@ a {
   color: rgb(199, 73, 73);
 }
 
+html {
+  height: 100lvh;
+  /* width: 100lvw; */
+}
 
 
 .app-topbar {
